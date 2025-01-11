@@ -49,7 +49,7 @@ export const siteSettings = {
       {
         id: 1,
         path: '/',
-        label: 'main-menu'
+        label: 'main-menu',
       },
       // {
       //   id: 1,
@@ -592,6 +592,11 @@ export const siteSettings = {
       },
       {
         id: 9,
+        path: '/faq',
+        label: 'menu-faq',
+      },
+      {
+        id: 10,
         path: '/terms',
         label: 'menu-terms-condition',
       },
