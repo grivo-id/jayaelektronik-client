@@ -6,6 +6,7 @@ import { DEFlag } from '@components/icons/language/DEFlag';
 import { ESFlag } from '@components/icons/language/ESFlag';
 import siteLogo from 'public/assets/images/logo.png';
 import siteLogoBlack from 'public/assets/images/logo-black.png';
+import { IDFlag } from '@components/icons/language/IDFlag';
 
 export const siteSettings = {
   name: 'Razor',
@@ -45,6 +46,11 @@ export const siteSettings = {
       },
     ],
     menu: [
+      {
+        id: 0,
+        path: '/',
+        label: 'main-menu'
+      },
       {
         id: 1,
         path: '/',
@@ -592,6 +598,12 @@ export const siteSettings = {
         name: 'English',
         value: 'en',
         icon: <USFlag />,
+      },
+      {
+        id: 'id',
+        name: 'Indonesia',
+        value: 'id',
+        icon: <IDFlag />,
       },
     ],
     pagesMenu: [
