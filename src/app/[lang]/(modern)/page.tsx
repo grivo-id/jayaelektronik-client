@@ -41,6 +41,11 @@ export default async function Page({
       />
       <Container>
         <FeatureCarousel lang={lang} />
+        <BannerAllCarousel
+          lang={lang}
+          data={bannerBrand}
+          className="mb-8 lg:mb-12"
+        />
         <ProductWithBestDeals lang={lang} />
         <BestSellerProductFeed lang={lang} variant={`cardv2`} />
         <BannerGridTwo
@@ -58,11 +63,6 @@ export default async function Page({
         />
         <SupperCategoryClothFeed lang={lang} />
         <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" />
-        <BannerAllCarousel
-          lang={lang}
-          data={bannerBrand}
-          className="mb-8 lg:mb-12"
-        />
       </Container>
     </>
   );
