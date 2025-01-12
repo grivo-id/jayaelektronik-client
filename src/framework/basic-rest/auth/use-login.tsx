@@ -6,17 +6,11 @@ import { useMutation } from 'react-query';
 export interface LoginInputType {
   user_email: string;
   user_password: string;
-  remember_me: boolean;
 }
 
 async function login(input: LoginInputType) {
-  const body = {
-    user_email: input.user_email,
-    user_password: input.user_password,
-  };
-
   try {
-    const response = await http.post(`${API_ENDPOINTS.LOGIN}`, body);
+    const response = await http.post(`${API_ENDPOINTS.LOGIN}`, input);
     return response.data;
   } catch (error: any) {
     console.error(error);
@@ -29,10 +23,12 @@ export const useLoginMutation = () => {
 
   return useMutation((input: LoginInputType) => login(input), {
     onSuccess: (data, variables) => {
-      sessionStorage.setItem('token', data.data.token);
-      if (variables.remember_me) {
-        localStorage.setItem('user', JSON.stringify(data.data.user));
-      }
+      const token = {
+        value: data.data.token.value,
+        expires_in: Date.now() + data.data.token.expires_in * 1000 - 3000,
+      };
+
+      sessionStorage.setItem('token', JSON.stringify(token));
       authorize();
       // closeModal();
       return data.data;

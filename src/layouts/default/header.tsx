@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { siteSettings } from '@settings/site-settings';
 import { ROUTES } from '@utils/routes';
@@ -36,6 +36,8 @@ function Header({ lang }: { lang: string }) {
     openSearch,
     isAuthorized,
     displayMobileSearch,
+    authorize,
+    unauthorize,
   } = useUI();
   const { openModal } = useModalAction();
   const siteSearchRef = useRef() as DivElementRef;
@@ -53,7 +55,21 @@ function Header({ lang }: { lang: string }) {
     setCategoryMenu(!categoryMenu);
   }
 
-  console.log(' isAuthorized', isAuthorized);
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      const parsedToken = JSON.parse(token);
+      if (parsedToken.expires_in > Date.now()) {
+        authorize();
+      } else {
+        sessionStorage.removeItem('token');
+        unauthorize();
+      }
+    } else {
+      unauthorize();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -107,7 +123,7 @@ function Header({ lang }: { lang: string }) {
 
                 <div className="flex space-x-5 xl:space-x-10 lg:max-w-[33%]">
                   <div className="items-center hidden lg:flex shrink-0">
-                    <div className="cart-button">
+                    <div className="cart-button !pt-2">
                       <UserIcon className="text-brand" />
                     </div>
                     <Link href={`/${lang}${ROUTES.LOGIN}`}>

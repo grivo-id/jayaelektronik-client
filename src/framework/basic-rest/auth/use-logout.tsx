@@ -19,7 +19,7 @@ export const useLogoutMutation = (lang: string) => {
   const router = useRouter();
   return useMutation(() => logout(), {
     onSuccess: (_data) => {
-      Cookies.remove('auth_token');
+      sessionStorage.removeItem('token');
       unauthorize();
       router.push(`/${lang}`);
     },

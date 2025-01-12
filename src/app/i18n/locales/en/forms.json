@@ -1,7 +1,10 @@
 {
   "email-error": "Please provide valid email address",
   "email-required": "You must need to provide your email address",
+  "password-error": "Password must be minimal 6 characters with uppercase, lowercase, and a number.",
   "password-required": "You must need to provide your password",
+  "confirm-password-required": "You must need to provide your confirm password",
+  "password-not-match": "Confirm Password not match",
   "password-old-required": "You must need to provide your old password",
   "password-new-required": "You must need to provide your new password",
   "name-required": "You must need to provide your full name",
