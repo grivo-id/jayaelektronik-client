@@ -20,7 +20,7 @@ export const BlogContent: FC<blogGridProps> = ({dataBlog, className = '',lang}) 
     const [currentPage, setCurrentPage] = useState(1);
     const [value, setValue] = useState('');
     const countPerPage = 8;
-    const useDatablog = dataBlog?.slice(0, countPerPage);
+    const useDatablog = dataBlog?.data.slice(0, countPerPage);
     let [filterData, setDataValue] = useState(useDatablog);
 
     const updatePage = (p: any) => {
@@ -29,6 +29,7 @@ export const BlogContent: FC<blogGridProps> = ({dataBlog, className = '',lang}) 
         const from = to - countPerPage;
         setDataValue(dataBlog?.slice(from, to));
     };
+
     return (
         <>
             <div
