@@ -69,11 +69,9 @@ export default function SignUpForm({
         </div>
         <div className="w-full md:w-1/2 lg:w-[45%] xl:w-[40%] py-6 sm:py-10 px-4 sm:px-8 md:px-6 lg:px-8 xl:px-12 rounded-md shadow-dropDown flex flex-col justify-center">
           <div className="text-center mb-10 pt-2.5">
-
             <h4 className="text-xl font-semibold text-brand-dark sm:text-2xl sm:pt-3 ">
               {t('common:text-sign-up-for-free')}
             </h4>
-            
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -150,16 +148,17 @@ export default function SignUpForm({
                   {t('common:text-register')}
                 </Button>
               </div>
-                <div className="mt-3 mb-1 text-sm text-center sm:text-base text-body">
-              {t('common:text-already-registered')}
-              <button
-                type="button"
-                className="text-sm ltr:ml-1 rtl:mr-1 sm:text-base text-brand hover:no-underline focus:outline-none"
-                onClick={handleSignIn}
-              >
-                {t('common:text-sign-in-now')}
-              </button>
-            </div>
+              <div className="mt-3 mb-1 text-sm text-center sm:text-base text-body">
+                {t('common:text-already-registered')}
+                <Link href={`/${lang}${ROUTES.LOGIN}`}>
+                  <button
+                    type="button"
+                    className="text-sm ltr:ml-1 rtl:mr-1 sm:text-base text-brand hover:no-underline focus:outline-none"
+                  >
+                    {t('common:text-sign-in-now')}
+                  </button>
+                </Link>
+              </div>
             </div>
           </form>
         </div>
