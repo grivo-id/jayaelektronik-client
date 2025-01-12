@@ -15,8 +15,12 @@ export const fetchSearchedProducts = async ({ queryKey }: any) => {
   return data.filter(searchProduct);
 };
 export const useSearchQuery = (options: QueryOptionsType) => {
-  return useQuery<Product[], Error>(
-    [API_ENDPOINTS.SEARCH, options],
-    fetchSearchedProducts
-  );
+  // return useQuery<Product[], Error>(
+  //   [API_ENDPOINTS.SEARCH, options],
+  //   fetchSearchedProducts
+  // );
+  return {
+    data: [], // Replace with your actual data
+    isLoading: false, // Replace with your actual loading state
+  };
 };
