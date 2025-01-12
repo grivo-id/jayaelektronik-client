@@ -20,6 +20,7 @@ interface blogGridProps {
 export const BlogListContent: FC<blogGridProps> = ({dataBlog, className = '',lang}) => {
     const { t } = useTranslation(lang, 'common');
 
+    console.log(dataBlog)
     const [currentPage, setCurrentPage] = useState(1);
     const [value, setValue] = useState('');
     const countPerPage = 8;

@@ -10,9 +10,9 @@ import React from "react";
 export default function BlogPageContent({ lang , variant }: {lang: string ,  variant?: string,}) {
     const {data, isLoading, error} = useBlogsQuery();
     const dataBlog = data?.blogs?.data;
-    console.log(data)
+    // console.log(data)
 
-    const renderBlogContent = (variant) => {
+    const renderBlogContent = (variant: any) => {
         switch(variant) {
             case 'grid':
                 return <BlogContent dataBlog = {dataBlog} className={`pt-8 pb-8`} lang={lang}/>

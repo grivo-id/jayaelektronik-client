@@ -10,7 +10,7 @@ const fetchBlogs = async ({ queryKey }: any) => {
   return { blogs: { data: data as Blog[] } };
 };
 
-const useBlogsQuery = (options: QueryOptionsType) => {
+const useBlogsQuery = (options: any) => {
   return useQuery<{ blogs: { data: Blog[] } }, Error>(
       [API_ENDPOINTS.BLOGS, options],
       fetchBlogs
