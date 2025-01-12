@@ -7,6 +7,7 @@ import Button from '@components/ui/button';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation, LoginInputType } from '@framework/auth/use-login';
 import Logo from '@components/ui/logo';
+import useWindowSize from '@utils/use-window-size';
 import { useTranslation } from 'src/app/i18n/client';
 import Image from '@components/ui/image';
 import { useModalAction } from '@components/common/modal/modal.context';
@@ -14,6 +15,11 @@ import Switch from '@components/ui/switch';
 import CloseButton from '@components/ui/close-button';
 import { FaFacebook, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import cn from 'classnames';
+import Link from 'next/link';
+import { ROUTES } from '@utils/routes';
+import { toast } from 'react-toastify';
+import ErrorIcon from '@components/icons/error-icon';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormProps {
   lang: string;
@@ -26,30 +32,60 @@ const LoginForm: React.FC<LoginFormProps> = ({
   isPopup = true,
   className,
 }) => {
+  const router = useRouter();
   const { t } = useTranslation(lang);
+  const { width } = useWindowSize();
   const { closeModal, openModal } = useModalAction();
-  const { mutate: login, isLoading } = useLoginMutation();
+  const { mutateAsync: login, isLoading } = useLoginMutation();
   const [remember, setRemember] = useState(false);
 
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputType>();
 
-  function onSubmit({ email, password, remember_me }: LoginInputType) {
-    login({
-      email,
-      password,
-      remember_me,
-    });
-    closeModal();
-    console.log(email, password, remember_me, 'data');
+  async function onSubmit({ user_email, user_password }: LoginInputType) {
+    try {
+      const response = await login({
+        user_email,
+        user_password,
+        remember_me: remember,
+      });
+      if (response.success) {
+        toast('Login successful!', {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        setTimeout(() => {
+          router.push(`/${lang}`);
+        }, 1500);
+      }
+      // closeModal();
+    } catch (error: any) {
+      console.log(' error', error);
+      toast.error(error.message || 'An unexpected error occurred', {
+        progressClassName: 'fancy-progress-bar',
+        position: width! > 768 ? 'bottom-right' : 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: <ErrorIcon />,
+      });
+    }
   }
   function handelSocialLogin() {
     login({
-      email: 'demo@demo.com',
-      password: 'demo',
+      user_email: 'demo@demo.com',
+      user_password: 'demo',
       remember_me: true,
     });
     closeModal();
@@ -89,7 +125,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 label={t('forms:label-email') as string}
                 type="email"
                 variant="solid"
-                {...register('email', {
+                {...register('user_email', {
                   required: `${t('forms:email-required')}`,
                   pattern: {
                     value:
@@ -97,13 +133,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     message: t('forms:email-error'),
                   },
                 })}
-                error={errors.email?.message}
+                error={errors.user_email?.message}
                 lang={lang}
               />
               <PasswordInput
                 label={t('forms:label-password') as string}
-                error={errors.password?.message}
-                {...register('password', {
+                error={errors.user_password?.message}
+                {...register('user_password', {
                   required: `${t('forms:password-required')}`,
                 })}
                 lang={lang}
@@ -145,15 +181,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
           </form>
           <div className="mt-5 mb-3 text-sm text-center sm:text-15px text-body">
             {t('common:text-don’t-have-account')}
-            <button
-              type="button"
-              className="text-sm text-brand sm:text-15px ltr:ml-1 rtl:mr-1 hover:no-underline focus:outline-none"
-              onClick={handleSignUp}
-            >
-              {t('common:text-create-account')}
-            </button>
+            <Link href={`/${lang}${ROUTES.SIGN_UP}`}>
+              <button
+                type="button"
+                className="text-sm text-brand sm:text-15px ltr:ml-1 rtl:mr-1 hover:no-underline focus:outline-none"
+              >
+                {t('common:text-create-account')}
+              </button>
+            </Link>
           </div>
-          <div className="relative flex flex-col items-center justify-center text-sm">
+          {/* <div className="relative flex flex-col items-center justify-center text-sm">
             <span className="mt-6 text-sm text-brand-dark opacity-70">
               {t('common:text-or')}
             </span>
@@ -178,7 +215,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             >
               <FaLinkedinIn className="w-4 h-4 text-opacity-50 transition-all text-brand-dark group-hover:text-brand" />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
