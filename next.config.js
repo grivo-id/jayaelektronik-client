@@ -3,6 +3,9 @@
 module.exports = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['png.pngtree.com', 'grivo-bucket-storage.ap-south-1.linodeobjects.com'],
+  },
   // experimental: {
   //   // Required:
   //   appDir: true,
