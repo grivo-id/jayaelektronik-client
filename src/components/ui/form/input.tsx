@@ -75,7 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           // @ts-ignore
           placeholder={t(placeholder)}
           className={rootClassName}
-          autoComplete="off"
+          autoComplete="on"
           spellCheck="false"
           aria-invalid={error ? 'true' : 'false'}
           {...rest}

@@ -51,7 +51,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
       const response = await login({
         user_email,
         user_password,
-        remember_me: remember,
       });
       if (response.success) {
         toast('Login successful!', {
@@ -82,17 +81,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
       });
     }
   }
-  function handelSocialLogin() {
-    login({
-      user_email: 'demo@demo.com',
-      user_password: 'demo',
-      remember_me: true,
-    });
-    closeModal();
-  }
-  function handleSignUp() {
-    return openModal('SIGN_UP_VIEW');
-  }
+  // function handelSocialLogin() {
+  //   login({
+  //     user_email: 'demo@demo.com',
+  //     user_password: 'demo',
+  //     remember_me: true,
+  //   });
+  //   closeModal();
+  // }
+  // function handleSignUp() {
+  //   return openModal('SIGN_UP_VIEW');
+  // }
   function handleForgetPassword() {
     return openModal('FORGET_PASSWORD');
   }
@@ -145,7 +144,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 lang={lang}
               />
               <div className="flex items-center justify-center">
-                <div className="flex items-center shrink-0">
+                {/* <div className="flex items-center shrink-0">
                   <label className="relative inline-block cursor-pointer switch">
                     <Switch checked={remember} onChange={setRemember} />
                   </label>
@@ -155,12 +154,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   >
                     {t('forms:label-remember-me')}
                   </label>
-                </div>
+                </div> */}
                 <div className="flex ltr:ml-auto rtl:mr-auto mt-[3px]">
                   <button
                     type="button"
                     onClick={handleForgetPassword}
-                    className="text-sm ltr:text-right rtl:text-left text-heading ltr:pl-3 lg:rtl:pr-3 hover:no-underline hover:text-brand-dark focus:outline-none focus:text-brand-dark"
+                    className="text-sm text-skin-primary ltr:text-right rtl:text-left text-heading ltr:pl-3 lg:rtl:pr-3 hover:no-underline hover:text-skin-purple focus:outline-none focus:text-brand-dark"
                   >
                     {t('common:text-forgot-password')}
                   </button>
@@ -179,7 +178,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               </div>
             </div>
           </form>
-          <div className="mt-5 mb-3 text-sm text-center sm:text-15px text-body">
+          <div className="mt-5 mb-5 text-sm text-center sm:text-15px text-body">
             {t('common:text-don’t-have-account')}
             <Link href={`/${lang}${ROUTES.SIGN_UP}`}>
               <button
@@ -189,6 +188,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 {t('common:text-create-account')}
               </button>
             </Link>
+          </div>
+          <div className="ltr:ml-auto rtl:mr-auto w-full" onClick={closeModal}>
+            <p className="text-sm text-center">
+              {t('common:text-privacy-and-policy-description-login')}
+              <Link
+                href={`/${lang}${ROUTES.PRIVACY}`}
+                className="text-skin-purple underline text-heading ltr:pl-1 lg:rtl:pr-1 hover:no-underline hover:text-skin-primary focus:outline-none focus:text-brand-dark"
+              >
+                {t('common:text-privacy-and-policy')}
+              </Link>
+            </p>
           </div>
           {/* <div className="relative flex flex-col items-center justify-center text-sm">
             <span className="mt-6 text-sm text-brand-dark opacity-70">

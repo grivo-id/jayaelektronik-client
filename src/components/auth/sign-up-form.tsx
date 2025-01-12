@@ -34,19 +34,28 @@ export default function SignUpForm({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<SignUpInputType>();
   function handleSignIn() {
     return openModal('LOGIN_VIEW');
   }
-  function onSubmit({ name, email, password, remember_me }: SignUpInputType) {
+  function onSubmit({
+    user_fname,
+    user_lname,
+    user_email,
+    user_address,
+    user_password,
+    user_confirm_password,
+  }: SignUpInputType) {
     signUp({
-      name,
-      email,
-      password,
-      remember_me,
+      user_fname,
+      user_lname,
+      user_email,
+      user_address,
+      user_password,
+      user_confirm_password,
     });
-    console.log(name, email, password, 'sign form values');
   }
   return (
     <div
@@ -80,20 +89,30 @@ export default function SignUpForm({
           >
             <div className="flex flex-col space-y-4">
               <Input
-                label={t('forms:label-name') as string}
+                label={t('forms:label-first-name') as string}
                 type="text"
                 variant="solid"
-                {...register('name', {
-                  required: 'forms:name-required',
+                {...register('user_fname', {
+                  required: 'forms:first-name-required',
                 })}
-                error={errors.name?.message}
+                error={errors.user_fname?.message}
+                lang={lang}
+              />
+              <Input
+                label={t('forms:label-last-name') as string}
+                type="text"
+                variant="solid"
+                {...register('user_lname', {
+                  required: 'forms:last-name-required',
+                })}
+                error={errors.user_lname?.message}
                 lang={lang}
               />
               <Input
                 label={t('forms:label-email') as string}
                 type="email"
                 variant="solid"
-                {...register('email', {
+                {...register('user_email', {
                   required: `${t('forms:email-required')}`,
                   pattern: {
                     value:
@@ -101,42 +120,32 @@ export default function SignUpForm({
                     message: t('forms:email-error'),
                   },
                 })}
-                error={errors.email?.message}
+                error={errors.user_email?.message}
                 lang={lang}
               />
               <PasswordInput
                 label={t('forms:label-password')}
-                error={errors.password?.message}
-                {...register('password', {
+                error={errors.user_password?.message}
+                {...register('user_password', {
                   required: `${t('forms:password-required')}`,
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/,
+                    message: t('forms:password-error'),
+                  },
                 })}
                 lang={lang}
               />
-              <div className="flex items-center justify-center">
-                <div className="flex items-center shrink-0">
-                  <label className="relative inline-block cursor-pointer switch">
-                    <Switch checked={remember} onChange={setRemember} />
-                  </label>
-
-                  <label
-                    onClick={() => setRemember(!remember)}
-                    className="mt-1 text-sm cursor-pointer shrink-0 text-heading ltr:pl-2.5 rtl:pr-2.5"
-                  >
-                    {t('forms:label-remember-me')}
-                  </label>
-                </div>
-                <div
-                  className="flex ltr:ml-auto rtl:mr-auto mt-[2px]"
-                  onClick={closeModal}
-                >
-                  <Link
-                    href={`/${lang}${ROUTES.PRIVACY}`}
-                    className="text-sm ltr:text-right rtl:text-left text-heading ltr:pl-3 lg:rtl:pr-3 hover:no-underline hover:text-brand-dark focus:outline-none focus:text-brand-dark"
-                  >
-                    {t('common:text-privacy-and-policy')}
-                  </Link>
-                </div>
-              </div>
+              <PasswordInput
+                label={t('forms:label-confirm-password')}
+                error={errors.user_confirm_password?.message}
+                {...register('user_confirm_password', {
+                  required: `${t('forms:confirm-password-required')}`,
+                  validate: (value) =>
+                    value === watch('user_password') ||
+                    (t('forms:passwords-not-match') as string),
+                })}
+                lang={lang}
+              />
               <div className="relative">
                 <Button
                   type="submit"
@@ -148,7 +157,7 @@ export default function SignUpForm({
                   {t('common:text-register')}
                 </Button>
               </div>
-              <div className="mt-3 mb-1 text-sm text-center sm:text-base text-body">
+              <div className="mt-3 mb-6 text-sm text-center sm:text-base text-body">
                 {t('common:text-already-registered')}
                 <Link href={`/${lang}${ROUTES.LOGIN}`}>
                   <button
@@ -158,6 +167,34 @@ export default function SignUpForm({
                     {t('common:text-sign-in-now')}
                   </button>
                 </Link>
+              </div>
+              <div
+                className="ltr:ml-auto rtl:mr-auto w-full"
+                onClick={closeModal}
+              >
+                <p className="text-sm text-center">
+                  {t('common:text-privacy-and-policy-description-register')}
+                  <Link
+                    href={`/${lang}${ROUTES.PRIVACY}`}
+                    className="text-skin-purple underline text-heading ltr:pl-1 lg:rtl:pr-1 hover:no-underline hover:text-brand-dark focus:outline-none focus:text-brand-dark"
+                  >
+                    {t('common:text-privacy-and-policy')}
+                  </Link>
+                </p>
+              </div>
+              <div className="flex items-center justify-center">
+                {/* <div className="flex items-center shrink-0">
+                  <label className="relative inline-block cursor-pointer switch">
+                    <Switch checked={remember} onChange={setRemember} />
+                  </label>
+
+                  <label
+                    onClick={() => setRemember(!remember)}
+                    className="mt-1 text-sm cursor-pointer shrink-0 text-heading ltr:pl-2.5 rtl:pr-2.5"
+                  >
+                    {t('forms:label-remember-me')}
+                  </label>
+                </div> */}
               </div>
             </div>
           </form>
