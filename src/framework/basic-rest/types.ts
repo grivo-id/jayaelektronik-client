@@ -13,6 +13,14 @@ export type CategoriesQueryOptionsType = {
   status?: string;
   limit?: number;
 };
+
+export type BlogCategoriesQueryOptionsType = {
+  text?: string;
+  category?: string;
+  status?: string;
+  limit?: number;
+};
+
 export type ProductsQueryOptionsType = {
   type: string;
   text?: string;
@@ -48,6 +56,14 @@ export type Category = {
   productCount?: number;
   [key: string]: unknown;
 };
+
+export type BlogCategory = {
+  blog_category_id: number | string;
+  blog_category_name: string;
+  slug: string;
+  blog_category_desc?: string;
+};
+
 export type Collection = {
   id: number | string;
   name: string;

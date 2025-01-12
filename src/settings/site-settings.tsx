@@ -533,7 +533,7 @@ export const siteSettings = {
       // },
       {
         id: 6,
-        path: '/blog/blog-category-list',
+        path: '/blog/',
         label: 'menu-blog-list',
       },
       // {
