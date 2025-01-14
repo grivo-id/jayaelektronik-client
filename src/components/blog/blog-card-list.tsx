@@ -93,7 +93,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
             dangerouslySetInnerHTML={{ __html: blog_desc }}
           />
         </div>
-        <div className={'flex justify-between'}>
+        <div className={'flex justify-start'}>
           <div className="entry-meta text-13px text-gray-500 flex">
             <span className="post-on pe-2.5 relative flex items-center gap-1.5">
               {' '}
