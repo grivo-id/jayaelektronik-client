@@ -10,18 +10,16 @@ interface CategoryDropdownProps {
   categoriesLimit?: number;
 }
 
-export default function CategoryDropdownMenu({
-  lang,
-  className,
-  categoriesLimit = 12,
-}: CategoryDropdownProps) {
+export default function CategoryDropdownMenu({ lang, className, categoriesLimit = 99 }: CategoryDropdownProps) {
   const {
     data,
     isLoading: loading,
     error,
   } = useCategoriesQuery({
-    limit: 15,
+    limit: 99,
   });
+
+
 
   return (
     <div className={cn('absolute z-30 w-72 lg:w-full', className)}>
@@ -36,7 +34,7 @@ export default function CategoryDropdownMenu({
               'w-full bg-skin-fill border-t-0 border-2 border-skin-primary rounded-b-md category-dropdown-menu'
             }
           >
-            {Array.from({ length: 6}).map((_, idx) => (
+            {Array.from({ length: 6 }).map((_, idx) => (
               <CategoryListCardLoader
                 key={`category-list-${idx}`}
                 uniqueKey="category-list-card-loader"
