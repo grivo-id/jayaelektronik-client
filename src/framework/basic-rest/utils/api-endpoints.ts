@@ -3,7 +3,7 @@ export const API_ENDPOINTS = {
   REGISTER: '/',
   LOGOUT: '/',
   FORGET_PASSWORD: '/',
-  CATEGORIES: '/',
+  CATEGORIES: '/product-categories/sub-categories',
   DIETARY: '/',
   BRANDS: '/',
   PRODUCTS: '/',
@@ -22,7 +22,7 @@ export const API_ENDPOINTS = {
   PHONES_CATEGORY: '/',
   COMPUTER_CATEGORY: '/',
   CLOTH_CATEGORY: '/',
-   SEARCH: '/search.json',
+  SEARCH: '/search.json',
   ORDERS: '/',
   ORDER: '/',
   ORDER_STATUS: '/',
@@ -34,7 +34,7 @@ export const API_ENDPOINTS = {
   WISHLIST: '/',
   BLOGS: '/blogs',
   BLOGDETAILS: '/blogs',
-  BLOGCATEGORIES: '/blog-categories'
+  BLOGCATEGORIES: '/blog-categories',
 };
 
 // export const API_ENDPOINTS = {

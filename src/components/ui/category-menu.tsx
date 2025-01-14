@@ -11,13 +11,13 @@ import {
 import Image from '@components/ui/image';
 import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
-import SubMegaVertical from "@components/ui/mega/sub-mega-vertical";
-import {getDirection} from "@utils/get-direction";
+import SubMegaVertical from '@components/ui/mega/sub-mega-vertical';
+import { getDirection } from '@utils/get-direction';
 
 function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
   const { t } = useTranslation(lang, 'common');
   const { name, children: items, icon, type } = item;
-    const dir = getDirection(lang);
+  const dir = getDirection(lang);
   return (
     <>
       <li
@@ -47,14 +47,17 @@ function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
             </div>
           )}
           <span className="capitalize">{name}</span>
-          {items && (
+          {Array.isArray(items) && items.length > 0 && (
             <span className="hidden ltr:ml-auto rtl:mr-auto md:inline-flex">
-              {dir === 'rtl' ? <IoIosArrowBack className="text-15px text-skin-base text-opacity-40"/>
-                  : <IoIosArrowForward className="text-15px text-skin-base text-opacity-40"/>}
+              {dir === 'rtl' ? (
+                <IoIosArrowBack className="text-15px text-skin-base text-opacity-40" />
+              ) : (
+                <IoIosArrowForward className="text-15px text-skin-base text-opacity-40" />
+              )}
             </span>
           )}
         </Link>
-        {Array.isArray(items) ? (
+        {Array.isArray(items) && items.length > 0 ? (
           <>
             {type != 'mega' ? (
               <div
@@ -87,62 +90,61 @@ function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
   );
 }
 
-function SidebarMenu({ items, className,categoriesLimit, lang }: any) {
-    const [categoryMenuToggle, setcategoryMenuToggle] = useState(
-    Boolean(false)
-    );
-    const { t } = useTranslation(lang, 'common');
+function SidebarMenu({ items, className, categoriesLimit, lang }: any) {
+  const [categoryMenuToggle, setcategoryMenuToggle] = useState(Boolean(false));
+  const { t } = useTranslation(lang, 'common');
 
-    function handleCategoryMenu() {
+  console.log('item', items);
+  function handleCategoryMenu() {
     setcategoryMenuToggle(!categoryMenuToggle);
-    }
+  }
 
-    return (
-      <ul
-        className={cn(
-          'w-full bg-skin-fill border-t-0 border-2 border-skin-primary rounded-b-md category-dropdown-menu',
-          className
-        )}
-      >
-        {items?.map((item: any, idx: number) =>
-          idx <= categoriesLimit - 1 ? (
+  return (
+    <ul
+      className={cn(
+        'w-full bg-skin-fill border-t-0 border-2 border-skin-primary rounded-b-md category-dropdown-menu',
+        className
+      )}
+    >
+      {items?.map((item: any, idx: number) =>
+        idx <= categoriesLimit - 1 ? (
+          <SidebarMenuItem
+            key={`${item.slug}-key-${item.id}`}
+            item={item}
+            lang={lang}
+          />
+        ) : (
+          categoryMenuToggle && (
             <SidebarMenuItem
               key={`${item.slug}-key-${item.id}`}
               item={item}
               lang={lang}
             />
-          ) : (
-            categoryMenuToggle && (
-              <SidebarMenuItem
-                key={`${item.slug}-key-${item.id}`}
-                item={item}
-                lang={lang}
-              />
-            )
           )
-        )}
+        )
+      )}
 
-        {items.length >= categoriesLimit && (
-          <li
-            className={`px-4 relative transition text-sm hover:text-skin-primary`}
+      {items.length >= categoriesLimit && (
+        <li
+          className={`px-4 relative transition text-sm hover:text-skin-primary`}
+        >
+          <div
+            className={`flex items-center w-full py-3 text-start cursor-pointer`}
+            onClick={handleCategoryMenu}
           >
-            <div
-              className={`flex items-center w-full py-3 text-start cursor-pointer`}
-              onClick={handleCategoryMenu}
-            >
-              <div className={`inline-flex flex-shrink-0 ltr:mr-2 rtl:ml-2`}>
-                {categoryMenuToggle ? (
-                  <IoIosRemoveCircleOutline className="text-xl text-skin-base text-opacity-80" />
-                ) : (
-                  <IoIosAddCircleOutline className="text-xl text-skin-base text-opacity-80" />
-                )}
-              </div>
-              <span className="capitalize ">{t('text-all-categories')}</span>
+            <div className={`inline-flex flex-shrink-0 ltr:mr-2 rtl:ml-2`}>
+              {categoryMenuToggle ? (
+                <IoIosRemoveCircleOutline className="text-xl text-skin-base text-opacity-80" />
+              ) : (
+                <IoIosAddCircleOutline className="text-xl text-skin-base text-opacity-80" />
+              )}
             </div>
-          </li>
-        )}
-      </ul>
-    );
+            <span className="capitalize ">{t('text-all-categories')}</span>
+          </div>
+        </li>
+      )}
+    </ul>
+  );
 }
 
 export default SidebarMenu;
