@@ -1,13 +1,9 @@
 'use client';
 import type { FC } from 'react';
 import { useTranslation } from 'src/app/i18n/client';
-import Alert from '@components/ui/alert';
-import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import cn from 'classnames';
-import { useBlogsQuery } from '@framework/blog/get-all-blogs';
 import BlogCardList from '@components/blog/blog-card-list';
 import { useState } from 'react';
-import BlogCard from '@components/blog/blog-card';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import Pagination from '@components/ui/pagination';
 

@@ -88,7 +88,10 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
           </Link>
         </h4>
         <div className="post-exerpt mb-5 lg:mb-8 text-gray-500">
-          <span className="line-clamp-1">{blog_desc}</span>
+          <span
+            className="line-clamp-1"
+            dangerouslySetInnerHTML={{ __html: blog_desc }}
+          />
         </div>
         <div className={'flex justify-between'}>
           <div className="entry-meta text-13px text-gray-500 flex">
