@@ -13,7 +13,8 @@ const http = axios.create({
 // Change request data/error here
 http.interceptors.request.use(
   (config) => {
-    const token = getToken();
+    const token = sessionStorage.getItem('token');
+    // const token = getToken();
     // config.headers.Authorization = {
     //   ...config.headers,
     //   Authorization: `Bearer ${token ? token : ''}`,

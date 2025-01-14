@@ -13,6 +13,7 @@ import { getDirection } from '@utils/get-direction';
 import { useModalAction } from '@components/common/modal/modal.context';
 import motionProps from '@components/common/drawer/motion';
 import { useTranslation } from 'src/app/i18n/client';
+import { useEffect } from 'react';
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
 });
@@ -29,6 +30,8 @@ export default function BottomNavigation({ lang }: { lang: string }) {
     displaySidebar,
     toggleMobileSearch,
     isAuthorized,
+    authorize,
+    unauthorize,
   } = useUI();
   const { openModal } = useModalAction();
   const dir = getDirection(lang);
@@ -39,6 +42,22 @@ export default function BottomNavigation({ lang }: { lang: string }) {
   function handleMobileMenu() {
     return openSidebar();
   }
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      const parsedToken = JSON.parse(token);
+      if (parsedToken.expires_in > Date.now()) {
+        authorize();
+      } else {
+        sessionStorage.removeItem('token');
+        unauthorize();
+      }
+    } else {
+      unauthorize();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -66,17 +85,15 @@ export default function BottomNavigation({ lang }: { lang: string }) {
           iconClassName="text-opacity-100"
           lang={lang}
         />
-        <AuthMenu
-          isAuthorized={isAuthorized}
-          href={`/${lang}${ROUTES.ACCOUNT}`}
-          btnProps={{
-            className: 'shrink-0 focus:outline-none',
-            children: <UserIcon />,
-            onClick: handleLogin,
-          }}
+        <Link
+          href={
+            isAuthorized
+              ? `/${lang}${ROUTES.ACCOUNT_SETTING}`
+              : `/${lang}${ROUTES.LOGIN}`
+          }
         >
           <UserIcon />
-        </AuthMenu>
+        </Link>
       </div>
       <Drawer
         className="w-[375px]"

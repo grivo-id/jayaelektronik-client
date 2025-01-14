@@ -13,6 +13,14 @@ export type CategoriesQueryOptionsType = {
   status?: string;
   limit?: number;
 };
+
+export type BlogCategoriesQueryOptionsType = {
+  text?: string;
+  category?: string;
+  status?: string;
+  limit?: number;
+};
+
 export type ProductsQueryOptionsType = {
   type: string;
   text?: string;
@@ -48,6 +56,14 @@ export type Category = {
   productCount?: number;
   [key: string]: unknown;
 };
+
+export type BlogCategory = {
+  blog_category_id: number | string;
+  blog_category_name: string;
+  slug: string;
+  blog_category_desc?: string;
+};
+
 export type Collection = {
   id: number | string;
   name: string;
@@ -143,22 +159,20 @@ export type Shop = {
   created_at: string;
   updated_at: string;
 };
+
 export type Blog = {
-  id: number | string;
-  title: string;
-  subTitle: string;
-  shortDescription: string;
-  authorName: string;
-  date: {
-    month: string;
-    date: number;
-    year: number;
-  };
+  blog_id: number | string;
+  blog_category_id: number | string;
+  blog_title: string;
+  subTitle?: string;
+  blog_desc: string;
+  user_name: string;
+  blog_created_date: Date | string
   totalWatchCount?: number;
   totalCommentCount?: number;
   titleTwo: string;
   category: string;
-  image: string;
+  blog_banner_image: string;
   sku?: string;
   content?: string;
   contentTwo?: string;
@@ -172,3 +186,33 @@ export type Blog = {
   comments?: object;
   [key: string]: unknown;
 };
+
+// export type Blog = {
+//   id: number | string;
+//   title: string;
+//   subTitle: string;
+//   shortDescription: string;
+//   authorName: string;
+//   date: {
+//     month: string;
+//     date: number;
+//     year: number;
+//   };
+//   totalWatchCount?: number;
+//   totalCommentCount?: number;
+//   titleTwo: string;
+//   category: string;
+//   image: string;
+//   sku?: string;
+//   content?: string;
+//   contentTwo?: string;
+//   contentThree?: string;
+//   quote: {
+//     content: string;
+//   };
+//   postList?: object;
+//   discount?: object;
+//   tags: {};
+//   comments?: object;
+//   [key: string]: unknown;
+// };

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { siteSettings } from '@settings/site-settings';
 import { ROUTES } from '@utils/routes';
@@ -18,6 +18,7 @@ import Search from '@components/common/search';
 import { FiMenu } from 'react-icons/fi';
 import CategoryDropdownMenu from '@components/category/category-dropdown-menu';
 import { useTranslation } from 'src/app/i18n/client';
+import Link from 'next/link';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -29,7 +30,15 @@ type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
 
 function Header({ lang }: { lang: string }) {
-  const { openSidebar,displaySearch,openSearch, isAuthorized, displayMobileSearch } = useUI();
+  const {
+    openSidebar,
+    displaySearch,
+    openSearch,
+    isAuthorized,
+    displayMobileSearch,
+    authorize,
+    unauthorize,
+  } = useUI();
   const { openModal } = useModalAction();
   const siteSearchRef = useRef() as DivElementRef;
   const { t } = useTranslation(lang, 'common');
@@ -45,6 +54,22 @@ function Header({ lang }: { lang: string }) {
   function handleCategoryMenu() {
     setCategoryMenu(!categoryMenu);
   }
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      const parsedToken = JSON.parse(token);
+      if (parsedToken.expires_in > Date.now()) {
+        authorize();
+      } else {
+        sessionStorage.removeItem('token');
+        unauthorize();
+      }
+    } else {
+      unauthorize();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -98,20 +123,22 @@ function Header({ lang }: { lang: string }) {
 
                 <div className="flex space-x-5 xl:space-x-10 lg:max-w-[33%]">
                   <div className="items-center hidden lg:flex shrink-0">
-                    <div className="cart-button">
+                    <div className="cart-button !pt-2">
                       <UserIcon className="text-brand" />
                     </div>
-
-                    <AuthMenu
-                      isAuthorized={isAuthorized}
-                      href={`/${lang}${ROUTES.ACCOUNT}`}
-                      btnProps={{
-                        children: t('text-sign-in'),
-                        onClick: handleLogin,
-                      }}
-                    >
-                      {t('text-account')}
-                    </AuthMenu>
+                    <Link href={`/${lang}${ROUTES.LOGIN}`}>
+                      <AuthMenu
+                        isAuthorized={isAuthorized}
+                        href={`/${lang}${ROUTES.ACCOUNT}`}
+                        btnProps={{
+                          children: isAuthorized
+                            ? t('text-account')
+                            : t('text-signin'),
+                        }}
+                      >
+                        {isAuthorized ? t('text-account') : t('text-signin')}
+                      </AuthMenu>
+                    </Link>
                   </div>
                   <CartButton className="hidden lg:flex" lang={lang} />
                 </div>

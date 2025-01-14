@@ -28,8 +28,8 @@ const rubik = Rubik({
 
 export const metadata: Metadata = {
   title: {
-    template: 'Razor | %s',
-    default: 'Razor',
+    template: 'Jaya Elektronik | %s',
+    default: 'Jaya Elektronik',
   },
 };
 
