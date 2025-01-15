@@ -34,7 +34,6 @@
     "next-pwa": "^5.6.0",
     "overlayscrollbars": "^2.1.1",
     "overlayscrollbars-react": "^0.5.0",
-    "razor-v2.2": "file:../jayaelektronik-client",
     "rc-drawer": "^6.1.5",
     "rc-pagination": "^3.5.0",
     "rc-rate": "^2.12.0",
