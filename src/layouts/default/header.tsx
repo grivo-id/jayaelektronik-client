@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { siteSettings } from '@settings/site-settings';
 import { ROUTES } from '@utils/routes';
@@ -19,6 +19,8 @@ import { FiMenu } from 'react-icons/fi';
 import CategoryDropdownMenu from '@components/category/category-dropdown-menu';
 import { useTranslation } from 'src/app/i18n/client';
 import Link from 'next/link';
+import http from '@framework/utils/http';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -38,6 +40,8 @@ function Header({ lang }: { lang: string }) {
     displayMobileSearch,
     authorize,
     unauthorize,
+    user,
+    setUser,
   } = useUI();
   const { openModal } = useModalAction();
   const siteSearchRef = useRef() as DivElementRef;
@@ -55,12 +59,27 @@ function Header({ lang }: { lang: string }) {
     setCategoryMenu(!categoryMenu);
   }
 
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await http.get(API_ENDPOINTS.USER_PROFILE);
+      if (response.status === 200) {
+        setUser(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if (token) {
       const parsedToken = JSON.parse(token);
       if (parsedToken.expires_in > Date.now()) {
         authorize();
+        if (!user) {
+          fetchUser();
+        }
       } else {
         sessionStorage.removeItem('token');
         unauthorize();

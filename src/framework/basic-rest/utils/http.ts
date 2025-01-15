@@ -13,13 +13,20 @@ const http = axios.create({
 // Change request data/error here
 http.interceptors.request.use(
   (config) => {
+    let authToken = '';
     const token = sessionStorage.getItem('token');
+    if (token) {
+      const parsedToken = JSON.parse(token);
+      if (parsedToken.expires_in > Date.now()) {
+        authToken = parsedToken.value;
+      }
+    }
     // const token = getToken();
     // config.headers.Authorization = {
     //   ...config.headers,
     //   Authorization: `Bearer ${token ? token : ''}`,
     // };
-    config.headers.Authorization = `Bearer ${token ? token : ''}`;
+    config.headers.Authorization = `Bearer ${authToken}`;
     return config;
   },
   (error) => {

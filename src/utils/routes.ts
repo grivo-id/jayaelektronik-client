@@ -25,4 +25,6 @@ export const ROUTES = {
   ORDER: '/complete-order',
   WISHLIST: '/my-account/wishlist',
   BLOG: `/blog`,
+  SEND_VERIFICATION: `/send-verification`,
+  VERIFY_EMAIL: `/verify-email`,
 };
