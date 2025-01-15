@@ -30,6 +30,15 @@ const SendVerification: React.FC<SendVerificationProps> = ({
     setIsLoading(true);
     const response = await sendEmailVerification(user.user_email);
     if (response.success) {
+      toast(response.message || 'An unexpected error occurred', {
+        progressClassName: 'fancy-progress-bar',
+        position: width! > 768 ? 'bottom-right' : 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       setIsLoading(false);
     } else {
       toast.error(response.message || 'An unexpected error occurred', {
@@ -75,8 +84,20 @@ const SendVerification: React.FC<SendVerificationProps> = ({
             <p className="text-sm m-0 text-center italic">
               {t('common:text-email-not-found')}
             </p>
-            <button className="btn-primary items-center" onClick={handleResend}>
-              {t('common:text-resend-verification')}
+            <button
+              className="btn-primary items-center !w-40"
+              onClick={handleResend}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div
+                  className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current
+                 border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite]
+                 dark:text-white"
+                ></div>
+              ) : (
+                t('common:text-resend-verification')
+              )}
             </button>
           </div>
         </div>
