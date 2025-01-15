@@ -16,6 +16,7 @@ export interface State {
   drawerView: string | null;
   toastText: string;
   isStickyheader: boolean;
+  user?: any;
   data?: any;
 }
 
@@ -30,6 +31,7 @@ const initialState = {
   drawerView: null,
   toastText: '',
   isStickyheader: false,
+  user: null,
   data: null,
 };
 
@@ -100,6 +102,10 @@ type Action =
     }
   | {
       type: 'DISABLE_STICKY_HEADER';
+    }
+  | {
+      type: 'SET_USER';
+      user: any;
     };
 
 type DRAWER_VIEWS = 'CART_SIDEBAR' | 'MOBILE_MENU' | 'ORDER_DETAILS';
@@ -241,6 +247,12 @@ function uiReducer(state: State, action: Action) {
         isStickyheader: false,
       };
     }
+    case 'SET_USER': {
+      return {
+        ...state,
+        user: action.user,
+      };
+    }
   }
 }
 
@@ -289,6 +301,7 @@ export function UIProvider(props: React.PropsWithChildren<any>) {
     dispatch({ type: 'SET_DRAWER_VIEW', view });
   const enableStickyHeader = () => dispatch({ type: 'ENABLE_STICKY_HEADER' });
   const disableStickyHeader = () => dispatch({ type: 'DISABLE_STICKY_HEADER' });
+  const setUser = (user: any) => dispatch({ type: 'SET_USER', user });
 
   const value = React.useMemo(
     () => ({
@@ -318,6 +331,8 @@ export function UIProvider(props: React.PropsWithChildren<any>) {
       setUserAvatar,
       enableStickyHeader,
       disableStickyHeader,
+      setUser,
+      user: state.user,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [state]

@@ -1,7 +1,10 @@
 export const API_ENDPOINTS = {
   LOGIN: '/auth/login',
-  REGISTER: '/',
+  REGISTER: '/auth/register',
+  SEND_VERIFICATION: '/auth/send-verification',
+  VERIFY_EMAIL: 'auth/verify-email',
   LOGOUT: '/',
+  USER_PROFILE: '/users/profile',
   FORGET_PASSWORD: '/',
   CATEGORIES: '/product-categories/sub-categories',
   DIETARY: '/',

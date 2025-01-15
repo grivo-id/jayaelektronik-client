@@ -15,6 +15,10 @@ import CloseButton from '@components/ui/close-button';
 import cn from 'classnames';
 import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import useWindowSize from '@utils/use-window-size';
+import ErrorIcon from '@components/icons/error-icon';
 
 interface SignUpFormProps {
   lang: string;
@@ -22,41 +26,70 @@ interface SignUpFormProps {
   className?: string;
 }
 
-export default function SignUpForm({
+const SignUpForm: React.FC<SignUpFormProps> = ({
   lang,
   isPopup = true,
   className,
-}: SignUpFormProps) {
+}: SignUpFormProps) => {
+  const router = useRouter();
+  const { width } = useWindowSize();
   const { t } = useTranslation(lang);
-  const { mutate: signUp, isLoading } = useSignUpMutation();
+  const { mutateAsync: signUp, isLoading } = useSignUpMutation();
   const { closeModal, openModal } = useModalAction();
-  const [remember, setRemember] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<SignUpInputType>();
-  function handleSignIn() {
-    return openModal('LOGIN_VIEW');
-  }
-  function onSubmit({
+
+  const onSubmit = async ({
     user_fname,
     user_lname,
     user_email,
+    user_phone,
     user_address,
     user_password,
     user_confirm_password,
-  }: SignUpInputType) {
-    signUp({
-      user_fname,
-      user_lname,
-      user_email,
-      user_address,
-      user_password,
-      user_confirm_password,
-    });
-  }
+  }: SignUpInputType) => {
+    try {
+      const response = await signUp({
+        user_fname,
+        user_lname,
+        user_email,
+        user_phone,
+        user_address,
+        user_password,
+        user_confirm_password,
+      });
+      if (response.success) {
+        toast('User registered successfully!', {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        setTimeout(() => {
+          router.push(`/${lang}${ROUTES.SEND_VERIFICATION}`);
+        }, 1000);
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'An unexpected error occurred', {
+        progressClassName: 'fancy-progress-bar',
+        position: width! > 768 ? 'bottom-right' : 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: <ErrorIcon />,
+      });
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -123,6 +156,26 @@ export default function SignUpForm({
                 error={errors.user_email?.message}
                 lang={lang}
               />
+              <Input
+                label={t('forms:label-phone') as string}
+                type="text"
+                variant="solid"
+                {...register('user_phone', {
+                  required: 'forms:phone-required',
+                })}
+                error={errors.user_phone?.message}
+                lang={lang}
+              />
+              <Input
+                label={t('forms:label-address') as string}
+                type="text"
+                variant="solid"
+                {...register('user_address', {
+                  required: 'forms:address-required',
+                })}
+                error={errors.user_address?.message}
+                lang={lang}
+              />
               <PasswordInput
                 label={t('forms:label-password')}
                 error={errors.user_password?.message}
@@ -182,8 +235,8 @@ export default function SignUpForm({
                   </Link>
                 </p>
               </div>
-              <div className="flex items-center justify-center">
-                {/* <div className="flex items-center shrink-0">
+              {/* <div className="flex items-center justify-center">
+                <div className="flex items-center shrink-0">
                   <label className="relative inline-block cursor-pointer switch">
                     <Switch checked={remember} onChange={setRemember} />
                   </label>
@@ -194,12 +247,14 @@ export default function SignUpForm({
                   >
                     {t('forms:label-remember-me')}
                   </label>
-                </div> */}
-              </div>
+                </div>
+              </div> */}
             </div>
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default SignUpForm;

@@ -69,6 +69,12 @@
   "text-sign-in": "Sign In",
   "text-register": "Register",
   "text-welcome-back": "Sign into you account",
+  "text-email-verification": "Email Verification",
+  "text-verify-email": "Verify your email address",
+  "text-send-email": "We have sent email verification to email",
+  "text-inbox-spam": "You might need to check your spam folder",
+  "text-email-not-found": "Still can't find the email?",
+  "text-resend-verification": "Resend email",
   "text-don’t-have-account": "Don’t have an account?",
   "text-create-account": "Create Account",
   "text-forgot-password": "Forgot password?",
@@ -118,6 +124,7 @@
   "text-see-all": "See All",
   "text-see-more": "See more",
   "text-add-to-cart": "Add to Cart",
+  "text-signin": "Sign In",
   "text-account": "My Account",
   "text-address": "My Address",
   "text-no-address-found": "No address found",
@@ -259,5 +266,5 @@
   "feature4-title-four-description": "Dedicated 24/7 support",
   "feature4-title-five": "Friendly Services",
   "feature4-title-five-description": "30 day satisfaction guarantee",
-  "text-all-keywords": "Kategori"
+  "text-all-keywords": "Categories"
 }

@@ -44,6 +44,10 @@
   }
 }
 
+.btn-primary {
+  @apply bg-skin-primary text-white hover:bg-skin-primary/90 py-2 px-4 rounded-md w-fit
+}
+
 /* Header Menu */
 #siteHeader.is-scrolling .innerSticky {
   @apply top-0 transition duration-200 ease-in-out shadow-header;

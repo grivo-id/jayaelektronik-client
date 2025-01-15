@@ -15,11 +15,12 @@ async function logout() {
   };
 }
 export const useLogoutMutation = (lang: string) => {
-  const { unauthorize } = useUI();
+  const { unauthorize, setUser } = useUI();
   const router = useRouter();
   return useMutation(() => logout(), {
     onSuccess: (_data) => {
       sessionStorage.removeItem('token');
+      setUser(null);
       unauthorize();
       router.push(`/${lang}`);
     },
