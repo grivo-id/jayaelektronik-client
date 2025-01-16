@@ -42,7 +42,7 @@ const SupperCategoryContainer: React.FC<Props> = ({
       loading={isLoading}
       error={error?.message}
       limit={LIMITS.CATEGORIES_LIMITS}
-      uniqueKey="fresh-vegetable"
+      uniqueKey="supercat-layout"
       carouselBreakpoint={breakpoints}
       lang={lang}
     />

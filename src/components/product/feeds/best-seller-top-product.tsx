@@ -22,8 +22,6 @@ const BestSellerProductFeed: FC<ProductFeedProps> = ({
 
   const products = data?.data || [];
 
-  console.log(products);
-
   const breakpoints = {
     '1536': {
       slidesPerView: 6,

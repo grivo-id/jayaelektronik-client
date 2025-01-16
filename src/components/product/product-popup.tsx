@@ -62,7 +62,6 @@ const convertToSlug = (text: string): string => {
     .trim();
 };
 
-
 export default function ProductPopup({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
   const { data } = useModalState();
@@ -83,8 +82,23 @@ export default function ProductPopup({ lang }: { lang: string }) {
     currencyCode: 'IDR',
   });
   const variations = getVariations(data.variations);
-  const { product_name, product_image1, brand_name, product_desc, gallery, product_tags, quantity } = data;
-  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${ROUTES.PRODUCT}/${convertToSlug(product_name)}`;
+  const {
+    product_name,
+    product_image1,
+    product_image2,
+    product_image3,
+    brand_name,
+    product_desc,
+    product_tags,
+    product_is_available,
+    quantity,
+  } = data;
+
+  const gallery = [product_image1, product_image2, product_image3];
+
+  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${
+    ROUTES.PRODUCT
+  }/${convertToSlug(product_name)}`;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -185,7 +199,9 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   </h2>
                 </div>
                 {brand_name && isEmpty(variations) ? (
-                  <div className="text-sm font-medium md:text-15px">{brand_name}</div>
+                  <div className="text-sm font-medium md:text-15px">
+                    {brand_name}
+                  </div>
                 ) : (
                   <VariationPrice
                     selectedVariation={selectedVariation}
@@ -229,13 +245,9 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 {/* check that item isInCart and place the available quantity or the item quantity */}
                 {isEmpty(variations) && (
                   <>
-                    {Number(quantity) > 0 || !outOfStock ? (
+                    {product_is_available ? (
                       <span className="text-sm font-medium text-yellow">
-                        {t('text-only') +
-                          ' ' +
-                          quantity +
-                          ' ' +
-                          t('text-left-item')}
+                        {t('text-left-item')}
                       </span>
                     ) : (
                       <div className="text-base text-brand-danger whitespace-nowrap">
@@ -365,7 +377,10 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 </Heading>
                 <Text variant="small">
                   {/* {description.split(' ').slice(0, 40).join(' ')} */}
-                  {product_desc}
+                  <span
+                    className="line-clamp-1"
+                    dangerouslySetInnerHTML={{ __html: product_desc }}
+                  />
                   {'...'}
                   <span
                     onClick={navigateToProductPage}
