@@ -53,6 +53,16 @@ const breakpoints = {
   },
 };
 
+const convertToSlug = (text: string): string => {
+  return text
+    ?.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-')
+    .trim();
+};
+
+
 export default function ProductPopup({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
   const { data } = useModalState();
@@ -68,13 +78,13 @@ export default function ProductPopup({ lang }: { lang: string }) {
     useState<boolean>(false);
   const [shareButtonStatus, setShareButtonStatus] = useState<boolean>(false);
   const { price, basePrice, discount } = usePrice({
-    amount: data.sale_price ? data.sale_price : data.price,
-    baseAmount: data.price,
-    currencyCode: 'USD',
+    amount: data.sale_price ? data.sale_price : data.product_price,
+    baseAmount: data.product_price,
+    currencyCode: 'IDR',
   });
   const variations = getVariations(data.variations);
-  const { slug, image, name, unit, description, gallery, tag, quantity } = data;
-  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${ROUTES.PRODUCT}/${slug}`;
+  const { product_name, product_image1, brand_name, product_desc, gallery, product_tags, quantity } = data;
+  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${ROUTES.PRODUCT}/${convertToSlug(product_name)}`;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -136,7 +146,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   function navigateToProductPage() {
     closeModal();
-    router.push(`${lang}/${ROUTES.PRODUCT}/${slug}`);
+    router.push(`${lang}/${ROUTES.PRODUCT}/${convertToSlug(product_name)}`);
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);
@@ -153,8 +163,8 @@ export default function ProductPopup({ lang }: { lang: string }) {
               ) : (
                 <div className="flex items-center justify-center w-auto">
                   <Image
-                    src={image?.original ?? productGalleryPlaceholder}
-                    alt={name!}
+                    src={product_image1 ?? productGalleryPlaceholder}
+                    alt={product_name}
                     width={650}
                     height={590}
                     style={{ width: 'auto' }}
@@ -171,11 +181,11 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   role="button"
                 >
                   <h2 className="text-lg font-medium transition-colors duration-300 text-brand-dark md:text-xl xl:text-2xl hover:text-brand">
-                    {name}
+                    {product_name}
                   </h2>
                 </div>
-                {unit && isEmpty(variations) ? (
-                  <div className="text-sm font-medium md:text-15px">{unit}</div>
+                {brand_name && isEmpty(variations) ? (
+                  <div className="text-sm font-medium md:text-15px">{brand_name}</div>
                 ) : (
                   <VariationPrice
                     selectedVariation={selectedVariation}
@@ -354,7 +364,8 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   {t('text-product-details')}:
                 </Heading>
                 <Text variant="small">
-                  {description.split(' ').slice(0, 40).join(' ')}
+                  {/* {description.split(' ').slice(0, 40).join(' ')} */}
+                  {product_desc}
                   {'...'}
                   <span
                     onClick={navigateToProductPage}

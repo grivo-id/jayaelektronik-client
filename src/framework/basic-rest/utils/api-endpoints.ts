@@ -13,7 +13,7 @@ export const API_ENDPOINTS = {
   PRODUCT: '/',
   RELATED_PRODUCTS: '/',
   FLASH_SELL_PRODUCTS: '/',
-  BEST_SELLER_PRODUCTS: '/',
+  BEST_SELLER_PRODUCTS: '/products/best-seller',
   NEW_ARRIVAL_PRODUCTS: '/',
   POPULAR_PRODUCTS: '/',
   COOKIES_PRODUCTS: '/',
