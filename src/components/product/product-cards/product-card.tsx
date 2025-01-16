@@ -17,6 +17,15 @@ const AddToCart = dynamic(() => import('@components/product/add-to-cart'), {
   ssr: false,
 });
 
+const convertToSlug = (text: string): string => {
+  return text
+    ?.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-')
+    .trim();
+};
+
 interface ProductProps {
   lang?: string;
   product: Product;
@@ -56,23 +65,33 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
   return <AddToCart data={data} variant="mercury" lang={lang} />;
 }
 const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
-  const { name, image, unit, slug, product_type } = product ?? {};
+  const {
+    product_name,
+    product_image1,
+    product_image2,
+    product_image3,
+    image,
+    unit,
+    slug,
+    brand_name,
+    product_type,
+  } = product ?? {};
   const { openModal } = useModalAction();
   const { t } = useTranslation(lang, 'common');
   const { width } = useWindowSize();
   const iconSize = width! > 1024 ? '20' : '17';
   const { price, basePrice, discount } = usePrice({
-    amount: product?.sale_price ? product?.sale_price : product?.price,
-    baseAmount: product?.price,
-    currencyCode: 'USD',
+    amount: product?.sale_price ? product?.sale_price : product?.product_price,
+    baseAmount: product?.product_price,
+    currencyCode: 'IDR',
   });
   const { price: minPrice } = usePrice({
     amount: product?.min_price ?? 0,
-    currencyCode: 'USD',
+    currencyCode: 'IDR',
   });
   const { price: maxPrice } = usePrice({
     amount: product?.max_price ?? 0,
-    currencyCode: 'USD',
+    currencyCode: 'IDR',
   });
 
   function handlePopupView() {
@@ -84,21 +103,35 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
         'flex flex-col product-card relative card-image--jump px-2 sm:px-3  h-full',
         className
       )}
-      title={name}
+      title={product_name}
     >
       <div className="relative flex-shrink-0  mt-4">
         <div className="relative card-img-container overflow-hidden mx-auto w-full h-[180px] md:h-[200px] ">
-          <Image
-            src={image?.thumbnail ?? productPlaceholder}
-            alt={name || 'Product Image'}
-            quality={100}
-            priority
-            fill
-            sizes="(max-width: 768px) 100vw,
+          {product_image1 ? (
+            <Image
+              src={product_image1 || productPlaceholder}
+              alt={product_name || 'Product Image'}
+              quality={100}
+              priority
+              fill
+              sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"
-            className="object-cover bg-fill-thumbnail"
-          />
+              className="object-cover bg-fill-thumbnail"
+            />
+          ) : (
+            <Image
+              src={productPlaceholder}
+              alt={'Product Image'}
+              quality={100}
+              priority
+              fill
+              sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+              className="object-cover bg-fill-thumbnail"
+            />
+          )}
         </div>
         <div className="w-full h-full absolute top-0  z-10">
           {discount && (
@@ -118,13 +151,13 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
 
       <div className="flex flex-col mb-2 h-full overflow-hidden text-center relative">
         <div className="text-sm mt-auto leading-6 text-gray-400 mb-1.5">
-          {unit}
+          {brand_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${slug}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${convertToSlug(product_name)}`}
           className="text-skin-base text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
         >
-          {name}
+          {product_name}
         </Link>
 
         <div className="space-s-2 mb-4 lg:mb-4">

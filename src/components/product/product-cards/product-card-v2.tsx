@@ -36,7 +36,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
   let { data, lang }: any = props;
   // console.log(variant);
   const { t } = useTranslation(lang, 'common');
-  const { id, quantity, product_type } = data ?? {};
+  const { id, product_is_available, product_type } = data ?? {};
   const { width } = useWindowSize();
   const { openModal } = useModalAction();
   const { isInCart, isInStock } = useCart();
@@ -45,7 +45,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
   function handlePopupView() {
     openModal('PRODUCT_VIEW', data);
   }
-  if (Number(quantity) < 1 || outOfStock) {
+  if (!product_is_available || outOfStock) {
     return (
       <span className="text-[11px] md:text-xs font-medium text-brand-light uppercase inline-block bg-brand-danger rounded px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
         {t('text-out-stock')}
@@ -98,7 +98,6 @@ const ProductCardV2: React.FC<ProductProps> = ({
     return null;
   }
 
-
   return (
     <article
       className={cn(
@@ -109,9 +108,9 @@ const ProductCardV2: React.FC<ProductProps> = ({
     >
       <div className="relative flex-shrink-0  mt-4">
         <div className="relative card-img-container overflow-hidden mx-auto w-full h-[180px] md:h-[200px] ">
-          {product_image1 && (
+          {product_image1 ? (
             <Image
-              src={product_image1 ?? productPlaceholder}
+              src={product_image1 || productPlaceholder}
               alt={product_name || 'Product Image'}
               quality={100}
               priority
@@ -119,6 +118,18 @@ const ProductCardV2: React.FC<ProductProps> = ({
               sizes="(max-width: 768px) 100vw,
             (max-width: 1200px) 50vw,
             33vw"
+              className="object-cover bg-fill-thumbnail"
+            />
+          ) : (
+            <Image
+              src={productPlaceholder}
+              alt={'Product Image placeholder'}
+              quality={100}
+              priority
+              fill
+              sizes="(max-width: 768px) 100vw,
+          (max-width: 1200px) 50vw,
+          33vw"
               className="object-cover bg-fill-thumbnail"
             />
           )}

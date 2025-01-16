@@ -38,6 +38,8 @@ export const API_ENDPOINTS = {
   BLOGS: '/blogs',
   BLOGDETAILS: '/blogs',
   BLOGCATEGORIES: '/blog-categories',
+  CATEGORY_BYID: "/products",
+  PRODUCTS_BYCATID: '/products'
 };
 
 // export const API_ENDPOINTS = {
