@@ -46,7 +46,7 @@ export default async function Page({
           data={bannerBrand}
           className="mb-8 lg:mb-12"
         />
-        <ProductWithBestDeals lang={lang} />
+        {/* <ProductWithBestDeals lang={lang} /> */}
         <BestSellerProductFeed lang={lang} variant={`cardv2`} />
         <BannerGridTwo
           lang={lang}
@@ -54,15 +54,15 @@ export default async function Page({
           className="mb-8 lg:mb-12"
           girdClassName="xl:gap-5 "
         />
-        <SupperCategoryElectronicFeed lang={lang} />
-        <BannerGridTwo
+        {/* <SupperCategoryElectronicFeed lang={lang} /> */}
+        {/* <BannerGridTwo
           lang={lang}
           data={bannerTwo2}
           className="mb-8 lg:mb-12"
           girdClassName="xl:gap-5 2xl:grid-cols-[minmax(1138px,_1fr)_1fr] "
-        />
-        <SupperCategoryClothFeed lang={lang} />
-        <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" />
+        /> */}
+        {/* <SupperCategoryClothFeed lang={lang} /> */}
+        {/* <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" /> */}
       </Container>
     </>
   );
