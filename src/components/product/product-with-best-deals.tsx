@@ -37,7 +37,7 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
   className = '',
   uniqueKey,
 }) => {
-  const limit = LIMITS.POPULAR_PRODUCTS_TWO_LIMITS;
+  const limit = 10;
   const { data, isLoading, error } = useBestSellerProductsQuery({
     page: 1,
     limit: 10,
@@ -45,7 +45,6 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
   });
 
   const products = data?.data || [];
-
   return (
     <div className={`mb-8 ${className}`}>
       <SectionHeader

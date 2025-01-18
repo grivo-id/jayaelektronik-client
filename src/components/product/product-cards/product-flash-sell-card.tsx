@@ -138,11 +138,7 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
             {t('text-offer-end')}
           </h2>
           <Countdown date={date} intervalDelay={1000} renderer={renderer} />
-          <ProgressCard
-            soldProduct={sold}
-            totalProduct={quantity}
-            className="pt-4 lg:pt-6"
-          />
+  
         </div>
       </div>
     </article>
