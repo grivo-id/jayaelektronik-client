@@ -41,11 +41,7 @@ export default async function Page({
       />
       <Container>
         <FeatureCarousel lang={lang} />
-        <BannerAllCarousel
-          lang={lang}
-          data={bannerBrand}
-          className="mb-8 lg:mb-12"
-        />
+        <BannerAllCarousel lang={lang} className="mb-2 lg:mb-4" />
         <ProductWithBestDeals lang={lang} />
         <BestSellerProductFeed lang={lang} variant={`cardv2`} />
         <BannerGridTwo
@@ -61,7 +57,7 @@ export default async function Page({
           className="mb-8 lg:mb-12"
           girdClassName="xl:gap-5 2xl:grid-cols-[minmax(1138px,_1fr)_1fr] "
         />
-        <SupperCategoryClothFeed lang={lang} />
+        {/* <SupperCategoryClothFeed lang={lang} /> */}
         {/* <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" /> */}
       </Container>
     </>
