@@ -130,7 +130,7 @@ function Header({ lang }: { lang: string }) {
                     <MenuIcon />
                   </button>
                 </div>
-                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0" />
+                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0 w-48" />
                 {/* End of logo */}
 
                 <Search
@@ -168,10 +168,13 @@ function Header({ lang }: { lang: string }) {
           <div className="hidden navbar bg-fill-one lg:block">
             <Container>
               <div className="flex justify-between items-center">
-                <Logo
-                  lang={lang}
-                  className="navbar-logo w-0 opacity-0 transition-all duration-200 ease-in-out"
-                />
+                <div className="w-36">
+                  <Logo
+                    lang={lang}
+                    className="navbar-logo  opacity-0 transition-all duration-200 ease-in-out "
+                  />
+                </div>
+
                 {/* End of logo */}
                 <div className="categories-header-button relative me-8 flex-shrink-0 w-72">
                   <button

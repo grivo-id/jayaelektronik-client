@@ -6,8 +6,8 @@ import Text from '@components/ui/text';
 import Image from '@components/ui/image';
 import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
-import {useRouter} from "next/navigation";
-import {getDirection} from "@utils/get-direction";
+import { useRouter } from 'next/navigation';
+import { getDirection } from '@utils/get-direction';
 
 interface AboutProps {
   lang: string;
@@ -29,18 +29,26 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
   return (
     <div className={`pb-10 sm:pb-0 ${className}`}>
       <div className="text-sm max-w-[350px] mx-auto sm:ms-0 pb-2">
-        <Logo
-          href={ROUTES.HOME}
-          className="mb-3 lg:mb-6 mx-auto sm:ms-0"
-        />
-        <div className={`bg-iconPhone bg-no-repeat  min-h-[60px] mb-5 ${dir === 'rtl' ? 'pr-16 xl:pr-20 bg-right': 'ps-16 xl:ps-20'}`}>
+        <div className='w-48'>
+          <Logo href={ROUTES.HOME} className="mb-3 lg:mb-6 mx-auto sm:ms-0" />
+        </div>
+
+        <div
+          className={`bg-iconPhone bg-no-repeat  min-h-[60px] mb-5 ${
+            dir === 'rtl' ? 'pr-16 xl:pr-20 bg-right' : 'ps-16 xl:ps-20'
+          }`}
+        >
           <p className="text-white mb-0">{t('text-hotline')}</p>
           <p className="text-brand text-lg duration-200 hover:text-white">
             {t('link-phone')}
           </p>
         </div>
-        <div className="mb-3">{t('text-address')} {t('link-address')}</div>
-        <div className="mb-3">{t('text-email')} {t('link-email')}</div>
+        <div className="mb-3">
+          {t('text-address')} {t('link-address')}
+        </div>
+        <div className="mb-3">
+          {t('text-email')} {t('link-email')}
+        </div>
       </div>
 
       {social && (

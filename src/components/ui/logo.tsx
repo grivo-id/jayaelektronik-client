@@ -5,7 +5,7 @@ import { siteSettings } from '@settings/site-settings';
 
 import React from "react";
 interface Props {
-  lang: string;
+  lang?: string;
   variant?: string;
   className?: string;
   href?: string;
