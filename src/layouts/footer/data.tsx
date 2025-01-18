@@ -36,114 +36,114 @@ export const footer = {
           },
         ],
       },
-      {
-        id: 2,
-        widgetTitle: 'widget-title-categories',
-        lists: [
-          {
-            id: 1,
-            title: 'link-category1',
-            path: '/search',
-          },
-          {
-            id: 2,
-            title: 'link-category2',
-            path: '/search',
-          },
-          {
-            id: 3,
-            title: 'link-category3',
-            path: '/search',
-          },
-          {
-            id: 4,
-            title: 'link-category4',
-            path: '/search',
-          },
-          {
-            id: 5,
-            title: 'link-category5',
-            path: '/search',
-          },
-          {
-            id: 6,
-            title: 'link-category6',
-            path: '/search',
-          },
-        ],
-      },
-      {
-        id: 3,
-        widgetTitle: 'widget-title-community',
-        lists: [
-          {
-            id: 1,
-            title: 'link-announcements',
-            path: '/',
-          },
-          {
-            id: 2,
-            title: 'link-answer-center',
-            path: '/',
-          },
-          {
-            id: 3,
-            title: 'link-discussion-boards',
-            path: '/',
-          },
-          {
-            id: 4,
-            title: 'link-giving-works',
-            path: '/',
-          },
-          {
-            id: 5,
-            title: 'link-feugiat',
-            path: '/',
-          },
-          {
-            id: 6,
-            title: 'link-samsung',
-            path: '/',
-          },
-        ],
-      },
-      {
-        id: 4,
-        widgetTitle: 'widget-title-services',
-        lists: [
-          {
-            id: 1,
-            title: 'link-about-us',
-            path: '/about-us',
-          },
-          {
-            id: 2,
-            title: 'link-contact-us',
-            path: '/contact-us',
-          },
-          {
-            id: 3,
-            title: 'link-about-team',
-            path: '/privacy',
-          },
-          {
-            id: 4,
-            title: 'link-terms',
-            path: '/terms',
-          },
-          {
-            id: 5,
-            title: 'link-checkout',
-            path: '/checkout',
-          },
-          {
-            id: 6,
-            title: 'link-faq',
-            path: '/faq',
-          },
-        ],
-      }
+      // {
+      //   id: 2,
+      //   widgetTitle: 'widget-title-categories',
+      //   lists: [
+      //     {
+      //       id: 1,
+      //       title: 'link-category1',
+      //       path: '/search',
+      //     },
+      //     {
+      //       id: 2,
+      //       title: 'link-category2',
+      //       path: '/search',
+      //     },
+      //     {
+      //       id: 3,
+      //       title: 'link-category3',
+      //       path: '/search',
+      //     },
+      //     {
+      //       id: 4,
+      //       title: 'link-category4',
+      //       path: '/search',
+      //     },
+      //     {
+      //       id: 5,
+      //       title: 'link-category5',
+      //       path: '/search',
+      //     },
+      //     {
+      //       id: 6,
+      //       title: 'link-category6',
+      //       path: '/search',
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: 2,
+      //   widgetTitle: 'widget-title-community',
+      //   lists: [
+      //     {
+      //       id: 1,
+      //       title: 'link-announcements',
+      //       path: '/',
+      //     },
+      //     {
+      //       id: 2,
+      //       title: 'link-answer-center',
+      //       path: '/',
+      //     },
+      //     {
+      //       id: 3,
+      //       title: 'link-discussion-boards',
+      //       path: '/',
+      //     },
+      //     {
+      //       id: 4,
+      //       title: 'link-giving-works',
+      //       path: '/',
+      //     },
+      //     {
+      //       id: 5,
+      //       title: 'link-feugiat',
+      //       path: '/',
+      //     },
+      //     {
+      //       id: 6,
+      //       title: 'link-samsung',
+      //       path: '/',
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: 4,
+      //   widgetTitle: 'widget-title-services',
+      //   lists: [
+      //     {
+      //       id: 1,
+      //       title: 'link-about-us',
+      //       path: '/about-us',
+      //     },
+      //     {
+      //       id: 2,
+      //       title: 'link-contact-us',
+      //       path: '/contact-us',
+      //     },
+      //     {
+      //       id: 3,
+      //       title: 'link-about-team',
+      //       path: '/privacy',
+      //     },
+      //     {
+      //       id: 4,
+      //       title: 'link-terms',
+      //       path: '/terms',
+      //     },
+      //     {
+      //       id: 5,
+      //       title: 'link-checkout',
+      //       path: '/checkout',
+      //     },
+      //     {
+      //       id: 6,
+      //       title: 'link-faq',
+      //       path: '/faq',
+      //     },
+      //   ],
+      // }
     ],
     payment: [
       {

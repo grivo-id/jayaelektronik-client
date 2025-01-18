@@ -93,14 +93,15 @@ const WidgetSubscription: React.FC<Props> = ({ lang, className }) => {
   const { t } = useTranslation(lang, 'footer');
 
   return (
-    <div className={cn('flex flex-col', className)}>
-      <Heading variant="mediumHeading" className="mb-4 lg:mb-6 lg:pb-0.5">
-        {t('widget-title-subscribe')}
-      </Heading>
+    <></>
+    // <div className={cn('flex flex-col', className)}>
+    //   <Heading variant="mediumHeading" className="mb-4 lg:mb-6 lg:pb-0.5">
+    //     {t('widget-title-subscribe')}
+    //   </Heading>
 
-      <Text className="lg:-mt-1 max-w-[400px]">{t('text-subscribe')}</Text>
-      <SubscriptionForm lang={lang} />
-    </div>
+    //   <Text className="lg:-mt-1 max-w-[400px]">{t('text-subscribe')}</Text>
+    //   <SubscriptionForm lang={lang} />
+    // </div>
   );
 };
 

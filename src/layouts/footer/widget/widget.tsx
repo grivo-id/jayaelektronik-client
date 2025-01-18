@@ -4,6 +4,8 @@ import Container from '@components/ui/container';
 import WidgetSubscription from './widget-subscription';
 import { footer } from '../data';
 import cn from 'classnames';
+import { useBrandsQuery } from '@framework/brand/get-all-brands';
+import BrandLink from './brand-link';
 
 interface WidgetsProps {
   lang: string;
@@ -20,7 +22,15 @@ const Widgets: React.FC<WidgetsProps> = ({
   widgets,
   variant = 'default',
 }) => {
+  const { data, isLoading, error } = useBrandsQuery({
+    page: 1,
+    limit: 6,
+    sort: 'desc',
+  });
   const { social } = footer;
+  // console.log(isLoading, error)
+  const brands = data?.data || [];
+
   return (
     <Container>
       <div className="grid grid-cols-2 md:grid-cols-7 xl:grid-cols-12 gap-5 sm:gap-9 lg:gap-11 xl:gap-7 pb-[50px] pt-10 md:pt-16">
@@ -37,6 +47,14 @@ const Widgets: React.FC<WidgetsProps> = ({
             lang={lang}
           />
         ))}
+
+        <BrandLink
+          data={brands}
+          className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2"
+          lang={lang}
+          header="Brands"
+        />
+
         <WidgetSubscription
           className={cn(
             'col-span-full sm:col-span-1 md:col-start-4 xl:col-start-auto md:col-span-4 xl:col-span-3'
