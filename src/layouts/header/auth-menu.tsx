@@ -17,13 +17,13 @@ export default function AuthMenu({
   return isAuthorized ? (
     <Link
       href={href}
-      className={cn('text-sm text-white font-normal focus:outline-none ms-2', className)}
+      className={cn('text-sm text-black font-normal focus:outline-none ms-2', className)}
     >
       {children}
     </Link>
   ) : (
     <button
-        className={cn('text-sm text-white font-normal focus:outline-none ms-2', className)}
+        className={cn('text-sm text-black font-normal focus:outline-none ms-2', className)}
       aria-label="Authentication"
       {...btnProps}
     />

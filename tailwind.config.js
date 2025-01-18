@@ -7,7 +7,7 @@ module.exports = {
       colors: {
         skin: {
           DEFAULT: '#ff7e00',
-          primary: '#ff7e00',
+          primary: '#1a6b22',
           inverted: '#ffffff',
           base: '#333333',
           fill: '#ffffff',
@@ -17,7 +17,7 @@ module.exports = {
           six: '#222b34',
         },
         brand: {
-          DEFAULT: '#ff7e00',
+          DEFAULT: '#1a6b22',
           dark: '#333333',
           light: '#ffffff',
           muted: '#595959',
@@ -37,7 +37,7 @@ module.exports = {
           secondary: '#f8f9fb',
           thumbnail: '#f3f6fa',
           'dropdown-hover': '#f6f9fc',
-          one: '#232F3F',
+          one: '#022c22',
           two: '#f2f2f2',
           three: '#e8ebf0',
           four: '#F3F5F9',
@@ -45,7 +45,7 @@ module.exports = {
         border: {
           base: '#e7ecf0',
           one: '#e3e8ec',
-          two: '#e2e8f0',
+          two: 'rgb(91 205 50)',
           three: '#e6e6e6',
           four: '#dee5ea',
         },

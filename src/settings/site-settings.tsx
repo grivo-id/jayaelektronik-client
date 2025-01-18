@@ -608,12 +608,6 @@ export const siteSettings = {
     ],
     languageMenu: [
       {
-        id: 'ar',
-        name: 'عربى',
-        value: 'ar',
-        icon: <SAFlag />,
-      },
-      {
         id: 'en',
         name: 'English',
         value: 'en',
