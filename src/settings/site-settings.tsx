@@ -9,7 +9,7 @@ import siteLogoBlack from 'public/assets/images/logo-black.png';
 import { IDFlag } from '@components/icons/language/IDFlag';
 
 export const siteSettings = {
-  name: 'Razor',
+  name: 'Jayaelektronik',
   description:
     'Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS.',
   author: {
@@ -39,11 +39,11 @@ export const siteSettings = {
         path: '/checkout/',
         label: 'menu-checkout',
       },
-      {
-        id: 3,
-        path: '/',
-        label: 'menu-gift',
-      },
+      // {
+      //   id: 3,
+      //   path: '/',
+      //   label: 'menu-gift',
+      // },
     ],
     menu: [
       {

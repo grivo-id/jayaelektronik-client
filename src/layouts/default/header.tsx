@@ -103,10 +103,10 @@ function Header({ lang }: { lang: string }) {
         <div className="z-20 w-full transition duration-200 ease-in-out  body-font bg-fill-one">
           <div className="top-bar  text-13px text-gray-300 border-b border-white/5">
             <Container>
-              <div className="h-12 flex justify-between items-center py-2 gap-5">
-                <text className={`hidden md:block truncate`}>
+              <div className="h-12 flex justify-end items-center py-2 gap-5">
+                {/* <text className={`hidden md:block truncate`}>
                   {t('text-free-shipping')}
-                </text>
+                </text> */}
                 <div className="flex flex-shrink-0 smx-auto max-w-[1920px]pace-s-5">
                   <HeaderMenutop
                     data={site_header.topmenu}
