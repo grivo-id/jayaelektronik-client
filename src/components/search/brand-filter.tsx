@@ -46,7 +46,9 @@ export const BrandFilter = ({ lang }: { lang: string }) => {
 
   return (
     <div className="block">
-      <Heading className="lg:text-xl mb-5 -mt-1 block-title">{t('text-brands')}</Heading>
+      <Heading className="lg:text-xl mb-5 -mt-1 block-title">
+        {t('text-brands')}
+      </Heading>
       <div className="flex flex-col">
         {items?.slice(0, 3)?.map((item: any) => (
           <CheckBox
@@ -59,7 +61,7 @@ export const BrandFilter = ({ lang }: { lang: string }) => {
             lang={lang}
           />
         ))}
-        {items!.length > 3 && (
+        {items && items.length > 3 && (
           <div className="w-full">
             <Disclosure>
               {({ open }) => (

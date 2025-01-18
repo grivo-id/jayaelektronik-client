@@ -22,12 +22,12 @@ const SupperCategoryList: React.FC<Props> = ({
       </h3>
       {Array.isArray(data?.children) ? (
         <ul key="content" className="pt-4 text-[14px] leading-7">
-          {data?.children.slice(0, 5)?.map((currentItem: any, idx: number) => {
+          {data?.children.slice(0, 6)?.map((currentItem: any, idx: number) => {
             return (
               <li className="pb-2 hover:text-skin-primary" key={`${idx}`}>
                 <Link
                   href={{
-                      pathname: `/${lang}${ROUTES.SEARCH}`,
+                    pathname: `/${lang}${ROUTES.SEARCH}`,
                     query: { category: currentItem.slug },
                   }}
                 >
@@ -36,16 +36,18 @@ const SupperCategoryList: React.FC<Props> = ({
               </li>
             );
           })}
-          <li className=" text-skin-primary hover:text-skin-primary">
-            <Link
-              href={{
+          {data?.children.length > 5 && (
+            <li className=" text-skin-primary hover:text-skin-primary">
+              <Link
+                href={{
                   pathname: `/${lang}${ROUTES.SEARCH}`,
-                query: { category: data?.slug },
-              }}
-            >
-              {t('text-view-all-categories')}
-            </Link>
-          </li>
+                  query: { category: data?.slug },
+                }}
+              >
+                {t('text-view-all-categories')}
+              </Link>
+            </li>
+          )}
         </ul>
       ) : null}
     </div>

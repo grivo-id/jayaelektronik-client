@@ -12,23 +12,25 @@ import { getDirection } from '@utils/get-direction';
 import Image from '@components/ui/image';
 import cn from 'classnames';
 import { useProductByCatQuery } from '@framework/product/get-product-by-categoryId';
+import { useFlexCategoryQuery } from '@framework/category/get-category-byId';
 
 export default function SupperCategoryElectronicFeed({
   lang,
 }: {
   lang: string;
 }) {
-  const { data: category } = useElectronicCategoryQuery({
-    limit: LIMITS.ELETRONIC_PRODUCTS_LIMITS,
+  const { data: catres } = useFlexCategoryQuery({
+    product_category_id: 'HYPCI2N4T9',
   });
 
   const { data, isLoading, error } = useProductByCatQuery({
-    product_category_id: 'O5JIR1K1EL',
+    product_category_id: 'HYPCI2N4T9',
     page: 1,
     limit: 10,
     sort: 'desc',
   });
 
+  const category = catres?.data || [];
   const products = data?.data || [];
 
   const dir = getDirection(lang);
@@ -54,11 +56,11 @@ export default function SupperCategoryElectronicFeed({
             />
           </div>
 
-          {/* <SupperCategoryList
+          <SupperCategoryList
             className={`supper-category--list relative z-10`}
             data={category}
             lang={lang}
-          /> */}
+          />
         </div>
 
         <div className="trendy-main-content w-full p-2.5">

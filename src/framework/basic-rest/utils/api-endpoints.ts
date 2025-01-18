@@ -8,7 +8,7 @@ export const API_ENDPOINTS = {
   FORGET_PASSWORD: '/',
   CATEGORIES: '/product-categories/sub-categories',
   DIETARY: '/',
-  BRANDS: '/',
+  BRANDS: '/brands',
   PRODUCTS: '/',
   PRODUCT: '/',
   RELATED_PRODUCTS: '/',
@@ -38,8 +38,8 @@ export const API_ENDPOINTS = {
   BLOGS: '/blogs',
   BLOGDETAILS: '/blogs',
   BLOGCATEGORIES: '/blog-categories',
-  CATEGORY_BYID: "/products",
-  PRODUCTS_BYCATID: '/products'
+  CATEGORY_BYID: '/product-categories',
+  PRODUCTS_BYCATID: '/products',
 };
 
 // export const API_ENDPOINTS = {

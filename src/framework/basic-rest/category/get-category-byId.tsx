@@ -10,7 +10,6 @@ type Category = {
   children?: [Category];
 };
 
-
 export const fetchFlexCategoryById = async ({ queryKey }: any) => {
   const [_key, _params] = queryKey;
   const queryString = new URLSearchParams(_params).toString();
@@ -18,9 +17,9 @@ export const fetchFlexCategoryById = async ({ queryKey }: any) => {
   const { data } = await http.get(url);
   return data as Category[];
 };
-export const useElectronicCategoryQuery = (options: any) => {
+export const useFlexCategoryQuery = (options: any) => {
   return useQuery<Category[], Error>(
-    [API_ENDPOINTS.ELECTRONIC_CATEGORY, options],
+    [API_ENDPOINTS.CATEGORY_BYID, options],
     fetchFlexCategoryById
   );
 };

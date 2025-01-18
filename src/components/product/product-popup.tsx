@@ -338,39 +338,6 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   </div>
                 </div>
               </div>
-              <ul className="pt-5 xl:pt-8 flex items-center justify-between">
-                <li className="relative inline-flex items-center justify-center text-sm  text-brand-dark text-opacity-80 ltr:mr-2 rtl:ml-2 top-1"></li>
-                <li className="inline-block ">
-                  {payment && (
-                    <ul className="flex flex-wrap justify-center items-center space-x-4 -mb-1.5 md:mb-0 mx-auto md:mx-0 pt-3.5 md:pt-0">
-                      {payment?.map((item) => (
-                        <li
-                          className="mb-2 md:mb-0 transition hover:opacity-80 inline-flex"
-                          key={`payment-list--key${item.id}`}
-                        >
-                          <a
-                            href={item.path ? item.path : '/#'}
-                            target="_blank"
-                            className="inline-flex"
-                            rel="noreferrer"
-                          >
-                            <Image
-                              src={item.image}
-                              alt={t(item.name)}
-                              width="0"
-                              height="0"
-                              sizes="100vw"
-                              className=" h-auto"
-                              style={{ width: item.width }}
-                            />
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              </ul>
-
               <div className="pt-6 xl:pt-8">
                 <Heading className="mb-3 lg:mb-3.5">
                   {t('text-product-details')}:
