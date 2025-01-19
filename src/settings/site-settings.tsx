@@ -19,8 +19,8 @@ export const siteSettings = {
   },
   logo: {
     url: siteLogo,
-    urlReverse: siteLogoBlack,
-    alt: 'Razor',
+    urlReverse: siteLogo,
+    alt: 'JayaElektronik',
     href: '/en',
     width: 195,
     height: 26,
@@ -607,12 +607,6 @@ export const siteSettings = {
       },
     ],
     languageMenu: [
-      {
-        id: 'ar',
-        name: 'عربى',
-        value: 'ar',
-        icon: <SAFlag />,
-      },
       {
         id: 'en',
         name: 'English',

@@ -96,11 +96,11 @@ function Header({ lang }: { lang: string }) {
         id="siteHeader"
         ref={siteHeaderRef}
         className={cn(
-          'header-one sticky-header sticky top-0 z-50 lg:relative w-full',
+          'header-one sticky-header sticky top-0 z-50 lg:relative w-full border-b border-gray-300/75',
           displayMobileSearch && 'active-mobile-search'
         )}
       >
-        <div className="z-20 w-full transition duration-200 ease-in-out  body-font bg-fill-one">
+        <div className="z-20 w-full transition duration-200 ease-in-out  body-font bg-white ">
           <div className="top-bar  text-13px text-gray-300 border-b border-white/5">
             <Container>
               <div className="h-12 flex justify-end items-center py-2 gap-5">
@@ -120,7 +120,7 @@ function Header({ lang }: { lang: string }) {
           </div>
           <div className="border-b border-white/5">
             <Container>
-              <div className="flex items-center justify-between  py-2 md:py-4">
+              <div className="flex items-center justify-center gap-5  py-2 md:py-4">
                 <div className="relative flex-shrink-0 lg:hidden">
                   <button
                     aria-label="Menu"
@@ -130,7 +130,7 @@ function Header({ lang }: { lang: string }) {
                     <MenuIcon />
                   </button>
                 </div>
-                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0" />
+                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0 w-48" />
                 {/* End of logo */}
 
                 <Search
@@ -165,17 +165,20 @@ function Header({ lang }: { lang: string }) {
               </div>
             </Container>
           </div>
-          <div className="hidden navbar bg-fill-one lg:block">
+          <div className="hidden navbar bg-white  lg:block">
             <Container>
               <div className="flex justify-between items-center">
-                <Logo
-                  lang={lang}
-                  className="navbar-logo w-0 opacity-0 transition-all duration-200 ease-in-out"
-                />
+                <div className="w-36">
+                  <Logo
+                    lang={lang}
+                    className="navbar-logo  opacity-0 transition-all duration-200 ease-in-out "
+                  />
+                </div>
+
                 {/* End of logo */}
                 <div className="categories-header-button relative me-8 flex-shrink-0 w-72">
                   <button
-                    className="bg-brand rounded-t min-h-[60px] focus:outline-none w-full font-medium text-white px-[18px] uppercase py-4 flex items-center transition-all hover:border-skin-four"
+                    className="bg-[#5bcd32] rounded-t min-h-[60px] focus:outline-none w-full font-medium text-white  px-[18px] uppercase py-4 flex items-center transition-all hover:border-skin-four"
                     onClick={handleCategoryMenu}
                   >
                     <FiMenu className="text-2xl me-3" />

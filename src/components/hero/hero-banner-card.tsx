@@ -97,7 +97,7 @@ export default function HeroBannerCard({
       </div>
     </div>
   ) : (
-    <Link href={`/${lang}${banner.btnUrl}`}>
+    // <Link href={`/${lang}${banner.btnUrl}`}>
       <div
         className={cn(
           'w-full bg-skin-thumbnail bg-no-repeat bg-cover flex items-center',
@@ -112,6 +112,6 @@ export default function HeroBannerCard({
             variant === 'antique' ? 'left bottom -10px' : 'center center',
         }}
       ></div>
-    </Link>
+    // </Link>
   );
 }

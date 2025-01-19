@@ -28,6 +28,7 @@ const BrandLink: React.FC<Props> = ({ lang, className, data, header }) => {
       >
         {header}
       </Heading>
+
       <div className="text-sm lg:text-14px flex flex-col space-y-3">
         {data?.map((brand) => (
           <li

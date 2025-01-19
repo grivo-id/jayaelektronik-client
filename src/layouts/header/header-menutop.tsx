@@ -28,7 +28,7 @@ const HeaderMenutop: React.FC<MenuProps> = ({lang, data, className,classNameLink
             >
               <Link
                   href={`/${lang}${item.path}`}
-                  className={`${classNameLink? classNameLink: 'text-gray-300' } inline-flex items-center py-2 font-normal relative group-hover:text-brand `}
+                  className={`${classNameLink? classNameLink: 'text-black' } inline-flex items-center py-2 font-normal relative group-hover:text-brand `}
               >
                 {t(item.label)}
                 {(item?.columns || item.subMenu) && (

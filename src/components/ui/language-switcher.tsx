@@ -39,7 +39,7 @@ export default function LanguageSwitcher({ lang }: { lang: string }) {
               <span className="w-4 h-4 overflow-hidden rounded-full ltr:mr-2 rtl:ml-2 shrink-0">
                 {selectedItem?.icon}
               </span>
-              <span className="leading-5 pb-0.5">{t(selectedItem?.name)}</span>
+              <span className="leading-5 pb-0.5 text-black">{t(selectedItem?.name)}</span>
             </span>
             <span className="absolute inset-y-0 flex items-center pointer-events-none ltr:right-0 rtl:left-0">
               <FaChevronDown
@@ -84,7 +84,7 @@ export default function LanguageSwitcher({ lang }: { lang: string }) {
                       </span>
                       {selected ? (
                         <span
-                          className={`${active && 'text-amber-600'}
+                          className={`${active && 'text-emerald-600'}
                                  absolute inset-y-0 ltr:left-0 rtl:right-0 flex items-center ltr:pl-3 rtl:pr-3`}
                         />
                       ) : null}

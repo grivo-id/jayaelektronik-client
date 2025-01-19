@@ -15,8 +15,8 @@
 .heightFull a > div {
   height: 100%;
 }
-.heightFull .swiper-slide{
-    width:auto;
+.heightFull .swiper-slide {
+  width: auto;
 }
 .heightFull .carouselWrapper > .swiper > .swiper-wrapper .swiper-slide > a {
   display: flex;
@@ -24,57 +24,56 @@
 
 .swiper .swiper-button-prev,
 .swiper .swiper-button-next {
-display: none;
+  display: none;
 }
 .carouselWrapper .swiper-button-disabled,
 #productGallery + div > .swiper-button-disabled {
-cursor: not-allowed;
-opacity: 0;
-visibility: hidden;
+  cursor: not-allowed;
+  opacity: 0;
+  visibility: hidden;
 }
 .carouselWrapper .swiper-button-disabled:hover,
 #productGallery + div > .swiper-button-disabled:hover {
-color: inherit;
-background-color: #666;
+  color: inherit;
+  background-color: #666;
 }
 
 .carouselWrapper .swiper .swiper-pagination-bullets .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
-border: 0;
-background-color: #ccc;
-border-radius: 8px;
-transition: all 0.3s ease-in-out;
+  border: 0;
+  background-color: #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
 }
 .carouselWrapper .swiper .swiper-pagination-bullets {
-bottom: 10px;
+  bottom: 10px;
 }
 .carouselWrapper
-.swiper
-.swiper-pagination-bullets
-.swiper-pagination-bullet.swiper-pagination-bullet-active {
-width: 18px;
-opacity: 1;
+  .swiper
+  .swiper-pagination-bullets
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 18px;
+  opacity: 1;
 }
 .carouselWrapper.dotsCircleBlack
-.swiper
-.swiper-pagination-bullets
-.swiper-pagination-bullet {
-background-color: #000;
+  .swiper
+  .swiper-pagination-bullets
+  .swiper-pagination-bullet {
+  background-color: #000;
 }
 
 #productGalleryThumbs {
   max-height: 580px;
 }
-#productGalleryThumbs .swiper-slide{
-    height: 100% !important;
+#productGalleryThumbs .swiper-slide {
+  height: 100% !important;
 }
 #productGalleryThumbs .swiper-wrapper .swiper-slide.swiper-slide-thumb-active {
   border-color: #80d8c7;
 }
 
 @media screen and (min-width: 1024px) {
-
   .carouselWrapper.dotsCircleBlack .swiper .swiper-pagination-bullets {
     bottom: 0;
   }
@@ -93,7 +92,7 @@ background-color: #000;
     .swiper-pagination-bullets
     .swiper-pagination-bullet.swiper-pagination-bullet-active {
     width: 34px;
-    background:#ff7e00;
+    background: #1a6b22;
   }
 }
 

@@ -10,15 +10,30 @@ type Category = {
   children?: [Category];
 };
 
+type Pagination = {
+  totalData: number;
+  currentPage: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};
+
+type ResultBody = {
+  success: boolean;
+  message?: string;
+  data: Category[];
+  pagination: Pagination[];
+};
+
 export const fetchFlexCategoryById = async ({ queryKey }: any) => {
   const [_key, _params] = queryKey;
   const queryString = new URLSearchParams(_params).toString();
   const url = `${API_ENDPOINTS.CATEGORY_BYID}?${queryString}`;
   const { data } = await http.get(url);
-  return data as Category[];
+  return data as ResultBody;
 };
 export const useFlexCategoryQuery = (options: any) => {
-  return useQuery<Category[], Error>(
+  return useQuery<ResultBody, Error>(
     [API_ENDPOINTS.CATEGORY_BYID, options],
     fetchFlexCategoryById
   );
