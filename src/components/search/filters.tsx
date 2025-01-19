@@ -8,7 +8,6 @@ export const ShopFilters: React.FC<{ lang: string }> = ({ lang }) => {
     <div className="space-y-10">
       <SelectedFilters lang={lang} />
       <CategoryFilter lang={lang} />
-      <DietaryFilter lang={lang} />
       <BrandFilter lang={lang} />
     </div>
   );
