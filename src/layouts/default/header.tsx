@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { siteSettings } from '@settings/site-settings';
 import { ROUTES } from '@utils/routes';
@@ -19,6 +19,8 @@ import { FiMenu } from 'react-icons/fi';
 import CategoryDropdownMenu from '@components/category/category-dropdown-menu';
 import { useTranslation } from 'src/app/i18n/client';
 import Link from 'next/link';
+import http from '@framework/utils/http';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -38,6 +40,8 @@ function Header({ lang }: { lang: string }) {
     displayMobileSearch,
     authorize,
     unauthorize,
+    user,
+    setUser,
   } = useUI();
   const { openModal } = useModalAction();
   const siteSearchRef = useRef() as DivElementRef;
@@ -55,12 +59,27 @@ function Header({ lang }: { lang: string }) {
     setCategoryMenu(!categoryMenu);
   }
 
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await http.get(API_ENDPOINTS.USER_PROFILE);
+      if (response.status === 200) {
+        setUser(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if (token) {
       const parsedToken = JSON.parse(token);
       if (parsedToken.expires_in > Date.now()) {
         authorize();
+        if (!user) {
+          fetchUser();
+        }
       } else {
         sessionStorage.removeItem('token');
         unauthorize();
@@ -69,7 +88,7 @@ function Header({ lang }: { lang: string }) {
       unauthorize();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -77,17 +96,17 @@ function Header({ lang }: { lang: string }) {
         id="siteHeader"
         ref={siteHeaderRef}
         className={cn(
-          'header-one sticky-header sticky top-0 z-50 lg:relative w-full',
+          'header-one sticky-header sticky top-0 z-50 lg:relative w-full border-b border-gray-300/75',
           displayMobileSearch && 'active-mobile-search'
         )}
       >
-        <div className="z-20 w-full transition duration-200 ease-in-out  body-font bg-fill-one">
+        <div className="z-20 w-full transition duration-200 ease-in-out  body-font bg-white ">
           <div className="top-bar  text-13px text-gray-300 border-b border-white/5">
             <Container>
-              <div className="h-12 flex justify-between items-center py-2 gap-5">
-                <text className={`hidden md:block truncate`}>
+              <div className="h-12 flex justify-end items-center py-2 gap-5">
+                {/* <text className={`hidden md:block truncate`}>
                   {t('text-free-shipping')}
-                </text>
+                </text> */}
                 <div className="flex flex-shrink-0 smx-auto max-w-[1920px]pace-s-5">
                   <HeaderMenutop
                     data={site_header.topmenu}
@@ -101,7 +120,7 @@ function Header({ lang }: { lang: string }) {
           </div>
           <div className="border-b border-white/5">
             <Container>
-              <div className="flex items-center justify-between  py-2 md:py-4">
+              <div className="flex items-center justify-center gap-5  py-2 md:py-4">
                 <div className="relative flex-shrink-0 lg:hidden">
                   <button
                     aria-label="Menu"
@@ -111,7 +130,7 @@ function Header({ lang }: { lang: string }) {
                     <MenuIcon />
                   </button>
                 </div>
-                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0" />
+                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0 w-48" />
                 {/* End of logo */}
 
                 <Search
@@ -122,22 +141,20 @@ function Header({ lang }: { lang: string }) {
                 {/* End of search */}
 
                 <div className="flex space-x-5 xl:space-x-10 lg:max-w-[33%]">
-                  <div className="items-center hidden lg:flex shrink-0">
+                  <div className="items-center hidden lg:flex shrink-0 gap-2 text-fill-dark">
                     <div className="cart-button !pt-2">
                       <UserIcon className="text-brand" />
                     </div>
-                    <Link href={`/${lang}${ROUTES.LOGIN}`}>
-                      <AuthMenu
-                        isAuthorized={isAuthorized}
-                        href={`/${lang}${ROUTES.ACCOUNT}`}
-                        btnProps={{
-                          children: isAuthorized
-                            ? t('text-account')
-                            : t('text-signin'),
-                        }}
-                      >
-                        {isAuthorized ? t('text-account') : t('text-signin')}
-                      </AuthMenu>
+                    <Link
+                      href={
+                        isAuthorized
+                          ? `/${lang}${ROUTES.ACCOUNT}`
+                          : `/${lang}${ROUTES.LOGIN}`
+                      }
+                    >
+                      {isAuthorized
+                        ? user?.user_name || t('text-account')
+                        : t('text-signin')}
                     </Link>
                   </div>
                   <CartButton className="hidden lg:flex" lang={lang} />
@@ -146,17 +163,20 @@ function Header({ lang }: { lang: string }) {
               </div>
             </Container>
           </div>
-          <div className="hidden navbar bg-fill-one lg:block">
+          <div className="hidden navbar bg-white  lg:block">
             <Container>
               <div className="flex justify-between items-center">
-                <Logo
-                  lang={lang}
-                  className="navbar-logo w-0 opacity-0 transition-all duration-200 ease-in-out"
-                />
+                <div className="w-36">
+                  <Logo
+                    lang={lang}
+                    className="navbar-logo  opacity-0 transition-all duration-200 ease-in-out "
+                  />
+                </div>
+
                 {/* End of logo */}
                 <div className="categories-header-button relative me-8 flex-shrink-0 w-72">
                   <button
-                    className="bg-brand rounded-t min-h-[60px] focus:outline-none w-full font-medium text-white px-[18px] uppercase py-4 flex items-center transition-all hover:border-skin-four"
+                    className="bg-[#5bcd32] rounded-t min-h-[60px] focus:outline-none w-full font-medium text-white  px-[18px] uppercase py-4 flex items-center transition-all hover:border-skin-four"
                     onClick={handleCategoryMenu}
                   >
                     <FiMenu className="text-2xl me-3" />
@@ -193,21 +213,21 @@ function Header({ lang }: { lang: string }) {
                     </button>
                     {/* End of search handler btn */}
 
-                    <div className="flex-shrink-0 flex items-center">
+                    <div className="flex-shrink-0 flex items-center gap-2 text-fill-dark">
                       <div className={'cart-button'}>
                         <UserIcon className="text-skin-primary" />
                       </div>
-
-                      <AuthMenu
-                        isAuthorized={isAuthorized}
-                        href={ROUTES.ACCOUNT}
-                        btnProps={{
-                          children: t('text-sign-in'),
-                          onClick: handleLogin,
-                        }}
+                      <Link
+                        href={
+                          isAuthorized
+                            ? `/${lang}${ROUTES.ACCOUNT}`
+                            : `/${lang}${ROUTES.LOGIN}`
+                        }
                       >
-                        {t('text-account')}
-                      </AuthMenu>
+                        {isAuthorized
+                          ? user?.user_name || t('text-account')
+                          : t('text-signin')}
+                      </Link>
                     </div>
                     {/* End of auth */}
 

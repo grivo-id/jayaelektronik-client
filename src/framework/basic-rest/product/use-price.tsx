@@ -1,56 +1,54 @@
 import { useMemo } from 'react';
 
-export function formatPrice({
-  amount,
-  currencyCode,
-  locale,
-}: {
+interface PriceData {
+  amount: number;
+  baseAmount?: number;
+  currencyCode: string;
+}
+
+interface FormatPriceArgs {
   amount: number;
   currencyCode: string;
   locale: string;
-}) {
-  const formatCurrency = new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency: currencyCode,
-  });
-
-  return formatCurrency.format(amount);
 }
 
-export function formatVariantPrice({
+interface FormatVariantPriceArgs extends FormatPriceArgs {
+  baseAmount: number;
+}
+
+const formatPrice = ({ amount, currencyCode, locale }: FormatPriceArgs) => {
+  const formatter = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: currencyCode === 'IDR' ? 0 : 2,
+    maximumFractionDigits: currencyCode === 'IDR' ? 0 : 2,
+  });
+
+  return formatter.format(amount);
+};
+
+const formatVariantPrice = ({
   amount,
   baseAmount,
   currencyCode,
   locale,
-}: {
-  baseAmount: number;
-  amount: number;
-  currencyCode: string;
-  locale: string;
-}) {
+}: FormatVariantPriceArgs) => {
   const hasDiscount = baseAmount > amount;
-  const formatDiscount = new Intl.NumberFormat(locale, { style: 'percent' });
-  const discount = hasDiscount
-    ? formatDiscount.format((baseAmount - amount) / baseAmount)
-    : null;
-
   const price = formatPrice({ amount, currencyCode, locale });
   const basePrice = hasDiscount
     ? formatPrice({ amount: baseAmount, currencyCode, locale })
     : null;
+  const discount = hasDiscount
+    ? Math.round(((baseAmount - amount) / baseAmount) * 100)
+    : null;
 
   return { price, basePrice, discount };
-}
+};
 
-export default function usePrice(
-  data?: {
-    amount: number;
-    baseAmount?: number;
-    currencyCode: string;
-  } | null
-) {
+export default function usePrice(data?: PriceData | null) {
   const { amount, baseAmount, currencyCode } = data ?? {};
   const locale = 'en';
+
   const value = useMemo(() => {
     if (typeof amount !== 'number' || !currencyCode) return '';
 

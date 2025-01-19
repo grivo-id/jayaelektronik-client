@@ -11,19 +11,28 @@ import { getDirection } from '@utils/get-direction';
 
 import Image from '@components/ui/image';
 import cn from 'classnames';
+import { useProductByCatQuery } from '@framework/product/get-product-by-categoryId';
+import { useFlexCategoryQuery } from '@framework/category/get-category-byId';
 
-export default function SupperCategoryElectronicFeed({lang,}: { lang: string; })  {
-  const { data: category } = useElectronicCategoryQuery({
-    limit: LIMITS.ELETRONIC_PRODUCTS_LIMITS,
+export default function SupperCategoryElectronicFeed({
+  lang,
+}: {
+  lang: string;
+}) {
+  const { data: catres } = useFlexCategoryQuery({
+    product_category_id: 'HYPCI2N4T9',
   });
 
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useElectronicProductsQuery({
-    limit: LIMITS.ELETRONIC_PRODUCTS_LIMITS,
+  const { data, isLoading, error } = useProductByCatQuery({
+    product_category_id: 'HYPCI2N4T9',
+    page: 1,
+    limit: 10,
+    sort: 'desc',
   });
+
+  const category = catres?.data || [];
+  const products = data?.data || [];
+
   const dir = getDirection(lang);
   const backgroundThumbnail =
     dir === 'ltr'

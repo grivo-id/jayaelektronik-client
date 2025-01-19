@@ -41,7 +41,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputType>();
@@ -64,11 +63,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
         });
         setTimeout(() => {
           router.push(`/${lang}`);
-        }, 1500);
+        }, 1000);
       }
       // closeModal();
     } catch (error: any) {
-      console.log(' error', error);
       toast.error(error.message || 'An unexpected error occurred', {
         progressClassName: 'fancy-progress-bar',
         position: width! > 768 ? 'bottom-right' : 'top-right',

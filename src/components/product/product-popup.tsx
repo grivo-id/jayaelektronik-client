@@ -53,6 +53,15 @@ const breakpoints = {
   },
 };
 
+const convertToSlug = (text: string): string => {
+  return text
+    ?.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-')
+    .trim();
+};
+
 export default function ProductPopup({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
   const { data } = useModalState();
@@ -68,13 +77,28 @@ export default function ProductPopup({ lang }: { lang: string }) {
     useState<boolean>(false);
   const [shareButtonStatus, setShareButtonStatus] = useState<boolean>(false);
   const { price, basePrice, discount } = usePrice({
-    amount: data.sale_price ? data.sale_price : data.price,
-    baseAmount: data.price,
-    currencyCode: 'USD',
+    amount: data.sale_price ? data.sale_price : data.product_price,
+    baseAmount: data.product_price,
+    currencyCode: 'IDR',
   });
   const variations = getVariations(data.variations);
-  const { slug, image, name, unit, description, gallery, tag, quantity } = data;
-  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${ROUTES.PRODUCT}/${slug}`;
+  const {
+    product_name,
+    product_image1,
+    product_image2,
+    product_image3,
+    brand_name,
+    product_desc,
+    product_tags,
+    product_is_available,
+    quantity,
+  } = data;
+
+  const gallery = [product_image1, product_image2, product_image3];
+
+  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${
+    ROUTES.PRODUCT
+  }/${convertToSlug(product_name)}`;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -136,7 +160,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   function navigateToProductPage() {
     closeModal();
-    router.push(`${lang}/${ROUTES.PRODUCT}/${slug}`);
+    router.push(`${lang}/${ROUTES.PRODUCT}/${convertToSlug(product_name)}`);
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);
@@ -153,8 +177,8 @@ export default function ProductPopup({ lang }: { lang: string }) {
               ) : (
                 <div className="flex items-center justify-center w-auto">
                   <Image
-                    src={image?.original ?? productGalleryPlaceholder}
-                    alt={name!}
+                    src={product_image1 ?? productGalleryPlaceholder}
+                    alt={product_name}
                     width={650}
                     height={590}
                     style={{ width: 'auto' }}
@@ -171,11 +195,13 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   role="button"
                 >
                   <h2 className="text-lg font-medium transition-colors duration-300 text-brand-dark md:text-xl xl:text-2xl hover:text-brand">
-                    {name}
+                    {product_name}
                   </h2>
                 </div>
-                {unit && isEmpty(variations) ? (
-                  <div className="text-sm font-medium md:text-15px">{unit}</div>
+                {brand_name && isEmpty(variations) ? (
+                  <div className="text-sm font-medium md:text-15px">
+                    {brand_name}
+                  </div>
                 ) : (
                   <VariationPrice
                     selectedVariation={selectedVariation}
@@ -219,13 +245,9 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 {/* check that item isInCart and place the available quantity or the item quantity */}
                 {isEmpty(variations) && (
                   <>
-                    {Number(quantity) > 0 || !outOfStock ? (
-                      <span className="text-sm font-medium text-yellow">
-                        {t('text-only') +
-                          ' ' +
-                          quantity +
-                          ' ' +
-                          t('text-left-item')}
+                    {product_is_available ? (
+                      <span className="text-sm font-medium text-[#5bcd32]">
+                        {t('text-left-item')}
                       </span>
                     ) : (
                       <div className="text-base text-brand-danger whitespace-nowrap">
@@ -236,7 +258,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 )}
 
                 {!isEmpty(selectedVariation) && (
-                  <span className="text-sm font-medium text-yellow">
+                  <span className="text-sm font-medium text-[#5bcd32]">
                     {selectedVariation?.is_disable ||
                     selectedVariation.quantity === 0
                       ? t('text-out-stock')
@@ -316,45 +338,16 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   </div>
                 </div>
               </div>
-              <ul className="pt-5 xl:pt-8 flex items-center justify-between">
-                <li className="relative inline-flex items-center justify-center text-sm  text-brand-dark text-opacity-80 ltr:mr-2 rtl:ml-2 top-1"></li>
-                <li className="inline-block ">
-                  {payment && (
-                    <ul className="flex flex-wrap justify-center items-center space-x-4 -mb-1.5 md:mb-0 mx-auto md:mx-0 pt-3.5 md:pt-0">
-                      {payment?.map((item) => (
-                        <li
-                          className="mb-2 md:mb-0 transition hover:opacity-80 inline-flex"
-                          key={`payment-list--key${item.id}`}
-                        >
-                          <a
-                            href={item.path ? item.path : '/#'}
-                            target="_blank"
-                            className="inline-flex"
-                            rel="noreferrer"
-                          >
-                            <Image
-                              src={item.image}
-                              alt={t(item.name)}
-                              width="0"
-                              height="0"
-                              sizes="100vw"
-                              className=" h-auto"
-                              style={{ width: item.width }}
-                            />
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              </ul>
-
               <div className="pt-6 xl:pt-8">
                 <Heading className="mb-3 lg:mb-3.5">
                   {t('text-product-details')}:
                 </Heading>
                 <Text variant="small">
-                  {description.split(' ').slice(0, 40).join(' ')}
+                  {/* {description.split(' ').slice(0, 40).join(' ')} */}
+                  <span
+                    className="line-clamp-1"
+                    dangerouslySetInnerHTML={{ __html: product_desc }}
+                  />
                   {'...'}
                   <span
                     onClick={navigateToProductPage}

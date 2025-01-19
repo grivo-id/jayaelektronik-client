@@ -28,7 +28,7 @@ const HeroSliderBlock: React.FC<Props> = ({
         navigation={true}
         autoplay={false}
         prevActivateId={`prevActivateId`}
-                nextActivateId={`nextActivateId`}
+        nextActivateId={`nextActivateId`}
         lang={lang}
       >
         {heroBanner?.map((banner: any) => (

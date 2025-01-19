@@ -13,7 +13,9 @@ import { getDirection } from '@utils/get-direction';
 import { useModalAction } from '@components/common/modal/modal.context';
 import motionProps from '@components/common/drawer/motion';
 import { useTranslation } from 'src/app/i18n/client';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
+import http from '@framework/utils/http';
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
 });
@@ -32,6 +34,8 @@ export default function BottomNavigation({ lang }: { lang: string }) {
     isAuthorized,
     authorize,
     unauthorize,
+    user,
+    setUser,
   } = useUI();
   const { openModal } = useModalAction();
   const dir = getDirection(lang);
@@ -43,12 +47,27 @@ export default function BottomNavigation({ lang }: { lang: string }) {
     return openSidebar();
   }
 
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await http.get(API_ENDPOINTS.USER_PROFILE);
+      if (response.status === 200) {
+        setUser(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if (token) {
       const parsedToken = JSON.parse(token);
       if (parsedToken.expires_in > Date.now()) {
         authorize();
+        if (!user) {
+          fetchUser();
+        }
       } else {
         sessionStorage.removeItem('token');
         unauthorize();

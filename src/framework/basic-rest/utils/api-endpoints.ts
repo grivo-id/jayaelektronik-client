@@ -1,16 +1,19 @@
 export const API_ENDPOINTS = {
   LOGIN: '/auth/login',
-  REGISTER: '/',
+  REGISTER: '/auth/register',
+  SEND_VERIFICATION: '/auth/send-verification',
+  VERIFY_EMAIL: 'auth/verify-email',
   LOGOUT: '/',
+  USER_PROFILE: '/users/profile',
   FORGET_PASSWORD: '/',
   CATEGORIES: '/product-categories/sub-categories',
   DIETARY: '/',
-  BRANDS: '/',
+  BRANDS: '/brands',
   PRODUCTS: '/',
   PRODUCT: '/',
   RELATED_PRODUCTS: '/',
   FLASH_SELL_PRODUCTS: '/',
-  BEST_SELLER_PRODUCTS: '/',
+  BEST_SELLER_PRODUCTS: '/products/best-seller',
   NEW_ARRIVAL_PRODUCTS: '/',
   POPULAR_PRODUCTS: '/',
   COOKIES_PRODUCTS: '/',
@@ -35,6 +38,8 @@ export const API_ENDPOINTS = {
   BLOGS: '/blogs',
   BLOGDETAILS: '/blogs',
   BLOGCATEGORIES: '/blog-categories',
+  CATEGORY_BYID: '/product-categories',
+  PRODUCTS_BYCATID: '/products',
 };
 
 // export const API_ENDPOINTS = {

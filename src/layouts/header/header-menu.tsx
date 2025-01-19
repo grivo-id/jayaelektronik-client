@@ -30,7 +30,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ lang, data, className, bgPrimary }) =
         >
           <Link
             href={`/${lang}${item.path}`}
-            className={`uppercase inline-flex items-center text-sm text-white py-2 font-medium relative  ${
+            className={`uppercase inline-flex items-center text-sm text-black py-2 font-medium relative  ${
               !bgPrimary && 'group-hover:text-brand'
             }`}
           >

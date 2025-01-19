@@ -117,13 +117,13 @@ const ProductsCarousel: React.FC<ProductsCarouselProps> = ({
                   >
                     {variant === 'cardv2' ? (
                       <ProductCardV2
-                        key={`${uniqueKey}-${product.id}`}
+                        key={`${uniqueKey}-${product.product_id}`}
                         product={product}
                         lang={lang}
                       />
                     ) : (
                       <ProductCard
-                        key={`${uniqueKey}-${product.id}`}
+                        key={`${uniqueKey}-${product.product_id}`}
                         product={product}
                         lang={lang}
                       />

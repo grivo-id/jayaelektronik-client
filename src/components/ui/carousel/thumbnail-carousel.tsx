@@ -75,21 +75,34 @@ const ThumbnailCarousel: React.FC<Props> = ({
           }}
           {...swiperParams}
         >
-          {gallery?.map((item: any) => (
-            <SwiperSlide
-              key={`product-gallery-${item.id}`}
-              className="flex items-center justify-center"
-            >
+          {gallery && gallery.length > 0 ? (
+            gallery.map((item: string, index: number) => (
+              <SwiperSlide
+                key={`product-gallery-${index}`}
+                className="flex items-center justify-center"
+              >
+                <Image
+                  src={item || productGalleryPlaceholder}
+                  alt={`Product gallery ${index}`}
+                  width={650}
+                  height={590}
+                  className="mx-auto rounded-lg"
+                  priority
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide className="flex items-center justify-center">
               <Image
-                src={item?.original ?? productGalleryPlaceholder}
-                alt={`Product gallery ${item.id}`}
+                src={productGalleryPlaceholder}
+                alt="Default product gallery placeholder"
                 width={650}
                 height={590}
                 className="mx-auto rounded-lg"
                 priority
               />
             </SwiperSlide>
-          ))}
+          )}
         </Swiper>
         <div className="flex items-center justify-between w-full absolute top-2/4 z-10 px-2.5">
           <div
@@ -131,20 +144,35 @@ const ThumbnailCarousel: React.FC<Props> = ({
             },
           }}
         >
-          {gallery?.map((item: any) => (
+          {gallery && gallery.length > 0 ? (
+            gallery.map((item: string, index: number) => (
+              <SwiperSlide
+                key={`product-thumb-gallery-${index}`}
+                className="flex items-center justify-center cursor-pointer rounded overflow-hidden border border-border-base transition hover:opacity-75"
+              >
+                <Image
+                  src={item || productGalleryPlaceholder}
+                  alt={`Product thumb gallery ${index}`}
+                  width={170}
+                  height={170}
+                  style={{ width: 'auto' }}
+                />
+              </SwiperSlide>
+            ))
+          ) : (
             <SwiperSlide
-              key={`product-thumb-gallery-${item.id}`}
+              key={`product-thumb-gallery-placeholder`}
               className="flex items-center justify-center cursor-pointer rounded overflow-hidden border border-border-base transition hover:opacity-75"
             >
               <Image
-                src={item?.thumbnail ?? productGalleryPlaceholder}
-                alt={`Product thumb gallery ${item.id}`}
+                src={productGalleryPlaceholder}
+                alt="Default product gallery placeholder"
                 width={170}
                 height={170}
                 style={{ width: 'auto' }}
               />
             </SwiperSlide>
-          ))}
+          )}
         </Swiper>
       </div>
     </div>
