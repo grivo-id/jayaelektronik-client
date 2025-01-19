@@ -41,6 +41,7 @@ module.exports = {
           two: '#f2f2f2',
           three: '#e8ebf0',
           four: '#F3F5F9',
+          dark: '#000'
         },
         border: {
           base: '#e7ecf0',
@@ -139,5 +140,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms'),require('tailwindcss-rtl')],
+  plugins: [require('@tailwindcss/forms'), require('tailwindcss-rtl')],
 };

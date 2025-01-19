@@ -88,7 +88,7 @@ function Header({ lang }: { lang: string }) {
       unauthorize();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -141,22 +141,20 @@ function Header({ lang }: { lang: string }) {
                 {/* End of search */}
 
                 <div className="flex space-x-5 xl:space-x-10 lg:max-w-[33%]">
-                  <div className="items-center hidden lg:flex shrink-0">
+                  <div className="items-center hidden lg:flex shrink-0 gap-2 text-fill-dark">
                     <div className="cart-button !pt-2">
                       <UserIcon className="text-brand" />
                     </div>
-                    <Link href={`/${lang}${ROUTES.LOGIN}`}>
-                      <AuthMenu
-                        isAuthorized={isAuthorized}
-                        href={`/${lang}${ROUTES.ACCOUNT}`}
-                        btnProps={{
-                          children: isAuthorized
-                            ? t('text-account')
-                            : t('text-signin'),
-                        }}
-                      >
-                        {isAuthorized ? t('text-account') : t('text-signin')}
-                      </AuthMenu>
+                    <Link
+                      href={
+                        isAuthorized
+                          ? `/${lang}${ROUTES.ACCOUNT}`
+                          : `/${lang}${ROUTES.LOGIN}`
+                      }
+                    >
+                      {isAuthorized
+                        ? user?.user_name || t('text-account')
+                        : t('text-signin')}
                     </Link>
                   </div>
                   <CartButton className="hidden lg:flex" lang={lang} />
@@ -215,21 +213,21 @@ function Header({ lang }: { lang: string }) {
                     </button>
                     {/* End of search handler btn */}
 
-                    <div className="flex-shrink-0 flex items-center">
+                    <div className="flex-shrink-0 flex items-center gap-2 text-fill-dark">
                       <div className={'cart-button'}>
                         <UserIcon className="text-skin-primary" />
                       </div>
-
-                      <AuthMenu
-                        isAuthorized={isAuthorized}
-                        href={ROUTES.ACCOUNT}
-                        btnProps={{
-                          children: t('text-sign-in'),
-                          onClick: handleLogin,
-                        }}
+                      <Link
+                        href={
+                          isAuthorized
+                            ? `/${lang}${ROUTES.ACCOUNT}`
+                            : `/${lang}${ROUTES.LOGIN}`
+                        }
                       >
-                        {t('text-account')}
-                      </AuthMenu>
+                        {isAuthorized
+                          ? user?.user_name || t('text-account')
+                          : t('text-signin')}
+                      </Link>
                     </div>
                     {/* End of auth */}
 
