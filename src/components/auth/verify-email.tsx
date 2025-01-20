@@ -25,9 +25,9 @@ const VerifyEmail: React.FC<VerifyEmailProps> = ({ lang, className }) => {
   const [countdown, setCountdown] = useState(3);
   const { t } = useTranslation(lang);
   const { authorize, user } = useUI();
+  const authToken = searchParams.get('token');
 
   useEffect(() => {
-    const authToken = searchParams.get('token');
     const token = {
       value: authToken,
       expires_in: Date.now() + 120 * 60 * 1000 - 3000,
