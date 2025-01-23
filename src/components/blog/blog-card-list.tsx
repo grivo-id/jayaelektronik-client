@@ -59,7 +59,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
     >
       <div className="relative flex-shrink-0 w-[360px] lg:w-[440px]">
         <Link
-          href={`/${lang}${ROUTES.BLOG}/${slug}`}
+          href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
           className="text-skin-base "
         >
           <div className="card-img-container flex overflow-hidden  mx-auto relative sm:rounded-l-xl h-[360px] ">
@@ -81,7 +81,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
       <div className="flex flex-col justify-center py-5 px-5 sm:px-8 h-full overflow-hidden relative">
         <h4 className={'font-medium text-2xl lg:text-3xl mb-3.5 '}>
           <Link
-            href={`/${lang}${ROUTES.BLOG}/${slug}`}
+            href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
             className="text-skin-base line-clamp-2 hover:text-skin-primary"
           >
             {blog_title}
@@ -105,7 +105,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
               </span> */}
           </div>
           <Link
-            href={`/${lang}${ROUTES.BLOG}/${slug}`}
+            href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
             className="text-gray-500 hover:text-skin-primary text-13px flex items-center gap-1.5"
           >
             {t('text-read-more')}
