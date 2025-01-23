@@ -13,7 +13,7 @@ export const CategoryFilter = ({ lang }: { lang: string }) => {
     isLoading: loading,
     error,
   } = useCategoriesQuery({
-    limit: 10,
+    limit: 99,
   });
 
   if (loading) {

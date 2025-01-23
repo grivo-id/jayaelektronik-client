@@ -1,10 +1,11 @@
 'use client';
-import type {FC} from 'react';
+import type { FC } from 'react';
 import Alert from '@components/ui/alert';
 import cn from 'classnames';
-import {useBlogPostQuery} from '@framework/blog/get-blog-post';
+import { useParams } from 'next/navigation';
 
-import BlogPostCard from "@components/blog/blog-post-card";
+import { useBlogPostQuery } from '@framework/blog/get-blog-post';
+import BlogPostCard from '@components/blog/blog-post-card';
 
 interface blogGridProps {
   className?: string;
@@ -12,8 +13,14 @@ interface blogGridProps {
 }
 
 export const BlogPost: FC<blogGridProps> = ({ className, lang }) => {
-
-  const { data, isLoading, error } = useBlogPostQuery({});
+  const params = useParams();
+  const decodedSlug = decodeURIComponent(params.slug as string);
+  const opt = {
+    blog_title: decodedSlug,
+  };
+  const { data, isLoading, error } = useBlogPostQuery(opt);
+  // console.log(data);\
+  const blog = data || {}
   if (isLoading) return <p>Loading...</p>;
   return (
     <>
@@ -23,7 +30,7 @@ export const BlogPost: FC<blogGridProps> = ({ className, lang }) => {
             <Alert message={error?.message} />
           </div>
         ) : (
-          <BlogPostCard key={`blog--post`} blogData={data} lang={lang} />
+          <BlogPostCard key={`blog--post`} blogData={blog} lang={lang} />
         )}
       </div>
     </>

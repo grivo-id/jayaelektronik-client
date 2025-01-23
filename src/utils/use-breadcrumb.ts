@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 export function convertBreadcrumbTitle(string: string) {
-  return string
+  return decodeURIComponent(string)
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
     .replace(/ae/g, 'ä')

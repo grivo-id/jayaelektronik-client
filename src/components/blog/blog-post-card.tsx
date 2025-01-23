@@ -19,24 +19,43 @@ interface BlogProps {
   lang: string;
 }
 
+const convertToSlug = (text: string): string => {
+  return text
+    ?.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-')
+    .trim();
+};
+
+function formatDate(dateString: Date | string): string {
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  };
+  const formattedDate = new Date(dateString).toLocaleDateString(
+    'en-GB',
+    options
+  );
+  return formattedDate;
+}
+
 const BlogPostCard: React.FC<BlogProps> = ({ blogData, className, lang }) => {
   const {
-    title,
-    image,
-    totalWatchCount,
-    slug,
-    date,
+    blog_title,
+    blog_banner_image,
+    blog_created_date,
+    blog_category_name,
     category,
-    tags,
-    authorName,
-    content,
-    titleTwo,
-    contentTwo,
-    contentThree,
-    quote,
-  } = blogData ?? {};
-   const { t } = useTranslation(lang, 'common');
-  const blogUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${ROUTES.BLOG}/${slug}`;
+    blog_keywords,
+    user_name,
+    blog_desc,
+  } = blogData.data;
+  const { t } = useTranslation(lang, 'common');
+  const title = convertToSlug(blog_title);
+  const blogUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${ROUTES.BLOG}/${blog_title}`;
+  console.log(blogData);
 
   return (
     <article
@@ -52,38 +71,34 @@ const BlogPostCard: React.FC<BlogProps> = ({ blogData, className, lang }) => {
         </div>
         <h4 className={'font-bold text-2xl lg:text-4xl mb-3.5 '}>
           <Link
-            href={`/${lang}${ROUTES.BLOG}/${slug}`}
+            href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
             className="text-skin-base line-clamp-2 hover:text-skin-primary"
           >
-            {title}
+            {blog_title}
           </Link>
         </h4>
         <div className="entry-meta text-13px text-gray-400">
           <span className="post-by pe-2.5 relative inline-block">
             {' '}
-            By {authorName}
+            By {user_name}
           </span>
           <span className="has-dot px-2.5 relative inline-block">
-            {' '}
-            {`${date?.date} ${date?.month} ${date?.year}`}
-          </span>
-          <span className="has-dot px-2.5 relative inline-block">
-            {getCountview(totalWatchCount)} {t('text-view')}
+            {formatDate(blog_created_date)}
           </span>
           <span className="has-dot ps-2.5 relative inline-block">
-            4 mins read
+            {blog_category_name}
           </span>
         </div>
       </div>
       <div className="relative flex-shrink-0 mb-10">
         <Link
-          href={`/${lang}${ROUTES.BLOG}/${slug}`}
+          href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
           className="text-skin-base "
         >
           <div className="card-img-container max-w-[1050px] overflow-hidden flex mx-auto relative rounded-xl">
             <Image
-              src={image ?? productPlaceholder}
-              alt={title || 'Product Image'}
+              src={blog_banner_image ?? productPlaceholder}
+              alt={blog_title || 'Product Image'}
               width={1050}
               height={460}
               priority
@@ -93,19 +108,7 @@ const BlogPostCard: React.FC<BlogProps> = ({ blogData, className, lang }) => {
         </Link>
       </div>
       <div className="single-content text-sm sm:text-15px text-skin-muted leading-[2em] space-y-4 lg:space-y-5 xl:space-y-7 mb-10">
-        <p>{content}</p>
-        <h3 className="mt-8 mb-3 text-[20px] text-skin-base font-medium truncate">
-          {titleTwo}
-        </h3>
-        <p>{contentTwo}</p>
-        <blockquote
-          className={
-            'lg:max-w-[80%] my-10 mx-auto rounded-xl text-gray-500 bg-[#f4f6fa] text-[22px] px-8 lg:px-12 py-8'
-          }
-        >
-          {quote?.content}
-        </blockquote>
-        <p>{contentThree}</p>
+        <p dangerouslySetInnerHTML={{ __html: blog_desc }} />
       </div>
       <hr className="w-full border-gray-200 mb-6" />
       <div
@@ -114,14 +117,17 @@ const BlogPostCard: React.FC<BlogProps> = ({ blogData, className, lang }) => {
         }
       >
         <div className={`tags`}>
-          {Array.isArray(tags) && (
+          {Array.isArray(blog_keywords) && (
             <ul className="pt-0">
               <li className="text-sm text-skin-base text-opacity-80 inline-flex items-center justify-center me-2 relative top-1">
                 <LabelIcon className="me-2" /> {t('text-tags')}:
               </li>
-              {tags?.map((item: any) => (
-                <li className="inline-block p-[3px]" key={`tag-${item.id}`}>
-                  <TagLabel data={item} />
+              {blog_keywords?.map((item: any) => (
+                <li
+                  className="inline-block p-[3px]"
+                  key={`tag-${item.blog_keyword_id}`}
+                >
+                  <TagLabel data={{ name: item.blog_keyword_name }} />
                 </li>
               ))}
             </ul>

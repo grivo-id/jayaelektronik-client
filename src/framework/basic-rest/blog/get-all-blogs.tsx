@@ -22,19 +22,20 @@ interface Blog {
   blog_keywords: BlogKeyword[];
 }
 
-interface Pagination {
+type Pagination = {
   totalData: number;
   currentPage: number;
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
-}
+};
+
 
 interface BlogsApiResponse {
   success: boolean;
-  message: string;
+  message?: string;
   data: Blog[];
-  pagination: Pagination;
+  pagination: Pagination[];
 }
 
 const fetchBlogs = async ({ queryKey }: any) => {

@@ -20,7 +20,6 @@ export const BlogListContent: FC<blogGridProps> = ({
 }) => {
   const { t } = useTranslation(lang, 'common');
 
-  console.log(dataBlog);
   const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState('');
   const countPerPage = 8;
