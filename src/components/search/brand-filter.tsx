@@ -8,6 +8,14 @@ import Heading from '@components/ui/heading';
 import { useTranslation } from 'src/app/i18n/client';
 import useQueryParam from '@utils/use-query-params';
 
+const convertToSlug = (text: string): string => {
+  return text
+    ?.replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-')
+    .trim();
+};
+
 export const BrandFilter = ({ lang }: { lang: string }) => {
   const { t } = useTranslation(lang, 'common');
   const pathname = usePathname();
@@ -28,7 +36,7 @@ export const BrandFilter = ({ lang }: { lang: string }) => {
   }, [hasQueryKey]);
 
   const { data, isLoading, error } = useBrandsQuery({
-    limit: 10,
+    limit: 99,
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -42,7 +50,7 @@ export const BrandFilter = ({ lang }: { lang: string }) => {
         : [...formState, value]
     );
   }
-  const items = data?.brands?.data;
+  const items = data?.data || [];
 
   return (
     <div className="block">
@@ -52,11 +60,11 @@ export const BrandFilter = ({ lang }: { lang: string }) => {
       <div className="flex flex-col">
         {items?.slice(0, 3)?.map((item: any) => (
           <CheckBox
-            key={`${item.name}-key-${item.id}`}
-            label={item.name}
-            name={item.name.toLowerCase()}
-            checked={formState.includes(item.slug)}
-            value={item.slug}
+            key={`${item.brand_name}-key-${item.brand_id}`}
+            label={item.brand_name}
+            name={item.brand_name.toLowerCase()}
+            checked={formState.includes(convertToSlug(item.brand_name))}
+            value={convertToSlug(item.brand_name)}
             onChange={handleItemClick}
             lang={lang}
           />
@@ -69,30 +77,30 @@ export const BrandFilter = ({ lang }: { lang: string }) => {
                   <Disclosure.Panel className="pt-4 pb-2">
                     {items?.slice(3, items.length).map((item: any) => (
                       <CheckBox
-                        key={`${item.name}-key-${item.id}`}
-                        label={item.name}
-                        name={item.name.toLowerCase()}
-                        checked={formState.includes(item.slug)}
-                        value={item.slug}
+                        key={`${item.brand_name}-key-${item.brand_id}`}
+                        label={item.brand_name}
+                        name={item.brand_name.toLowerCase()}
+                        checked={formState.includes(convertToSlug(item.brand_name))}
+                        value={convertToSlug(item.brand_name)}
                         onChange={handleItemClick}
                         lang={lang}
                       />
                     ))}
                   </Disclosure.Panel>
-                  <Disclosure.Button className="flex justify-center items-center w-full px-4 pt-3.5 pb-1 text-sm font-medium text-center bg-brand focus:outline-none">
+                  <Disclosure.Button className="flex justify-center items-center w-full px-4 py-2.5 text-sm font-medium text-center bg-brand text-white focus:outline-none rounded-md">
                     {open ? (
                       <>
                         <span className="inline-block ltr:pr-1 rtl:pl-1">
                           {t('text-see-less')}
                         </span>
-                        <IoIosArrowUp className="text-brand-dark text-opacity-60 text-15px" />
+                        <IoIosArrowUp className="text-white text-opacity-60 text-15px" />
                       </>
                     ) : (
                       <>
                         <span className="inline-block ltr:pr-1 rtl:pl-1">
                           {t('text-see-more')}
                         </span>
-                        <IoIosArrowDown className="text-brand-dark text-opacity-60 text-15px" />
+                        <IoIosArrowDown className="text-white text-opacity-60 text-15px" />
                       </>
                     )}
                   </Disclosure.Button>
