@@ -15,6 +15,7 @@ import {
   IoClose,
 } from 'react-icons/io5';
 import { useTranslation } from 'src/app/i18n/client';
+import CategoryListMenu from './category-list';
 
 const social = [
   {
@@ -47,6 +48,19 @@ const social = [
   },
 ];
 
+type MenuItem = {
+  id: number;
+  path: string;
+  label: string;
+  subMenu?: any;
+};
+
+type CustomMenuItem = MenuItem & {
+  component: JSX.Element;
+};
+
+type MenuWithCategories = (MenuItem | CustomMenuItem)[];
+
 export default function MobileMenu({ lang }: { lang: string }) {
   const [activeMenus, setActiveMenus] = useState<any>([]);
   const { site_header } = siteSettings;
@@ -65,6 +79,17 @@ export default function MobileMenu({ lang }: { lang: string }) {
     setActiveMenus(newActiveMenus);
   };
 
+  const menuWithCategories: MenuWithCategories = [
+    ...site_header.menu.slice(0, 1),
+    {
+      id: 999,
+      path: '/category',
+      label: 'menu-categories',
+      component: <CategoryListMenu lang={lang} closeSidebar={closeSidebar} />,
+    },
+    ...site_header.menu.slice(1),
+  ];
+
   const ListMenu = ({
     dept,
     data,
@@ -74,7 +99,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
     className = '',
   }: any) =>
     data.label && (
-      <li className={`transition-colors duration-200 ${className}`}>
+      <div className={`transition-colors duration-200 ${className}`}>
         <div className="relative flex items-center justify-between">
           <Link
             href={`/${lang}${data.path}`}
@@ -105,7 +130,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
             menuIndex={menuIndex}
           />
         )}
-      </li>
+      </div>
     );
 
   const SubMenu = ({ dept, data, toggle, menuIndex }: any) => {
@@ -142,8 +167,12 @@ export default function MobileMenu({ lang }: { lang: string }) {
   return (
     <>
       <div className="flex flex-col justify-between w-full h-full">
-        <div className="bg-slate-600 w-full border-b border-border-base flex justify-between items-center relative ltr:pl-5 rtl:pr-5 md:ltr:pl-7 md:rtl:pr-7 shrink-0 py-0.5">
-          <div role="button" onClick={closeSidebar} className="inline-flex w-32">
+        <div className="bg-white shadow w-full border-b border-border-base flex justify-between items-center relative ltr:pl-5 rtl:pr-5 md:ltr:pl-7 md:rtl:pr-7 shrink-0 py-0.5">
+          <div
+            role="button"
+            onClick={closeSidebar}
+            className="inline-flex w-32"
+          >
             <Logo />
           </div>
 
@@ -152,26 +181,35 @@ export default function MobileMenu({ lang }: { lang: string }) {
             onClick={closeSidebar}
             aria-label="close"
           >
-            <IoClose className="text-brand-light" />
+            <IoClose className="text-brand" />
           </button>
         </div>
 
         <Scrollbar className="flex-grow mb-auto menu-scrollbar">
           <div className="flex flex-col px-0  text-brand-dark h-[calc(100vh_-_150px)]">
             <ul className="mobile-menu">
-              {site_header.menu.map((menu, index) => {
+              {menuWithCategories.map((menu, index) => {
                 const dept: number = 1;
                 const menuName: string = `sidebar-menu-${dept}-${index}`;
 
+                const isCustomMenuItem = (
+                  item: MenuItem | CustomMenuItem
+                ): item is CustomMenuItem => 'component' in item;
+
                 return (
-                  <ListMenu
-                    dept={dept}
-                    data={menu}
-                    hasSubMenu={menu.subMenu}
-                    menuName={menuName}
-                    key={menuName}
-                    menuIndex={index}
-                  />
+                  <li key={menuName}>
+                    {isCustomMenuItem(menu) ? (
+                      menu.component
+                    ) : (
+                      <ListMenu
+                        dept={dept}
+                        data={menu}
+                        hasSubMenu={menu.subMenu}
+                        menuName={menuName}
+                        menuIndex={index}
+                      />
+                    )}
+                  </li>
                 );
               })}
             </ul>
