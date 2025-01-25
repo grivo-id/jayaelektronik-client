@@ -1,3 +1,4 @@
+import { Product } from '@framework/types';
 import isEmpty from 'lodash/isEmpty';
 interface Item {
   id: string | number;
@@ -20,28 +21,47 @@ interface Variation {
   quantity: number;
   [key: string]: unknown;
 }
-export function generateCartItem(item: Item, variation: Variation) {
-  const { id, name, slug, image, price, sale_price, quantity, unit } = item;
+
+const convertToSlug = (text: any): string => {
+  return text
+    ?.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-')
+    .trim();
+};
+
+export function generateCartItem(item: Product, variation: any) {
+  // console.log('car', item)
+  const {
+    product_id,
+    product_name,
+    product_image1,
+    product_is_available,
+    product_price,
+  } = item;
+  const slug = convertToSlug(product_name);
+
   if (!isEmpty(variation)) {
     return {
-      id: `${id}.${variation.id}`,
-      productId: id,
-      name: `${name} - ${variation.title}`,
-      slug,
-      unit,
-      stock: variation.quantity,
-      price: variation.sale_price ? variation.sale_price : variation.price,
-      image: image?.thumbnail,
+      id: product_id,
+      productId: product_id,
+      name: product_name,
+      slug: slug,
+      product_is_available: product_is_available,
+      price: product_price,
+      image: product_image1,
       variationId: variation.id,
+      stock: 50,
     };
   }
   return {
-    id,
-    name,
-    slug,
-    unit,
-    image: image?.thumbnail,
-    stock: quantity,
-    price: sale_price ? sale_price : price,
+    id: product_id,
+    name: product_name,
+    slug: slug,
+    image: product_image1,
+    product_is_available: product_is_available,
+    price: product_price,
+    stock: 50,
   };
 }
