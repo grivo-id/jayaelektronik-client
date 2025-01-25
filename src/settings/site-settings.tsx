@@ -21,12 +21,12 @@ export const siteSettings = {
     url: siteLogo,
     urlReverse: siteLogo,
     alt: 'JayaElektronik',
-    href: '/en',
+    href: '/ina',
     width: 195,
     height: 26,
   },
-  defaultLanguage: 'en',
-  currencyCode: 'USD',
+  defaultLanguage: 'ina',
+  currencyCode: 'IDR',
   site_header: {
     topmenu: [
       {
@@ -80,16 +80,16 @@ export const siteSettings = {
     ],
     languageMenu: [
       {
+        id: 'ina',
+        name: 'Indonesia',
+        value: 'ina',
+        icon: <IDFlag />,
+      },
+      {
         id: 'en',
         name: 'English',
         value: 'en',
         icon: <USFlag />,
-      },
-      {
-        id: 'id',
-        name: 'Indonesia',
-        value: 'id',
-        icon: <IDFlag />,
       },
     ],
     pagesMenu: [
