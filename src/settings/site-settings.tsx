@@ -46,37 +46,42 @@ export const siteSettings = {
         path: '/',
         label: 'main-menu',
       },
+      {
+        id: 2,
+        path: '/search',
+        label: 'menu-catalog',
+      },
 
       {
-        id: 4,
+        id: 3,
         path: '/shops/',
         label: 'menu-shops',
       },
       {
-        id: 6,
+        id: 4,
         path: '/blog/',
         label: 'menu-blog-list',
       },
       {
-        id: 7,
+        id: 5,
         path: '/about-us',
         label: 'menu-about-us',
       },
       {
-        id: 8,
+        id: 6,
         path: '/contact-us',
         label: 'menu-contact-us',
       },
       {
-        id: 9,
+        id: 7,
         path: '/faq',
         label: 'menu-faq',
       },
-      {
-        id: 10,
-        path: '/terms',
-        label: 'menu-terms-condition',
-      },
+      // {
+      //   id: 10,
+      //   path: '/terms',
+      //   label: 'menu-terms-condition',
+      // },
     ],
     languageMenu: [
       {
