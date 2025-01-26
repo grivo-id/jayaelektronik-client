@@ -20,8 +20,7 @@ function getImage(deviceWidth: number, imgObj: any) {
 
 const convertToSlug = (text: string): string => {
   return text
-    ?.toLowerCase()
-    .replace(/[^\w\s-]/g, '')
+    ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
     .trim();
@@ -42,7 +41,7 @@ const BrandCard: React.FC<BannerProps> = ({
   return (
     <div className={cn('mx-auto', className)}>
       <Link
-        href={`/${lang}/${slug}`}
+        href={`/${lang}/search?brand=${slug}`}
         className={cn(
           'h-full w-full group flex justify-center relative overflow-hidden',
           classNameInner
