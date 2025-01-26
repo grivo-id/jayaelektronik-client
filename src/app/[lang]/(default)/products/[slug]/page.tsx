@@ -23,7 +23,7 @@ export default async function Page({
             lang={lang}
             className="mb-8 lg:mb-12"
           />
-          <ElectronicProductFeed lang={lang} />
+          {/* <ElectronicProductFeed lang={lang} /> */}
         </Container>
       </div>
     </>

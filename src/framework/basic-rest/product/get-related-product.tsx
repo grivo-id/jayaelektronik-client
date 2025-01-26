@@ -8,7 +8,7 @@ export const fetchRelatedProducts = async ({ queryKey }: any) => {
   const { data } = await http.get(API_ENDPOINTS.RELATED_PRODUCTS);
   return data;
 };
-export const useRelatedProductsQuery = (options: QueryOptionsType) => {
+export const useRelatedProductsQuery = (options: any) => {
   return useQuery<Product[], Error>(
     [API_ENDPOINTS.RELATED_PRODUCTS, options],
     fetchRelatedProducts
