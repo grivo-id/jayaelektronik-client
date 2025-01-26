@@ -10,10 +10,9 @@ import { bundleDataTwo as bundle } from '@framework/static/bundle';
 import SupperCategoryElectronicFeed from '@components/product/feeds/suppercategory-electronic-feed';
 import SupperCategoryClothFeed from '@components/product/feeds/suppercategory-cloth-feed';
 import {
-  bannerBrand,
   homeOnesGridHero as bannerTwo,
   homeOnesGridHero2 as bannerTwo2,
-  homeSixHeroSlider as heroSlider,
+  homeJayaHeroSlider as heroSlider,
 } from '@framework/static/banner';
 import ProductWithBestDeals from '@components/product/product-with-best-deals';
 
@@ -55,8 +54,14 @@ export default async function Page({
           lang={lang}
           data={bannerTwo2}
           className="mb-8 lg:mb-12"
-          girdClassName="xl:gap-5 2xl:grid-cols-[minmax(1138px,_1fr)_1fr] "
+          girdClassName="xl:gap-5 "
         />
+        {/* <BannerGridTwo
+          lang={lang}
+          data={bannerTwo2}
+          className="mb-8 lg:mb-12"
+          girdClassName="xl:gap-5 2xl:grid-cols-[minmax(1138px,_1fr)_1fr] "
+        /> */}
         {/* <SupperCategoryClothFeed lang={lang} /> */}
         {/* <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" /> */}
       </Container>

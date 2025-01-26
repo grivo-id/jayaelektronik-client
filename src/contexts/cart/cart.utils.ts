@@ -15,16 +15,20 @@ export function addItemWithQuantity(
 ) {
   if (quantity <= 0)
     throw new Error("cartQuantity can't be zero or less than zero");
+
   const existingItemIndex = items.findIndex(
     (existingItem) => existingItem.id === item.id
   );
 
   if (existingItemIndex > -1) {
-    const newItems = [...items];
-    newItems[existingItemIndex].quantity! += quantity;
-    return newItems;
+    return items.map((existingItem, index) =>
+      index === existingItemIndex
+        ? { ...existingItem, quantity: existingItem.quantity! + quantity }
+        : existingItem
+    );
+  } else {
+    return [...items, { ...item, quantity }];
   }
-  return [...items, { ...item, quantity }];
 }
 
 export function removeItemOrQuantity(
