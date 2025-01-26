@@ -7,7 +7,7 @@ module.exports = {
       colors: {
         skin: {
           DEFAULT: '#ff7e00',
-          primary: '#1a6b22',
+          primary: '#ff6501',
           inverted: '#ffffff',
           base: '#333333',
           fill: '#ffffff',
@@ -17,7 +17,7 @@ module.exports = {
           six: '#222b34',
         },
         brand: {
-          DEFAULT: '#1a6b22',
+          DEFAULT: '#ff6501',
           dark: '#333333',
           light: '#ffffff',
           muted: '#595959',

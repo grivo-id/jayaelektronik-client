@@ -176,7 +176,7 @@ function Header({ lang }: { lang: string }) {
                 {/* End of logo */}
                 <div className="categories-header-button relative me-8 flex-shrink-0 w-72">
                   <button
-                    className="bg-[#5bcd32] rounded-t min-h-[60px] focus:outline-none w-full font-medium text-white  px-[18px] uppercase py-4 flex items-center transition-all hover:border-skin-four"
+                    className="bg-[#ff6501] rounded-t min-h-[60px] focus:outline-none w-full font-medium text-white  px-[18px] uppercase py-4 flex items-center transition-all hover:border-skin-four"
                     onClick={handleCategoryMenu}
                   >
                     <FiMenu className="text-2xl me-3" />

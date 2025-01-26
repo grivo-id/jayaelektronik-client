@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   CATEGORIES: '/product-categories/sub-categories',
   DIETARY: '/',
   BRANDS: '/brands',
+  FLEX_PRODUCTS:'/products/all',
   PRODUCTS: '/',
   PRODUCT: '/',
   RELATED_PRODUCTS: '/',

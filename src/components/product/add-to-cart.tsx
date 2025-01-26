@@ -29,11 +29,13 @@ const AddToCart = ({
     isInCart,
   } = useCart();
   const item = generateCartItem(data!, variation);
+  // console.log('item', item)
   const handleAddClick = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
-    e.stopPropagation();
-    addItemToCart(item, 1);
+    e.stopPropagation(); 
+    e.preventDefault(); 
+    addItemToCart(item, 1); 
   };
   const handleRemoveClick = (e: any) => {
     e.stopPropagation();
