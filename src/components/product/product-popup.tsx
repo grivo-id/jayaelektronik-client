@@ -246,7 +246,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 {isEmpty(variations) && (
                   <>
                     {product_is_available ? (
-                      <span className="text-sm font-medium text-[#5bcd32]">
+                      <span className="text-sm font-medium text-[#fe4800]">
                         {t('text-left-item')}
                       </span>
                     ) : (
@@ -258,7 +258,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 )}
 
                 {!isEmpty(selectedVariation) && (
-                  <span className="text-sm font-medium text-[#5bcd32]">
+                  <span className="text-sm font-medium text-[#fe4800]">
                     {selectedVariation?.is_disable ||
                     selectedVariation.quantity === 0
                       ? t('text-out-stock')

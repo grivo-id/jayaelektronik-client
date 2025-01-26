@@ -43,7 +43,7 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
           </div>
           <div className='block'>
             <p className="text-black mb-0">{t('text-hotline')}</p>
-            <p className="text-brand text-lg duration-200 hover:text-[#1a6b22]">
+            <p className="text-brand text-lg duration-200 hover:text-[#fe4800]">
               {t('link-phone')}
             </p>
           </div>
@@ -93,7 +93,7 @@ function HotlineSvg() {
       height="55"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#1a6b22"
+      stroke="#ff6501"
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
