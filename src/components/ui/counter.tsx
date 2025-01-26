@@ -35,7 +35,7 @@ const Counter: React.FC<CounterProps> = ({
         {
           'h-8 md:h-10 bg-brand shadow-counter rounded-3xl':
             variant === 'mercury' || variant === 'cardv2',
-          'rounded-md h-11 md:h-14 bg-[#f3f5f9] w-40 mb-5':
+          'rounded-md h-11 md:h-14 bg-gray-200 w-40 mb-5 ':
             variant === 'single',
           'inline-flex': variant === 'cart',
         },
@@ -47,9 +47,9 @@ const Counter: React.FC<CounterProps> = ({
         className={cn(
           'flex items-center justify-center shrink-0 transition-all ease-in-out duration-300 focus:outline-none focus-visible:outline-none',
           {
-            'w-8 md:w-12 h-8 rounded-2xl text-heading ms-1 ':
+            'w-8 md:w-12 h-8 rounded-2xl text-heading ms-1 text-white ':
               variant === 'mercury' || variant === 'cardv2',
-            '!w-8 !h-8 rounded-full transform scale-80 lg:scale-100 text-white hover:bg-fill-four ltr:ml-auto rtl:mr-auto':
+            '!w-8 !h-8 rounded-full transform scale-80 lg:scale-100 text-brand hover:bg-fill-four ltr:ml-auto rtl:mr-auto':
               variant === 'single',
             '!w-6 !h-6 pr-0 border border-border-three hover:bg-brand text-white hover:border-brand rounded hover:text-brand-light':
               variant === 'cart',
@@ -57,16 +57,16 @@ const Counter: React.FC<CounterProps> = ({
         )}
       >
         <span className="sr-only">{t('button-minus')}</span>
-        <MinusIcon color="white" width={size} height={size} opacity="1" />
+        <MinusIcon  width={size} height={size} opacity="1" />
       </button>
       <span
         className={cn(
-          'font-semibold text-white flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default shrink-0',
+          'font-semibold  flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default shrink-0',
           {
-            'text-sm md:text-base w-6':
+            'text-sm md:text-base w-6 text-white':
               variant === 'mercury' || variant === 'cardv2',
-            'text-base md:text-[17px] w-12 md:w-12': variant === 'single',
-            'text-15px w-9': variant === 'cart',
+            'text-base md:text-[17px] w-12 md:w-12 text-brand': variant === 'single',
+            'text-15px w-9 text-brand': variant === 'cart',
           }
         )}
       >
@@ -78,9 +78,9 @@ const Counter: React.FC<CounterProps> = ({
         className={cn(
           'group flex  items-center justify-center flex-shrink-0 transition-all ease-in-out duration-300 focus:outline-none focus-visible:outline-none',
           {
-            'w-8 md:w-12 h-8 rounded-2xl text-heading  me-1':
+            'w-8 md:w-12 h-8 rounded-2xl text-heading  me-1 text-white':
               variant === 'mercury' || variant === 'cardv2',
-            '!w-8 !h-8 rounded-full scale-80 lg:scale-100 text-heading hover:bg-fill-four ltr:mr-auto rtl:ml-auto !pr-0 justify-center':
+            '!w-8 !h-8 rounded-full scale-80 lg:scale-100 text-heading text-brand hover:bg-fill-four ltr:mr-auto rtl:ml-auto !pr-0 justify-center':
               variant === 'single',
             '!w-6 !h-6 border text-white border-border-three hover:bg-brand hover:border-brand  rounded hover:text-brand-light !pr-0':
               variant === 'cart',
@@ -89,7 +89,7 @@ const Counter: React.FC<CounterProps> = ({
         title={disabled ? 'Out Of Stock' : ''}
       >
         <span className="sr-only">{t('button-plus')}</span>
-        <PlusIcon color="white" width={size} height={size} opacity="1" />
+        <PlusIcon  width={size} height={size} opacity="1" />
       </button>
     </div>
   );

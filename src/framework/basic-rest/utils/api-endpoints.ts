@@ -12,6 +12,7 @@ export const API_ENDPOINTS = {
   FLEX_PRODUCTS:'/products/all',
   PRODUCTS: '/',
   PRODUCT: '/',
+  PRODUCT_DETAIL: '/products',
   RELATED_PRODUCTS: '/',
   FLASH_SELL_PRODUCTS: '/',
   BEST_SELLER_PRODUCTS: '/products/best-seller',

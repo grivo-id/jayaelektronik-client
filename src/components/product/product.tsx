@@ -26,13 +26,18 @@ import ProductDetailsTab from '@components/product/product-details/product-tab';
 import VariationPrice from './variation-price';
 import isEqual from 'lodash/isEqual';
 import { useTranslation } from 'src/app/i18n/client';
+import { useProductDetailQueryByName } from '@framework/product/get-product-detail';
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
   const pathname = useParams();
-  const { slug } = pathname;
+  const { slug }: any = pathname;
+  const productName = slug.replace(/-/g, ' ');
   const { width } = useWindowSize();
-  const { data, isLoading } = useProductQuery(slug as string);
+  const { data, isLoading } = useProductDetailQueryByName({
+    product_name: productName,
+  });
+
   const { addItemToCart, isInCart, getItemFromCart, isInStock } = useCart();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
@@ -43,20 +48,31 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     useState<boolean>(false);
   const [shareButtonStatus, setShareButtonStatus] = useState<boolean>(false);
   const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${ROUTES.PRODUCT}/${pathname.slug}`;
+
+  const product = data?.data;
+  const gallery = [
+    product?.product_image1,
+    product?.product_image2,
+    product?.product_image3,
+  ];
+  console.log(product);
+
   const { price, basePrice, discount } = usePrice(
-    data && {
-      amount: data.sale_price ? data.sale_price : data.price,
-      baseAmount: data.price,
-      currencyCode: 'USD',
+    product && {
+      amount: product?.sale_price
+        ? product?.sale_price
+        : product?.product_price,
+      baseAmount: product?.product_price,
+      currencyCode: 'IDR',
     }
   );
-  
-  const {  payment } = footer;
+
+  const { payment } = footer;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
-  if (isLoading) return <p className={"pt-8 pb-8"}>Loading...</p>;
-  const variations = getVariations(data?.variations);
+  if (isLoading) return <p className={'pt-8 pb-8'}>Loading...</p>;
+  const variations = getVariations(product?.variations);
 
   const isSelected = !isEmpty(variations)
     ? !isEmpty(attributes) &&
@@ -66,7 +82,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     : true;
   let selectedVariation: any = {};
   if (isSelected) {
-    const dataVaiOption: any = data?.variation_options;
+    const dataVaiOption: any = product?.variation_options;
     selectedVariation = dataVaiOption?.find((o: any) =>
       isEqual(
         o.options.map((v: any) => v.value).sort(),
@@ -74,7 +90,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
       )
     );
   }
-  const item = generateCartItem(data!, selectedVariation);
+  const item = generateCartItem(product!, selectedVariation);
   const outOfStock = isInCart(item.id) && !isInStock(item.id);
   function addToCart() {
     if (!isSelected) return;
@@ -84,7 +100,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
       setAddToCartLoader(false);
     }, 1500);
 
-    const item = generateCartItem(data!, selectedVariation);
+    const item = generateCartItem(product!, selectedVariation);
     addItemToCart(item, quantity);
     toast('Added to the bag', {
       progressClassName: 'fancy-progress-bar',
@@ -120,9 +136,9 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     <div className="pt-6 pb-2 md:pt-7">
       <div className="grid-cols-10 lg:grid gap-7 2xl:gap-8">
         <div className="col-span-5 mb-6 overflow-hidden  md:mb-8 lg:mb-0">
-          {!!data?.gallery?.length ? (
+          {!!gallery?.length ? (
             <ThumbnailCarousel
-              gallery={data?.gallery}
+              gallery={gallery}
               thumbnailClassName="xl:w-[700px] 2xl:w-[880px]"
               galleryClassName="xl:w-[100px] 2xl:w-[120px]"
               lang={lang}
@@ -130,8 +146,8 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
           ) : (
             <div className="flex items-center justify-center w-auto">
               <Image
-                src={data?.image?.original ?? '/product-placeholder.svg'}
-                alt={data?.name!}
+                src={product?.product_image1 ?? '/product-placeholder.svg'}
+                alt={product?.product_name!}
                 width={900}
                 height={680}
                 style={{ width: 'auto' }}
@@ -144,21 +160,9 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
           <div className="pb-4 lg:pb-8">
             <div className="md:mb-2.5 block -mt-1.5">
               <h2 className="text-lg font-medium transition-colors duration-300 text-brand-dark md:text-xl xl:text-2xl">
-                {data?.name}
+                {product?.product_name}
               </h2>
             </div>
-            {data?.unit && isEmpty(variations) ? (
-              <div className="text-sm font-medium md:text-15px">
-                {data?.unit}
-              </div>
-            ) : (
-              <VariationPrice
-                selectedVariation={selectedVariation}
-                minPrice={data?.min_price}
-                maxPrice={data?.max_price}
-                lang={lang}
-              />
-            )}
 
             {isEmpty(variations) && (
               <div className="flex items-center mt-5">
@@ -181,18 +185,19 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
 
           <dl className="productView-info  text-[14px] leading-8 pb-5 mb-5 border-b border-border-base">
             <dt className={`productView-info-name w-40 float-left`}>
-              {t('text-brand')}:
-            </dt>
-            <dd className="productView-info-value">{data?.brand}</dd>
-            <dt className={`productView-info-name w-40 float-left`}>
               {t('text-sku')}:
             </dt>
-            <dd className="productView-info-value">200101</dd>
+            <dd className="productView-info-value">{product?.product_code}</dd>
             <dt className={`productView-info-name w-40 float-left`}>
-              {t('text-weight')}:
+              {t('text-brand')}:
+            </dt>
+            <dd className="productView-info-value">{product?.brand_name}</dd>
+
+            <dt className={`productView-info-name w-40 float-left`}>
+              {t('text-sub-category')}:
             </dt>
             <dd className="productView-info-value" data-product-weight="">
-              {data?.weight} KGS
+              {product?.product_subcategory_name}
             </dd>
             <dt className={`productView-info-name w-40 float-left`}>
               {t('text-shipping')}:
@@ -201,28 +206,14 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
               {t(`text-calculated-checkout`)}
             </dd>
           </dl>
-          {Object.keys(variations).map((variation) => {
-            return (
-              <ProductAttributes
-                key={`popup-attribute-key${variation}`}
-                variations={variations}
-                attributes={attributes}
-                setAttributes={setAttributes}
-              />
-            );
-          })}
 
           <div className="pb-2">
             {/* check that item isInCart and place the available quantity or the item quantity */}
             {isEmpty(variations) && (
               <>
-                {Number(quantity) > 0 || !outOfStock ? (
+                {product?.product_is_available ? (
                   <span className="text-sm font-medium text-yellow">
-                    {t('text-only') +
-                      ' ' +
-                      quantity +
-                      ' ' +
-                      t('text-left-item')}
+                    {t('text-left-item')}
                   </span>
                 ) : (
                   <div className="text-base text-red-500 whitespace-nowrap">
@@ -230,21 +221,6 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
                   </div>
                 )}
               </>
-            )}
-
-            {!isEmpty(selectedVariation) && (
-              <span className="text-sm font-medium text-yellow">
-                {selectedVariation?.is_disable ||
-                selectedVariation.quantity === 0
-                  ? t('text-out-stock')
-                  : `${
-                      t('text-only') +
-                      ' ' +
-                      selectedVariation.quantity +
-                      ' ' +
-                      t('text-left-item')
-                    }`}
-              </span>
             )}
           </div>
 
@@ -314,43 +290,22 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
             </div>
           </div>
 
-          <ul className="pt-5 xl:pt-8 flex items-center justify-between">
-            <li className="relative inline-flex items-center justify-center text-sm  text-brand-dark text-opacity-80 ltr:mr-2 rtl:ml-2 top-1">
+          <div className="pt-5 xl:pt-8 flex items-center justify-end gap-2">
+            <span className="relative inline-flex items-center justify-center text-sm  text-brand-dark text-opacity-80">
               {t('text-tags')}:
-            </li>
-            <li className="inline-block ">
-              {payment && (
-                <ul className="flex flex-wrap justify-center items-center space-x-4 -mb-1.5 md:mb-0 mx-auto md:mx-0 pt-3.5 md:pt-0">
-                  {payment?.map((item) => (
-                    <li
-                      className="mb-2 md:mb-0 transition hover:opacity-80 inline-flex"
-                      key={`payment-list--key${item.id}`}
-                    >
-                      <a
-                        href={item.path ? item.path : '/#'}
-                        target="_blank"
-                        className="inline-flex"
-                        rel="noreferrer"
-                      >
-                        <Image
-                          src={item.image}
-                          alt={t(item.name)}
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className=" h-auto"
-                          style={{ width: item.width }}
-                        />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          </ul>
+            </span>
+            {product?.product_tags?.map((tag, index) => (
+              <span
+                key={tag.product_tag_id}
+                className="uppercase text-sm bg-gray-100 px-2 py-1 rounded-md shadow text-brand-dark "
+              >
+                {tag.product_tag_name}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
-      <ProductDetailsTab lang={lang} />
+      <ProductDetailsTab lang={lang} product_desc={product?.product_desc} />
     </div>
   );
 };
