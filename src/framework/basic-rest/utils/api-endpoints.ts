@@ -26,7 +26,7 @@ export const API_ENDPOINTS = {
   PHONES_CATEGORY: '/',
   COMPUTER_CATEGORY: '/',
   CLOTH_CATEGORY: '/',
-  SEARCH: '/search.json',
+  SEARCH: '/products/search',
   ORDERS: '/',
   ORDER: '/',
   ORDER_STATUS: '/',

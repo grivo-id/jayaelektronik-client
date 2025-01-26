@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       colors: {
         skin: {
-          DEFAULT: '#ff7e00',
+          DEFAULT: '#ff6501',
           primary: '#ff6501',
           inverted: '#ffffff',
           base: '#333333',
