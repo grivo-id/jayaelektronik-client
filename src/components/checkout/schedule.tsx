@@ -92,7 +92,7 @@ export default function Schedule({ lang }: { lang: string }) {
                         'flex w-6 h-6 rounded-full',
                         checked
                           ? 'border-[6px] border-brand'
-                          : 'border-2 border-gray-200'
+                          : 'border-2 border-gray-500'
                       )}
                     />
                     <RadioGroup.Label
