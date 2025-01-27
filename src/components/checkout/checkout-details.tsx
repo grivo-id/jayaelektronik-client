@@ -27,11 +27,11 @@ const CheckoutDetails: React.FC<{ lang: string }> = ({ lang }) => {
       component: <DeliverySchedule lang={lang} />,
     },
    
-    {
-      id: 4,
-      title: 'text-payment-option',
-      component: <StripeCheckoutInlineForm lang={lang} />,
-    },
+    // {
+    //   id: 4,
+    //   title: 'text-payment-option',
+    //   component: <StripeCheckoutInlineForm lang={lang} />,
+    // },
     {
       id: 5,
       title: 'text-delivery-instructions',

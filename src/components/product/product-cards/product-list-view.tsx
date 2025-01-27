@@ -66,6 +66,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
 
 const ProductList: React.FC<ProductProps> = ({ product, className, lang }) => {
   const {
+    product_id,
     product_name,
     product_image1,
     product_image2,
@@ -109,7 +110,7 @@ const ProductList: React.FC<ProductProps> = ({ product, className, lang }) => {
     >
       <div className="col-span-1 ">
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${convertToSlug(product_name)}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
           className="block border border-black/10 hover:border-skin-primary"
         >
           <div className="relative card-img-container overflow-hidden mx-auto w-full max-w-[270px]  h-[180px] md:h-[300px] ">
@@ -147,7 +148,7 @@ const ProductList: React.FC<ProductProps> = ({ product, className, lang }) => {
           {product_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${convertToSlug(product_name)}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
           className="text-skin-base text-base font-semibold leading-5 min-h-[30px] line-clamp-2 mb-1.5 hover:text-skin-primary"
         >
           {product_name}

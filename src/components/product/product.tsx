@@ -6,12 +6,10 @@ import Counter from '@components/ui/counter';
 import { useParams } from 'next/navigation';
 import { ROUTES } from '@utils/routes';
 import useWindowSize from '@utils/use-window-size';
-import { useProductQuery } from '@framework/product/get-product';
 import { getVariations } from '@framework/utils/get-variations';
 import usePrice from '@framework/product/use-price';
 import { useCart } from '@contexts/cart/cart.context';
 import { generateCartItem } from '@utils/generate-cart-item';
-import ProductAttributes from '@components/product/product-attributes';
 import isEmpty from 'lodash/isEmpty';
 import { toast } from 'react-toastify';
 import ThumbnailCarousel from '@components/ui/carousel/thumbnail-carousel';
@@ -19,23 +17,22 @@ import Image from '@components/ui/image';
 import CartIcon from '@components/icons/cart-icon';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { footer } from '../../layouts/footer/data';
-import LabelIcon from '@components/icons/label-icon';
 import { IoArrowRedoOutline } from 'react-icons/io5';
 import SocialShareBox from '@components/ui/social-share-box';
 import ProductDetailsTab from '@components/product/product-details/product-tab';
-import VariationPrice from './variation-price';
 import isEqual from 'lodash/isEqual';
 import { useTranslation } from 'src/app/i18n/client';
-import { useProductDetailQueryByName } from '@framework/product/get-product-detail';
+import { useProductDetailQueryByProdId } from '@framework/product/get-product-detail';
+
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
   const pathname = useParams();
   const { slug }: any = pathname;
-  const productName = slug.replace(/-/g, ' ');
+  const [productId, productNameWithHyphens] = slug.split('.');
   const { width } = useWindowSize();
-  const { data, isLoading } = useProductDetailQueryByName({
-    product_name: productName,
+  const { data, isLoading } = useProductDetailQueryByProdId({
+    product_id: productId,
   });
 
   const { addItemToCart, isInCart, getItemFromCart, isInStock } = useCart();

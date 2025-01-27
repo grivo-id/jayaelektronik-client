@@ -65,6 +65,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
 }
 const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
   const {
+    product_id,
     product_name,
     product_image1,
     product_image2,
@@ -153,7 +154,7 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
           {brand_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${convertToSlug(product_name)}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
           className="text-skin-base text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
         >
           {product_name}
