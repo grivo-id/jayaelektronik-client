@@ -37,7 +37,7 @@ const Counter: React.FC<CounterProps> = ({
             variant === 'mercury' || variant === 'cardv2',
           'rounded-md h-11 md:h-14 bg-gray-200 w-40 mb-5 ':
             variant === 'single',
-          'inline-flex': variant === 'cart',
+          'inline-flex ': variant === 'cart',
         },
         className
       )}
@@ -51,7 +51,7 @@ const Counter: React.FC<CounterProps> = ({
               variant === 'mercury' || variant === 'cardv2',
             '!w-8 !h-8 rounded-full transform scale-80 lg:scale-100 text-brand hover:bg-fill-four ltr:ml-auto rtl:mr-auto':
               variant === 'single',
-            '!w-6 !h-6 pr-0 border border-border-three hover:bg-brand text-white hover:border-brand rounded hover:text-brand-light':
+            '!w-6 !h-6 pr-0 border border-border-three bg-brand hover:bg-brand text-white hover:border-brand rounded hover:text-brand-light':
               variant === 'cart',
           }
         )}
@@ -82,7 +82,7 @@ const Counter: React.FC<CounterProps> = ({
               variant === 'mercury' || variant === 'cardv2',
             '!w-8 !h-8 rounded-full scale-80 lg:scale-100 text-heading text-brand hover:bg-fill-four ltr:mr-auto rtl:ml-auto !pr-0 justify-center':
               variant === 'single',
-            '!w-6 !h-6 border text-white border-border-three hover:bg-brand hover:border-brand  rounded hover:text-brand-light !pr-0':
+            '!w-6 !h-6 border text-white bg-brand border-border-three hover:bg-brand hover:border-brand  rounded hover:text-brand-light !pr-0':
               variant === 'cart',
           }
         )}
