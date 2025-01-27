@@ -9,7 +9,7 @@ type ResultBody = {
   data: Product;
 };
 
-export const fetchProductDetailByName = async ({ queryKey }: any) => {
+export const fetchProductDetailByProdId = async ({ queryKey }: any) => {
   const [_key, _params] = queryKey;
   const queryString = new URLSearchParams(_params).toString();
   const url = `${API_ENDPOINTS.PRODUCT_DETAIL}?${queryString}`;
@@ -17,9 +17,9 @@ export const fetchProductDetailByName = async ({ queryKey }: any) => {
   const { data } = await http.get(url);
   return data as ResultBody;
 };
-export const useProductDetailQueryByName = (options: any) => {
+export const useProductDetailQueryByProdId = (options: any) => {
   return useQuery<ResultBody, Error>(
     [API_ENDPOINTS.PRODUCT_DETAIL, options],
-    fetchProductDetailByName
+    fetchProductDetailByProdId
   );
 };

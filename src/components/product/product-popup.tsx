@@ -82,6 +82,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
   });
   const variations = getVariations(data.variations);
   const {
+    product_id,
     product_name,
     product_image1,
     product_image2,
@@ -97,7 +98,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${
     ROUTES.PRODUCT
-  }/${convertToSlug(product_name)}`;
+  }/${product_id}.${convertToSlug(product_name)}`;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -159,7 +160,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   function navigateToProductPage() {
     closeModal();
-    router.push(`${lang}/${ROUTES.PRODUCT}/${convertToSlug(product_name)}`);
+    router.push(`${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`);
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);

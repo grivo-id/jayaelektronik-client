@@ -69,7 +69,7 @@ const ProductCardV2: React.FC<ProductProps> = ({
   className,
   lang,
 }) => {
-  const { product_name, product_image1, brand_id, brand_name, product_type } =
+  const {product_id, product_name, product_image1, brand_id, brand_name, product_type } =
     product ?? {};
   const { openModal } = useModalAction();
   const { t } = useTranslation(lang, 'common');
@@ -154,7 +154,7 @@ const ProductCardV2: React.FC<ProductProps> = ({
           {brand_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${convertToSlug(product_name)}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
           className="text-skin-purple text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
         >
           {product_name}

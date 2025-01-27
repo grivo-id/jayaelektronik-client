@@ -18,7 +18,7 @@ const convertToSlug = (text: string): string => {
 };
 
 const SearchProduct: React.FC<SearchProductProps> = ({ lang, item }) => {
-  const { product_name, product_image1, product_type } = item ?? {};
+  const {product_id, product_name, product_image1, product_type } = item ?? {};
 
   const { price, basePrice } = usePrice({
     amount: item?.sale_price ? item?.sale_price : item?.product_price,
@@ -38,7 +38,7 @@ const SearchProduct: React.FC<SearchProductProps> = ({ lang, item }) => {
 
   return (
     <Link
-      href={`/${lang}${ROUTES.PRODUCT}/${slug}`}
+      href={`/${lang}${ROUTES.PRODUCT}/${product_id}.${slug}`}
       className="flex items-center justify-start w-full h-auto group"
     >
       <div className="relative flex w-20 rounded-md overflow-hidden flex-shrink-0 cursor-pointer me-4">
