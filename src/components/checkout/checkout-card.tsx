@@ -24,6 +24,7 @@ const CheckoutCard: React.FC<{ lang: string }> = ({ lang }) => {
     setLoading(false);
   }, []);
   const { items, total, isEmpty } = useCart();
+  console.log('item', items, total)
   const { price: subtotal } = usePrice({
     amount: total,
     currencyCode: 'IDR',
