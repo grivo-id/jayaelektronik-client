@@ -24,9 +24,14 @@ const formatPrice = ({ amount, currencyCode, locale }: FormatPriceArgs) => {
     maximumFractionDigits: currencyCode === 'IDR' ? 0 : 2,
   });
 
-  return formatter.format(amount);
-};
+  let formattedPrice = formatter.format(amount);
 
+  if (currencyCode === 'IDR') {
+    formattedPrice = formattedPrice.replace(/,/g, '.');
+  }
+
+  return formattedPrice;
+};
 const formatVariantPrice = ({
   amount,
   baseAmount,

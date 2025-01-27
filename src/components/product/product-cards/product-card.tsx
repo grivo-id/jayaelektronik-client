@@ -19,8 +19,7 @@ const AddToCart = dynamic(() => import('@components/product/add-to-cart'), {
 
 const convertToSlug = (text: string): string => {
   return text
-    ?.toLowerCase()
-    .replace(/[^\w\s-]/g, '')
+    ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
     .trim();
@@ -35,7 +34,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
   let { data, lang }: any = props;
   // console.log(variant);
   const { t } = useTranslation(lang, 'common');
-  const { id, quantity, product_type } = data ?? {};
+  const { id, quantity, product_type, product_is_available } = data ?? {};
   const { width } = useWindowSize();
   const { openModal } = useModalAction();
   const { isInCart, isInStock } = useCart();
@@ -44,7 +43,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
   function handlePopupView() {
     openModal('PRODUCT_VIEW', data);
   }
-  if (Number(quantity) < 1 || outOfStock) {
+  if (!product_is_available) {
     return (
       <span className="min-w-[150px] min-h-[38px] px-4 py-2 text-[13px] text-brand-light  inline-block bg-brand-danger rounded-full ">
         {t('text-out-stock')}
@@ -66,6 +65,7 @@ function RenderPopupOrAddToCart({ props }: { props: Object }) {
 }
 const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
   const {
+    product_id,
     product_name,
     product_image1,
     product_image2,
@@ -154,7 +154,7 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
           {brand_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${convertToSlug(product_name)}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
           className="text-skin-base text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
         >
           {product_name}

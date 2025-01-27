@@ -11,44 +11,48 @@ import DeliveryTips from './delivery-tips';
 import StripeCheckoutInlineForm from './stripe-checkout-inline-form';
 import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
+import CheckoutInformation from './information';
 
 const CheckoutDetails: React.FC<{ lang: string }> = ({ lang }) => {
+  const isLoggedin = false;
   const { t } = useTranslation(lang, 'common');
   const [bindIndex, setBindIndex] = useState(0);
   const data = [
     {
       id: 1,
+      title: 'text-delivery-userinfo',
+      component: <CheckoutInformation lang={lang} />,
+    },
+    {
+      id: 2,
       title: 'text-delivery-address',
       component: <Address lang={lang} />,
     },
     {
-      id: 2,
+      id: 3,
       title: 'text-delivery-schedule',
       component: <DeliverySchedule lang={lang} />,
     },
-   
+
     {
       id: 4,
-      title: 'text-payment-option',
-      component: <StripeCheckoutInlineForm lang={lang} />,
-    },
-    {
-      id: 5,
       title: 'text-delivery-instructions',
       component: <DeliveryNotes lang={lang} />,
     },
-   
   ];
   const changeItem = (itemIndex: any) => {
     if (itemIndex !== bindIndex) {
       setBindIndex(itemIndex);
     }
   };
+
+  const filteredData = isLoggedin ? data.filter((item) => item.id !== 1) : data;
+
   const mounted = useIsMounted();
   return (
     <div className="border rounded-md border-border-base text-brand-light">
       {mounted &&
-        data?.map((item, index) => {
+        filteredData?.map((item, index) => {
           return (
             <div
               key={index}

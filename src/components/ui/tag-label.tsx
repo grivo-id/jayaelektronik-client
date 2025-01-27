@@ -4,9 +4,13 @@ import { ROUTES } from '@utils/routes';
 import { useRouter } from 'next/navigation';
 import { useModalAction } from '@components/common/modal/modal.context';
 
+interface TagData {
+  name: string;
+}
+
 interface Props {
-  data: Tag;
   className?: string;
+  data: TagData;
 }
 
 const TagLabel: React.FC<Props> = ({ className, data }) => {
@@ -20,7 +24,7 @@ const TagLabel: React.FC<Props> = ({ className, data }) => {
   return (
     <div
       className={cn(
-        'text-13px md:text-sm rounded hover:bg-fill-four block border border-border-four px-2 py-1 transition',
+        'text-13px md:text-sm capitalize rounded hover:bg-fill-four block border border-border-four px-2 py-1 transition',
         className
       )}
       role="button"

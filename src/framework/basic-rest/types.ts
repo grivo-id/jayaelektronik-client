@@ -93,6 +93,11 @@ export type Tag = {
   slug: string;
 };
 
+export type ProdTag = {
+  product_tag_id: string | number,
+  product_tag_name: string
+}
+
 export type Product = {
   product_id: string;
   user_id: string;
@@ -125,7 +130,7 @@ export type Product = {
   product_category_id: string;
   product_subcategory_name: string;
   product_category_name: string;
-  product_tags?: Tag[];
+  product_tags?: ProdTag[];
   [key: string]: unknown;
 };
 

@@ -37,6 +37,10 @@ const Search = React.forwardRef<HTMLDivElement, Props>(
       text: searchText,
     });
 
+    const products = data?.data || []
+
+    // console.log('search', searchText, products)
+
     useFreezeBodyScroll(
       inputFocus === true || displaySearch || displayMobileSearch
     );
@@ -109,7 +113,7 @@ const Search = React.forwardRef<HTMLDivElement, Props>(
                           />
                         </div>
                       ))
-                    : data?.map((item, index) => (
+                    : products?.map((item, index) => (
                         <div
                           key={`search-result-key-${index}`}
                           className="py-2.5 ps-5 pe-10 border-b border-black/5 scroll-snap-align-start transition-colors duration-200 hover:bg-fill-four"

@@ -41,7 +41,6 @@ const SupperCategoryList: React.FC<Props> = ({
               <Link
                 href={{
                   pathname: `/${lang}${ROUTES.SEARCH}`,
-                  query: { category: data?.slug },
                 }}
               >
                 {t('text-view-all-categories')}

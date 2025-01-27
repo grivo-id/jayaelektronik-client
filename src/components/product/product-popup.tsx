@@ -55,8 +55,7 @@ const breakpoints = {
 
 const convertToSlug = (text: string): string => {
   return text
-    ?.toLowerCase()
-    .replace(/[^\w\s-]/g, '')
+    ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
     .trim();
@@ -83,6 +82,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
   });
   const variations = getVariations(data.variations);
   const {
+    product_id,
     product_name,
     product_image1,
     product_image2,
@@ -98,7 +98,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${
     ROUTES.PRODUCT
-  }/${convertToSlug(product_name)}`;
+  }/${product_id}.${convertToSlug(product_name)}`;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -160,7 +160,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   function navigateToProductPage() {
     closeModal();
-    router.push(`${lang}/${ROUTES.PRODUCT}/${convertToSlug(product_name)}`);
+    router.push(`${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`);
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);
@@ -246,7 +246,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 {isEmpty(variations) && (
                   <>
                     {product_is_available ? (
-                      <span className="text-sm font-medium text-[#5bcd32]">
+                      <span className="text-sm font-medium text-[#fe4800]">
                         {t('text-left-item')}
                       </span>
                     ) : (
@@ -258,7 +258,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 )}
 
                 {!isEmpty(selectedVariation) && (
-                  <span className="text-sm font-medium text-[#5bcd32]">
+                  <span className="text-sm font-medium text-[#fe4800]">
                     {selectedVariation?.is_disable ||
                     selectedVariation.quantity === 0
                       ? t('text-out-stock')

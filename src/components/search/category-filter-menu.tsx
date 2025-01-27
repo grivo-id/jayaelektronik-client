@@ -111,7 +111,7 @@ function CategoryFilterMenuItem({
               <span
                   className={`w-[20px] h-[20px] text-[11px] flex items-center justify-center border-2 border-border-four rounded-full transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${
                       formState.includes(item.slug) &&
-                      'border-yellow-100 bg-yellow-100'
+                      'border-[#ff751a] bg-[#ff751a]'
                   }`}
               >
               {formState.includes(item.slug) && <FaCheck />}
