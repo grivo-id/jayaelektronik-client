@@ -222,7 +222,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
                 {isEmpty(variations) && (
                   <div className="flex items-center mt-5">
-                    {product_promo.product_promo_is_discount &&
+                    {product_promo?.product_promo_is_discount &&
                     isValidPromoDate ? (
                       <div className='flex flex-col gap-2'>
                         <div className='flex flex-wrap gap-2 items-center'>
