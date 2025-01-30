@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import cn from 'classnames';
 import Image from '@components/ui/image';
 import usePrice from '@framework/product/use-price';
@@ -7,6 +9,8 @@ import Countdown, { zeroPad } from 'react-countdown';
 import { productPlaceholder } from '@assets/placeholders';
 import ProgressCard from '@components/ui/progress-card';
 import { useTranslation } from 'src/app/i18n/client';
+import PromoCountdown from './promo-coundown';
+import { usePromoCountdown } from '@utils/use-promo-countdown';
 
 interface ProductProps {
   lang: string;
@@ -55,8 +59,10 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
     image,
     quantity,
     sold,
+    product_promo,
     product_type,
   } = product ?? {};
+  const isValidPromoDate = usePromoCountdown(product_promo);
   const { openModal } = useModalAction();
   const { t } = useTranslation(lang, 'common');
   const { price, basePrice } = usePrice({
@@ -64,12 +70,8 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
     baseAmount: product?.product_price,
     currencyCode: 'IDR',
   });
-  const { price: minPrice } = usePrice({
-    amount: product?.min_price ?? 0,
-    currencyCode: 'IDR',
-  });
-  const { price: maxPrice } = usePrice({
-    amount: product?.max_price ?? 0,
+  const { price: promoPrice } = usePrice({
+    amount: product?.product_promo?.product_promo_final_price ?? 0,
     currencyCode: 'IDR',
   });
 
@@ -111,9 +113,16 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
           </div>
 
           <div className="w-full h-full absolute top-0 z-10 -mx-0.5 sm:-mx-1">
-            <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
-              {t('text-on-sale')}
-            </span>
+            {product_promo?.product_promo_is_discount && isValidPromoDate && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-on-sale')}
+              </span>
+            )}
+            {product_promo?.product_promo_is_best_deal && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-best-deal')}
+              </span>
+            )}
           </div>
         </div>
 
@@ -122,27 +131,29 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
             {product_name}
           </h2>
           <div className="space-s-2 mb-1 lg:mb-4">
-            <span className="inline-block font-semibold text-sm sm:text-15px lg:text-base text-skin-primary">
-              {product_type === 'variable'
-                ? `${minPrice} - ${maxPrice}`
-                : price}
-            </span>
-            {basePrice && (
-              <del className="text-sm text-skin-base text-opacity-70">
-                {basePrice}
-              </del>
+            {product_promo?.product_promo_is_discount && isValidPromoDate ? (
+              <>
+                <span className="inline-block font-semibold text-sm sm:text-15px lg:text-base text-skin-primary">
+                  {promoPrice}
+                </span>
+                <del className="text-sm text-skin-base text-opacity-70">
+                  {price}
+                </del>
+              </>
+            ) : (
+              <span className="inline-block font-semibold text-sm sm:text-15px lg:text-base text-skin-primary">
+                {price}
+              </span>
             )}
           </div>
-          <h2 className="text-skin-base text-opacity-60 sm:text-sm lg:text-15px mb-2">
-            {' '}
-            {t('text-offer-end')}
-          </h2>
-          <Countdown date={date} intervalDelay={1000} renderer={renderer} />
-          {/* <ProgressCard
-            soldProduct={sold}
-            totalProduct={quantity}
-            className="pt-4 lg:pt-6"
-          /> */}
+          {isValidPromoDate && (
+            <>
+              <h2 className="text-skin-base text-opacity-60 sm:text-sm lg:text-15px mb-2">
+                {product_promo?.product_promo_discount_percentage}% Off, {t('text-offer-end')}
+              </h2>
+              <PromoCountdown promoData={product_promo} />
+            </>
+          )}
         </div>
       </div>
     </article>
