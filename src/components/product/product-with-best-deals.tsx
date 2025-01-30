@@ -1,15 +1,13 @@
 'use client';
-import { usePopularProductsQuery } from '@framework/product/get-all-popular-products';
+import React from 'react';
+import { useBestDealProductsQuery } from '@framework/product/get-all-best-deals-products';
 import SectionHeader from '@components/common/section-header';
 import ProductCardLoader from '@components/ui/loaders/product-card-loader';
-import { LIMITS } from '@framework/utils/limits';
 import Alert from '@components/ui/alert';
 import ProductFlashSellCard from '@components/product/product-cards/product-flash-sell-card';
 import { useTranslation } from 'src/app/i18n/client';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
-import React from 'react';
-import { useBestSellerProductsQuery } from '@framework/product/get-all-best-seller-products';
 
 interface ProductFeedProps {
   lang?: string;
@@ -33,14 +31,14 @@ const breakpoints = {
 };
 
 const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
-  lang,
+  lang = 'ina',
   className = '',
   uniqueKey,
 }) => {
   const limit = 10;
-  const { data, isLoading, error } = useBestSellerProductsQuery({
+  const { data, isLoading, error } = useBestDealProductsQuery({
     page: 1,
-    limit: 10,
+    limit: limit,
     sort: 'desc',
   });
 
@@ -73,7 +71,10 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
             ) : (
               <>
                 {products?.slice(0, limit).map((product: any) => (
-                  <SwiperSlide key={`${uniqueKey}-${product.product_id}`} className="py-1.5 ">
+                  <SwiperSlide
+                    key={`${uniqueKey}-${product.product_id}`}
+                    className="py-1.5 "
+                  >
                     <ProductFlashSellCard
                       lang={lang}
                       key={`popular-product-${product.product_id}`}

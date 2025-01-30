@@ -31,6 +31,7 @@ import CloseButton from '@components/ui/close-button';
 import VariationPrice from './variation-price';
 import isEqual from 'lodash/isEqual';
 import { productGalleryPlaceholder } from '@assets/placeholders';
+import { usePromoCountdown } from '@utils/use-promo-countdown';
 
 const breakpoints = {
   '1536': {
@@ -75,11 +76,16 @@ export default function ProductPopup({ lang }: { lang: string }) {
   const [addToWishlistLoader, setAddToWishlistLoader] =
     useState<boolean>(false);
   const [shareButtonStatus, setShareButtonStatus] = useState<boolean>(false);
-  const { price, basePrice, discount } = usePrice({
-    amount: data.sale_price ? data.sale_price : data.product_price,
-    baseAmount: data.product_price,
+  const { price, basePrice } = usePrice({
+    amount: data?.sale_price ? data?.sale_price : data?.product_price,
+    baseAmount: data?.product_price,
     currencyCode: 'IDR',
   });
+  const { price: promoPrice } = usePrice({
+    amount: data?.product_promo?.product_promo_final_price ?? 0,
+    currencyCode: 'IDR',
+  });
+
   const variations = getVariations(data.variations);
   const {
     product_id,
@@ -91,9 +97,10 @@ export default function ProductPopup({ lang }: { lang: string }) {
     product_desc,
     product_tags,
     product_is_available,
+    product_promo,
     quantity,
   } = data;
-
+  const isValidPromoDate = usePromoCountdown(product_promo);
   const gallery = [product_image1, product_image2, product_image3];
 
   const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${
@@ -118,7 +125,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
       )
     );
   }
-  const item = generateCartItem(data, selectedVariation);
+  const item = generateCartItem(data, selectedVariation, isValidPromoDate);
   const outOfStock = isInCart(item.id) && !isInStock(item.id);
   function addToCart() {
     if (!isSelected) return;
@@ -160,7 +167,9 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   function navigateToProductPage() {
     closeModal();
-    router.push(`${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`);
+    router.push(
+      `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
+    );
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);
@@ -213,18 +222,27 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
                 {isEmpty(variations) && (
                   <div className="flex items-center mt-5">
-                    <div className="text-brand font-medium text-base md:text-xl xl:text-[30px]">
-                      {price}
-                    </div>
-                    {discount && (
-                      <>
-                        <del className="text-sm text-opacity-50 md:text-15px ltr:pl-3 rtl:pr-3 ">
-                          {basePrice}
+                    {product_promo?.product_promo_is_discount &&
+                    isValidPromoDate ? (
+                      <div className='flex flex-col gap-2'>
+                        <div className='flex flex-wrap gap-2 items-center'>
+                          <div className="text-brand font-medium text-base md:text-xl xl:text-[30px]">
+                            {promoPrice}
+                          </div>
+                          <span className="inline-block rounded font-bold text-xs md:text-sm bg-brand-tree bg-opacity-20 text-brand-tree uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
+                            {product_promo.product_promo_discount_percentage}{' '}
+                            {t('text-off')}
+                          </span>
+                        </div>
+
+                        <del className="text-sm text-opacity-50 md:text-15px ltr:pl-0 rtl:pr-3 ">
+                          {price}
                         </del>
-                        <span className="inline-block rounded font-bold text-xs md:text-sm bg-brand-tree bg-opacity-20 text-brand-tree uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
-                          {discount} {t('text-off')}
-                        </span>
-                      </>
+                      </div>
+                    ) : (
+                      <div className="text-brand font-medium text-base md:text-xl xl:text-[30px]">
+                        {price}
+                      </div>
                     )}
                   </div>
                 )}
@@ -246,7 +264,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 {isEmpty(variations) && (
                   <>
                     {product_is_available ? (
-                      <span className="text-sm font-medium text-[#fe4800]">
+                      <span className="text-sm font-medium text-[#ff6501]">
                         {t('text-left-item')}
                       </span>
                     ) : (

@@ -94,9 +94,19 @@ export type Tag = {
 };
 
 export type ProdTag = {
-  product_tag_id: string | number,
-  product_tag_name: string
-}
+  product_tag_id: string | number;
+  product_tag_name: string;
+};
+
+export type ProductPromo = {
+  product_promo_id: string | number;
+  product_promo_final_price: number;
+  product_promo_is_discount: boolean;
+  product_promo_created_date: Date | string;
+  product_promo_expired_date: Date | string;
+  product_promo_is_best_deal: boolean;
+  product_promo_discount_percentage: number;
+};
 
 export type Product = {
   product_id: string;
@@ -131,32 +141,10 @@ export type Product = {
   product_subcategory_name: string;
   product_category_name: string;
   product_tags?: ProdTag[];
+  product_promo?: ProductPromo;
   [key: string]: unknown;
 };
 
-
-// export type Product = {
-//   id: number | string;
-//   name: string;
-//   slug: string;
-//   price: number;
-//   quantity: number;
-//   sold: number;
-//   unit: string;
-//   sale_price?: number;
-//   min_price?: number;
-//   max_price?: number;
-//   image: Attachment;
-//   sku?: string;
-//   gallery?: Attachment[];
-//   category?: Category;
-//   tag?: Tag[];
-//   meta?: any[];
-//   brand?: Brand;
-//   description?: string;
-//   variations?: object;
-//   [key: string]: unknown;
-// };
 export type OrderItem = {
   id: number | string;
   name: string;
@@ -210,7 +198,7 @@ export type Blog = {
   subTitle?: string;
   blog_desc: string;
   user_name: string;
-  blog_created_date: Date | string
+  blog_created_date: Date | string;
   totalWatchCount?: number;
   totalCommentCount?: number;
   titleTwo: string;

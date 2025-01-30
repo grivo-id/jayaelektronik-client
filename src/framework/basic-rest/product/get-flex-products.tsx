@@ -52,7 +52,7 @@ const fetchFlexProducts = async ({
   const { data } = await http.post<ApiResponse>(fullUrl, requestBody);
 
   return {
-    data: shuffle(data.data) as Product[],
+    data: data.data as Product[], 
     paginatorInfo: {
       nextPageUrl: data.pagination.hasNextPage
         ? data.pagination.currentPage + 1
