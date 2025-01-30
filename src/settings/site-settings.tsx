@@ -48,7 +48,7 @@ export const siteSettings = {
       },
       {
         id: 2,
-        path: '/search',
+        path: '/products',
         label: 'menu-catalog',
       },
 
