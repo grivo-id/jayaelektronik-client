@@ -125,7 +125,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
       )
     );
   }
-  const item = generateCartItem(data, selectedVariation);
+  const item = generateCartItem(data, selectedVariation, isValidPromoDate);
   const outOfStock = isInCart(item.id) && !isInStock(item.id);
   function addToCart() {
     if (!isSelected) return;

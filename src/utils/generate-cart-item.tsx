@@ -1,5 +1,8 @@
+
 import { Product } from '@framework/types';
 import isEmpty from 'lodash/isEmpty';
+import { usePromoCountdown } from './use-promo-countdown';
+
 interface Item {
   id: string | number;
   name: string;
@@ -31,7 +34,7 @@ const convertToSlug = (text: any): string => {
     .trim();
 };
 
-export function generateCartItem(item: Product, variation: any) {
+export function generateCartItem(item: Product, variation: any, isValidPromoDate: boolean) {
   // console.log('car', item)
   const {
     product_id,
@@ -39,10 +42,13 @@ export function generateCartItem(item: Product, variation: any) {
     product_image1,
     product_is_available,
     product_price,
+    product_promo,
   } = item;
   const slug = convertToSlug(product_name);
-
+ 
+ 
   if (!isEmpty(variation)) {
+    
     return {
       id: product_id,
       productId: product_id,
@@ -61,7 +67,7 @@ export function generateCartItem(item: Product, variation: any) {
     slug: slug,
     image: product_image1,
     product_is_available: product_is_available,
-    price: product_price,
-    stock: 50,
+    price: product_promo?.product_promo_is_discount && isValidPromoDate ? product_promo.product_promo_final_price : product_price ,
+    stock: product_is_available ? 99 : 0,
   };
 }

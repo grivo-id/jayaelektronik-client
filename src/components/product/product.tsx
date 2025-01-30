@@ -23,6 +23,7 @@ import ProductDetailsTab from '@components/product/product-details/product-tab';
 import isEqual from 'lodash/isEqual';
 import { useTranslation } from 'src/app/i18n/client';
 import { useProductDetailQueryByProdId } from '@framework/product/get-product-detail';
+import { usePromoCountdown } from '@utils/use-promo-countdown';
 
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
@@ -53,7 +54,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     product?.product_image3,
   ];
   console.log(product);
-
+  const isValidPromoDate = usePromoCountdown(product?.product_promo);
   const { price, basePrice, discount } = usePrice(
     product && {
       amount: product?.sale_price
@@ -87,7 +88,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
       )
     );
   }
-  const item = generateCartItem(product!, selectedVariation);
+  const item = generateCartItem(product!, selectedVariation, isValidPromoDate);
   const outOfStock = isInCart(item.id) && !isInStock(item.id);
   function addToCart() {
     if (!isSelected) return;
@@ -97,7 +98,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
       setAddToCartLoader(false);
     }, 1500);
 
-    const item = generateCartItem(product!, selectedVariation);
+    const item = generateCartItem(product!, selectedVariation, isValidPromoDate);
     addItemToCart(item, quantity);
     toast('Added to the bag', {
       progressClassName: 'fancy-progress-bar',
