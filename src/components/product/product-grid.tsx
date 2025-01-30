@@ -48,7 +48,7 @@ export const ProductGrid: FC<ProductGridProps> = ({
   });
 
   // console.log(newQuery)
-  // console.log(data);
+  console.log(data);
 
   return (
     <>

@@ -4,6 +4,7 @@ import { generateCartItem } from '@utils/generate-cart-item';
 import PlusIcon from '@components/icons/plus-icon';
 import useWindowSize from '@utils/use-window-size';
 import { useTranslation } from 'src/app/i18n/client';
+import { usePromoCountdown } from '@utils/use-promo-countdown';
 
 interface Props {
   lang: string;
@@ -28,7 +29,9 @@ const AddToCart = ({
     getItemFromCart,
     isInCart,
   } = useCart();
-  const item = generateCartItem(data!, variation);
+  const isValidPromoDate = usePromoCountdown(data?.product_promo)
+  const item = generateCartItem(data!, variation, isValidPromoDate);
+  // console.log('passed data ', data)
   // console.log('item', item)
   const handleAddClick = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>

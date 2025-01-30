@@ -13,6 +13,7 @@ import { useTranslation } from 'src/app/i18n/client';
 import { ROUTES } from '@utils/routes';
 import Link from '@components/ui/link';
 import SearchIcon from '@components/icons/search-icon';
+import { usePromoCountdown } from '@utils/use-promo-countdown';
 const AddToCart = dynamic(() => import('@components/product/add-to-cart'), {
   ssr: false,
 });
@@ -26,7 +27,7 @@ const convertToSlug = (text: string): string => {
 };
 
 interface ProductProps {
-  lang?: string;
+  lang: string;
   product: Product;
   className?: string;
 }
@@ -74,25 +75,23 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
     unit,
     slug,
     brand_name,
+    product_promo,
     product_type,
   } = product ?? {};
   const { openModal } = useModalAction();
   const { t } = useTranslation(lang, 'common');
   const { width } = useWindowSize();
   const iconSize = width! > 1024 ? '20' : '17';
-  const { price, basePrice, discount } = usePrice({
+  const { price, basePrice } = usePrice({
     amount: product?.sale_price ? product?.sale_price : product?.product_price,
     baseAmount: product?.product_price,
     currencyCode: 'IDR',
   });
-  const { price: minPrice } = usePrice({
-    amount: product?.min_price ?? 0,
+  const { price: promoPrice } = usePrice({
+    amount: product?.product_promo?.product_promo_final_price ?? 0,
     currencyCode: 'IDR',
   });
-  const { price: maxPrice } = usePrice({
-    amount: product?.max_price ?? 0,
-    currencyCode: 'IDR',
-  });
+  const isValidPromoDate = usePromoCountdown(product_promo);
 
   function handlePopupView() {
     openModal('PRODUCT_VIEW', product);
@@ -134,9 +133,14 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
           )}
         </div>
         <div className="w-full h-full absolute top-0  z-10">
-          {discount && (
+          {product_promo?.product_promo_is_discount && isValidPromoDate && (
             <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
               {t('text-on-sale')}
+            </span>
+          )}
+          {product_promo?.product_promo_is_best_deal && (
+            <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+              {t('text-best-deal')}
             </span>
           )}
           <button
@@ -154,20 +158,28 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
           {brand_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(
+            product_name
+          )}`}
           className="text-skin-base text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
         >
           {product_name}
         </Link>
 
         <div className="space-s-2 mb-4 lg:mb-4">
-          <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
-            {product_type === 'variable' ? `${minPrice} - ${maxPrice}` : price}
-          </span>
-          {basePrice && (
-            <del className="mx-1 text-sm text-gray-400 text-opacity-70">
-              {basePrice}
-            </del>
+          {product_promo?.product_promo_is_discount && isValidPromoDate ? (
+            <>
+              <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
+                {promoPrice}
+              </span>
+              <del className="mx-1 text-sm text-gray-400 text-opacity-70">
+                {price}
+              </del>
+            </>
+          ) : (
+            <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
+              {price}
+            </span>
           )}
         </div>
         <div className="inline-block product-cart-button">
