@@ -14,7 +14,7 @@ type Props = {
 
 export default function Founder({ personList }: Props) {
   return (
-    <div className="bg-gray-100/50 w-full flex flex-wrap justify-center px-4 py-10 md:py-20 items-center gap-4">
+    <div className="bg-slate-100 w-full flex flex-wrap justify-center px-4 py-10 md:py-20 items-center gap-4">
       {personList.map((person, index) => (
         <div
           key={`${person.id}-${index}`}

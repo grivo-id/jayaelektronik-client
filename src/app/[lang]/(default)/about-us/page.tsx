@@ -13,7 +13,6 @@ export default async function Page({
     lang: string;
   };
 }) {
-    console.log('lang' , lang)
   return (
     <>
       <PageHeroSection
