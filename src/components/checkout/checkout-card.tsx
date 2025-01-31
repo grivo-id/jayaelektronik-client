@@ -14,23 +14,30 @@ import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
 import { useEffect, useState } from 'react';
 import SearchResultLoader from '@components/ui/loaders/search-result-loader';
+import { redirectToWhatsAppCart } from '@utils/wa-redirect';
+import { useUI } from '@contexts/ui.context';
 
-const CheckoutCard: React.FC<{ lang: string }> = ({ lang }) => {
+type Props = {
+  lang: string;
+};
+
+const CheckoutCard: React.FC<Props> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
+  const { checkOutFormData } = useUI();
 
   useEffect(() => {
     setLoading(false);
   }, []);
   const { items, total, isEmpty } = useCart();
-  console.log('item', items, total)
+  // console.log('item', items, total);
   const { price: subtotal } = usePrice({
     amount: total,
     currencyCode: 'IDR',
   });
   function orderHeader() {
-    !isEmpty && router.push(`/${lang}${ROUTES.ORDER}`);
+    !isEmpty && redirectToWhatsAppCart(checkOutFormData);
   }
   const checkoutFooter = [
     {
@@ -104,7 +111,6 @@ const CheckoutCard: React.FC<{ lang: string }> = ({ lang }) => {
         </Link>
         . {t('text-credit-debit')}
       </Text>
-     
     </>
   );
 };

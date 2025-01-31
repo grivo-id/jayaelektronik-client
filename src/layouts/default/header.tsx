@@ -153,7 +153,7 @@ function Header({ lang }: { lang: string }) {
                       }
                     >
                       {isAuthorized
-                        ? user?.user_name || t('text-account')
+                        ? user?.user_fname || t('text-account')
                         : t('text-signin')}
                     </Link>
                   </div>
@@ -214,8 +214,8 @@ function Header({ lang }: { lang: string }) {
                     {/* End of search handler btn */}
 
                     <div className="flex-shrink-0 flex items-center gap-2 text-fill-dark">
-                      <div className={'cart-button'}>
-                        <UserIcon className="text-skin-primary" />
+                      <div className="cart-button !pt-2">
+                        <UserIcon className="text-brand" />
                       </div>
                       <Link
                         href={
@@ -225,7 +225,7 @@ function Header({ lang }: { lang: string }) {
                         }
                       >
                         {isAuthorized
-                          ? user?.user_name || t('text-account')
+                          ? user?.user_fname || t('text-account')
                           : t('text-signin')}
                       </Link>
                     </div>

@@ -17,6 +17,13 @@ export interface State {
   toastText: string;
   isStickyheader: boolean;
   user?: any;
+  shippingAddress?: any;
+  checkOutFormData?: {
+    user_fname: string;
+    user_lname: string;
+    user_email: string;
+    user_phone: string;
+  };
   data?: any;
 }
 
@@ -33,6 +40,13 @@ const initialState = {
   isStickyheader: false,
   user: null,
   data: null,
+  checkOutFormData: {
+    user_fname: '',
+    user_lname: '',
+    user_email: '',
+    user_phone: '',
+  },
+  shippingAddress: [],
 };
 
 type Action =
@@ -106,8 +120,20 @@ type Action =
   | {
       type: 'SET_USER';
       user: any;
+    }
+  | {
+      type: 'SET_CHECKOUT_FORM_DATA';
+      checkOutFormData: {
+        user_fname: string;
+        user_lname: string;
+        user_email: string;
+        user_phone: string;
+      };
+    }
+  | {
+      type: 'SET_SHIPPING_ADDRESS';
+      shippingAddress: any;
     };
-
 type DRAWER_VIEWS = 'CART_SIDEBAR' | 'MOBILE_MENU' | 'ORDER_DETAILS';
 type ToastText = string;
 
@@ -253,6 +279,21 @@ function uiReducer(state: State, action: Action) {
         user: action.user,
       };
     }
+    case 'SET_SHIPPING_ADDRESS': {
+      return {
+        ...state,
+        shippingAddress: action.shippingAddress,
+      };
+    }
+    case 'SET_CHECKOUT_FORM_DATA': {
+      return {
+        ...state,
+        checkOutFormData: {
+          ...state.checkOutFormData,
+          ...action.checkOutFormData,
+        },
+      };
+    }
   }
 }
 
@@ -302,6 +343,10 @@ export function UIProvider(props: React.PropsWithChildren<any>) {
   const enableStickyHeader = () => dispatch({ type: 'ENABLE_STICKY_HEADER' });
   const disableStickyHeader = () => dispatch({ type: 'DISABLE_STICKY_HEADER' });
   const setUser = (user: any) => dispatch({ type: 'SET_USER', user });
+  const setShippingAddress = (shippingAddress: any) =>
+    dispatch({ type: 'SET_SHIPPING_ADDRESS', shippingAddress });
+  const setCheckOutFormData = (checkOutFormData: any) =>
+    dispatch({ type: 'SET_CHECKOUT_FORM_DATA', checkOutFormData });
 
   const value = React.useMemo(
     () => ({
@@ -332,7 +377,8 @@ export function UIProvider(props: React.PropsWithChildren<any>) {
       enableStickyHeader,
       disableStickyHeader,
       setUser,
-      user: state.user,
+      setShippingAddress,
+      setCheckOutFormData,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [state]

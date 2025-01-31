@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   LOGOUT: '/',
   USER_PROFILE: '/users/profile',
   FORGET_PASSWORD: '/',
+  SHIPPING_ADDRESS: '/shipping-addresses',
   CATEGORIES: '/product-categories/sub-categories',
   DIETARY: '/',
   BRANDS: '/brands',

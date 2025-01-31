@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TiPencil } from 'react-icons/ti';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { RadioGroup } from '@headlessui/react';
 import { useModalAction } from '@components/common/modal/modal.context';
-import { formatAddress } from '@utils/format-address';
 import Button from '@components/ui/button';
 import { useTranslation } from 'src/app/i18n/client';
+import { useUI } from '@contexts/ui.context';
 
 const AddressGrid: React.FC<{ address?: any; lang: string }> = ({
   address,
@@ -15,14 +15,33 @@ const AddressGrid: React.FC<{ address?: any; lang: string }> = ({
 }) => {
   const { t } = useTranslation(lang, 'common');
   const { openModal } = useModalAction();
+  const { shippingAddress } = useUI();
 
   function handlePopupView(item: any) {
     openModal('ADDRESS_VIEW_AND_EDIT', item);
   }
 
-  address = address || [];
+  const [selected, setSelected] = useState(address[0] || null);
 
-  const [selected, setSelected] = useState(address[0]);
+  // This useEffect will run whenever shippingAddress changes
+  useEffect(() => {
+    if (address?.length > 0) {
+      setSelected(address[0]);
+      const { shipping_address_title, shipping_address_desc } = address[0];
+      if (shipping_address_title && shipping_address_desc) {
+        sessionStorage.setItem('default_address', JSON.stringify(address[0]));
+      }
+    }
+  }, [address]);
+
+  console.log('shippingAddress ', shippingAddress);
+  // Re-render when shippingAddress changes
+  // useEffect(() => {
+  //   if (shippingAddress) {
+  //     setSelected(shippingAddress);
+  //   }
+  // }, [shippingAddress]);
+
   return (
     <div className="flex flex-col justify-between h-full -mt-4 text-15px md:mt-0">
       <RadioGroup
@@ -45,13 +64,13 @@ const AddressGrid: React.FC<{ address?: any; lang: string }> = ({
                 as="h3"
                 className="mb-2 -mt-1 font-semibold text-brand-dark "
               >
-                {item?.title}
+                {item?.shipping_address_title}
               </RadioGroup.Label>
               <RadioGroup.Description
                 as="div"
                 className="leading-6 text-brand-muted"
               >
-                {formatAddress(item?.address)}
+                {item?.shipping_address_desc}
               </RadioGroup.Description>
               <div className="absolute z-10 flex transition-all ltr:right-3 rtl:left-3 top-3 lg:opacity-0 address__actions">
                 <button

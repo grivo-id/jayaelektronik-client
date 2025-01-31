@@ -69,8 +69,15 @@ const ProductCardV2: React.FC<ProductProps> = ({
   className,
   lang,
 }) => {
-  const {product_id, product_name, product_image1, brand_id, brand_name, product_type } =
-    product ?? {};
+  const {
+    product_id,
+    product_name,
+    product_image1,
+    brand_id,
+    brand_name,
+    product_type,
+    product_item_sold,
+  } = product ?? {};
   const { openModal } = useModalAction();
   const { t } = useTranslation(lang, 'common');
   const { width } = useWindowSize();
@@ -154,14 +161,16 @@ const ProductCardV2: React.FC<ProductProps> = ({
           {brand_name}
         </div>
         <Link
-          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(product_name)}`}
-          className="text-skin-purple text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
+          href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(
+            product_name
+          )}`}
+          className="text-brand-dark text-sm leading-5 min-h-[15px] line-clamp-2 mb-2 hover:text-brand-muted"
         >
           {product_name}
         </Link>
 
-        <div className="space-s-2 mb-4 lg:mb-4">
-          <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-gray-700">
+        <div className="flex flex-col mb-2 lg:mb-4">
+          <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
             {product_type === 'variable' ? `${minPrice} - ${maxPrice}` : price}
           </span>
           {basePrice && (
@@ -169,7 +178,13 @@ const ProductCardV2: React.FC<ProductProps> = ({
               {basePrice}
             </del>
           )}
+
+          <span className="text-sm text-brand-muted">
+            {product_item_sold}
+            {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
+          </span>
         </div>
+
         <div className="inline-block product-cart-button">
           <RenderPopupOrAddToCart props={{ data: product, lang: lang }} />
         </div>

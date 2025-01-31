@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { siteSettings } from '@settings/site-settings';
 import { ROUTES } from '@utils/routes';
@@ -17,6 +17,9 @@ import Search from '@components/common/search';
 import { FiMenu } from 'react-icons/fi';
 import CategoryDropdownMenu from '@components/category/category-dropdown-menu';
 import { useTranslation } from 'src/app/i18n/client';
+import Link from 'next/link';
+import http from '@framework/utils/http';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -28,12 +31,53 @@ type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
 
 function Header({ lang }: { lang: string }) {
-  const { openSidebar,displaySearch,openSearch, isAuthorized, displayMobileSearch } = useUI();
+  const {
+    openSidebar,
+    displaySearch,
+    openSearch,
+    isAuthorized,
+    displayMobileSearch,
+    authorize,
+    unauthorize,
+    user,
+    setUser,
+  } = useUI();
   const { openModal } = useModalAction();
   const siteSearchRef = useRef() as DivElementRef;
   const { t } = useTranslation(lang, 'common');
   const siteHeaderRef = useRef() as DivElementRef;
   const [categoryMenu, setCategoryMenu] = useState(Boolean(false));
+
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await http.get(API_ENDPOINTS.USER_PROFILE);
+      if (response.status === 200) {
+        setUser(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      const parsedToken = JSON.parse(token);
+      if (parsedToken.expires_in > Date.now()) {
+        authorize();
+        if (!user) {
+          fetchUser();
+        }
+      } else {
+        sessionStorage.removeItem('token');
+        unauthorize();
+      }
+    } else {
+      unauthorize();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   useActiveScroll(siteHeaderRef);
   function handleLogin() {
     openModal('LOGIN_VIEW');
@@ -102,21 +146,21 @@ function Header({ lang }: { lang: string }) {
                 {/* End of search */}
 
                 <div className="flex space-x-5 xl:space-x-10 lg:max-w-[33%]">
-                  <div className="items-center hidden lg:flex shrink-0">
-                    <div className="cart-button">
+                  <div className="items-center hidden lg:flex shrink-0 gap-2 text-fill-dark">
+                    <div className="cart-button !pt-2">
                       <UserIcon className="text-brand" />
                     </div>
-
-                    <AuthMenu
-                      isAuthorized={isAuthorized}
-                      href={`/${lang}${ROUTES.ACCOUNT}`}
-                      btnProps={{
-                        children: t('text-sign-in'),
-                        onClick: handleLogin,
-                      }}
+                    <Link
+                      href={
+                        isAuthorized
+                          ? `/${lang}${ROUTES.ACCOUNT}`
+                          : `/${lang}${ROUTES.LOGIN}`
+                      }
                     >
-                      {t('text-account')}
-                    </AuthMenu>
+                      {isAuthorized
+                        ? user?.user_fname || t('text-account')
+                        : t('text-signin')}
+                    </Link>
                   </div>
                   <CartButton className="hidden lg:flex" lang={lang} />
                 </div>
@@ -129,7 +173,7 @@ function Header({ lang }: { lang: string }) {
               <div className="flex justify-between items-center">
                 <Logo
                   lang={lang}
-                   className="navbar-logo w-0 opacity-0 transition-all duration-200 ease-in-out"
+                  className="navbar-logo w-0 opacity-0 transition-all duration-200 ease-in-out"
                 />
                 {/* End of logo */}
                 <div className="categories-header-button relative me-8 flex-shrink-0 w-72">
@@ -171,21 +215,21 @@ function Header({ lang }: { lang: string }) {
                     </button>
                     {/* End of search handler btn */}
 
-                    <div className="flex-shrink-0 flex items-center">
-                      <div className={'cart-button'}>
-                        <UserIcon className="text-skin-primary" />
+                    <div className="items-center hidden lg:flex shrink-0 gap-2 text-fill-dark">
+                      <div className="cart-button !pt-2">
+                        <UserIcon className="text-brand" />
                       </div>
-
-                      <AuthMenu
-                        isAuthorized={isAuthorized}
-                        href={ROUTES.ACCOUNT}
-                        btnProps={{
-                          children: t('text-sign-in'),
-                          onClick: handleLogin,
-                        }}
+                      <Link
+                        href={
+                          isAuthorized
+                            ? `/${lang}${ROUTES.ACCOUNT}`
+                            : `/${lang}${ROUTES.LOGIN}`
+                        }
                       >
-                        {t('text-account')}
-                      </AuthMenu>
+                        {isAuthorized
+                          ? user?.user_fname || t('text-account')
+                          : t('text-signin')}
+                      </Link>
                     </div>
                     {/* End of auth */}
 
