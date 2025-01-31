@@ -179,12 +179,12 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
                       <span className="text-brand font-medium text-base md:text-xl xl:text-[30px]">
                         {promoPrice}
                       </span>
-                      <span className="inline-block rounded font-bold text-xs md:text-sm bg-brand-tree bg-opacity-20 text-brand-tree uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
+                      <span className="inline-block rounded font-bold text-xs md:text-sm bg-rose-500 bg-opacity-20 text-rose-500 uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
                         {
                           product?.product_promo
                             ?.product_promo_discount_percentage
-                        }{' '}
-                        {t('text-off')}
+                        }
+                        % {t('text-off')}
                       </span>
                     </div>
                     <del className="text-sm text-opacity-50 md:text-15px ltr:pl-0 rtl:pr-3 text-brand-dark ">
@@ -221,6 +221,12 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
             </dt>
             <dd className="productView-info-value">
               {t(`text-calculated-checkout`)}
+            </dd>
+            <dt className={`productView-info-name w-40 float-left`}>
+              {t('text-amountsold')}:
+            </dt>
+            <dd className="productView-info-value">
+              {product?.product_item_sold}
             </dd>
           </dl>
 

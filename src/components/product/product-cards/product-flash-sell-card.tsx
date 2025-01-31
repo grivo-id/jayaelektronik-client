@@ -59,6 +59,7 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
     image,
     quantity,
     sold,
+    product_item_sold,
     product_promo,
     product_type,
   } = product ?? {};
@@ -130,27 +131,40 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
           <h2 className="text-skin-base text-base font-semibold mb-4">
             {product_name}
           </h2>
-          <div className="space-s-2 mb-1 lg:mb-4">
+          <div className="space-s-2 mb-1 ">
             {product_promo?.product_promo_is_discount && isValidPromoDate ? (
-              <>
+              <div className="flex flex-col gap-1">
                 <span className="inline-block font-semibold text-sm sm:text-15px lg:text-base text-skin-primary">
                   {promoPrice}
                 </span>
-                <del className="text-sm text-skin-base text-opacity-70">
-                  {price}
-                </del>
-              </>
+                <div className="flex flex-row gap-2 items-center">
+                  <del className="text-sm text-skin-base text-opacity-70">
+                    {price}
+                  </del>
+                  <span className="text-sm text-rose-500">
+                    {product_promo?.product_promo_discount_percentage}%,
+                  </span>
+                </div>
+              </div>
             ) : (
               <span className="inline-block font-semibold text-sm sm:text-15px lg:text-base text-skin-primary">
                 {price}
               </span>
             )}
           </div>
+          {product_item_sold > 0 && (
+            <span className="mb-1 lg:mb-4 text-brand-muted ">
+              {product_item_sold}
+              {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
+            </span>
+          )}
+
           {isValidPromoDate && (
             <>
-              <h2 className="text-skin-base text-opacity-60 sm:text-sm lg:text-15px mb-2">
-                {product_promo?.product_promo_discount_percentage}% Off, {t('text-offer-end')}
-              </h2>
+              {/* <h2 className="text-skin-base text-opacity-60 sm:text-sm lg:text-15px mb-2">
+                {product_promo?.product_promo_discount_percentage}% Off,{' '}
+                {t('text-offer-end')}
+              </h2> */}
               <PromoCountdown promoData={product_promo} />
             </>
           )}
