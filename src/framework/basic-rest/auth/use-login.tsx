@@ -19,7 +19,7 @@ async function login(input: LoginInputType) {
 }
 
 export const useLoginMutation = () => {
-  const { authorize, closeModal } = useUI();
+  const { authorize, closeModal, setUser, user } = useUI();
 
   return useMutation((input: LoginInputType) => login(input), {
     onSuccess: (data, variables) => {
@@ -30,7 +30,7 @@ export const useLoginMutation = () => {
 
       sessionStorage.setItem('token', JSON.stringify(token));
       authorize();
-      // closeModal();
+      setUser(data.data.user);
       return data.data;
     },
     onError: (error: any) => {

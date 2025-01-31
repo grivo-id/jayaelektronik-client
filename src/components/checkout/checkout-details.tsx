@@ -13,7 +13,11 @@ import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
 import CheckoutInformation from './information';
 
-const CheckoutDetails: React.FC<{ lang: string }> = ({ lang }) => {
+type Props = {
+  lang: string;
+};
+
+const CheckoutDetails: React.FC<Props> = ({ lang }) => {
   const isLoggedin = false;
   const { t } = useTranslation(lang, 'common');
   const [bindIndex, setBindIndex] = useState(0);
@@ -28,17 +32,17 @@ const CheckoutDetails: React.FC<{ lang: string }> = ({ lang }) => {
       title: 'text-delivery-address',
       component: <Address lang={lang} />,
     },
-    {
-      id: 3,
-      title: 'text-delivery-schedule',
-      component: <DeliverySchedule lang={lang} />,
-    },
+    // {
+    //   id: 3,
+    //   title: 'text-delivery-schedule',
+    //   component: <DeliverySchedule lang={lang} />,
+    // },
 
-    {
-      id: 4,
-      title: 'text-delivery-instructions',
-      component: <DeliveryNotes lang={lang} />,
-    },
+    // {
+    //   id: 4,
+    //   title: 'text-delivery-instructions',
+    //   component: <DeliveryNotes lang={lang} />,
+    // },
   ];
   const changeItem = (itemIndex: any) => {
     if (itemIndex !== bindIndex) {

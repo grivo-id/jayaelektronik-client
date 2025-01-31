@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { useLoginMutation, LoginInputType } from '@framework/auth/use-login';
 import Logo from '@components/ui/logo';
 import useWindowSize from '@utils/use-window-size';
+import { toast } from 'react-toastify';
+import ErrorIcon from '@components/icons/error-icon';
 import { useTranslation } from 'src/app/i18n/client';
 import Image from '@components/ui/image';
 import { useModalAction } from '@components/common/modal/modal.context';
@@ -17,8 +19,6 @@ import { FaFacebook, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import cn from 'classnames';
 import Link from 'next/link';
 import { ROUTES } from '@utils/routes';
-import { toast } from 'react-toastify';
-import ErrorIcon from '@components/icons/error-icon';
 import { useRouter } from 'next/navigation';
 
 interface LoginFormProps {
