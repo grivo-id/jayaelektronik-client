@@ -32,6 +32,7 @@ import VariationPrice from './variation-price';
 import isEqual from 'lodash/isEqual';
 import { productGalleryPlaceholder } from '@assets/placeholders';
 import { usePromoCountdown } from '@utils/use-promo-countdown';
+import Link from '@components/ui/link';
 
 const breakpoints = {
   '1536': {
@@ -98,6 +99,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
     product_tags,
     product_is_available,
     product_promo,
+    product_item_sold,
     quantity,
   } = data;
   const isValidPromoDate = usePromoCountdown(product_promo);
@@ -164,12 +166,16 @@ export default function ProductPopup({ lang }: { lang: string }) {
       draggable: true,
     });
   }
-
+  console.log('lang', lang);
+  console.log(
+    'route',
+    `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
+  );
   function navigateToProductPage() {
     closeModal();
-    router.push(
-      `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
-    );
+    // router.push(
+    //   `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
+    // );
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);
@@ -198,15 +204,16 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
             <div className="flex-shrink-0 flex flex-col lg:w-[430px] xl:w-[520px] 2xl:w-[520px]">
               <div className="pt-5 lg:pt-0 pb-5">
-                <div
-                  className="mb-2 md:mb-2.5 block -mt-1.5"
+                <Link
+                  href={`/${lang}${
+                    ROUTES.PRODUCTS
+                  }/${product_id}.${convertToSlug(product_name)}`}
                   onClick={navigateToProductPage}
-                  role="button"
                 >
                   <h2 className="text-lg font-medium transition-colors duration-300 text-brand-dark md:text-xl xl:text-2xl hover:text-brand">
                     {product_name}
                   </h2>
-                </div>
+                </Link>
                 {brand_name && isEmpty(variations) ? (
                   <div className="text-sm font-medium md:text-15px">
                     {brand_name}
@@ -224,13 +231,13 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   <div className="flex items-center mt-5">
                     {product_promo?.product_promo_is_discount &&
                     isValidPromoDate ? (
-                      <div className='flex flex-col gap-2'>
-                        <div className='flex flex-wrap gap-2 items-center'>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex flex-wrap gap-2 items-center">
                           <div className="text-brand font-medium text-base md:text-xl xl:text-[30px]">
                             {promoPrice}
                           </div>
-                          <span className="inline-block rounded font-bold text-xs md:text-sm bg-brand-tree bg-opacity-20 text-brand-tree uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
-                            {product_promo.product_promo_discount_percentage}{' '}
+                          <span className="inline-block rounded font-bold text-xs md:text-sm bg-rose-500 bg-opacity-20 text-rose-500 uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
+                            {product_promo.product_promo_discount_percentage}%{' '}
                             {t('text-off')}
                           </span>
                         </div>
@@ -258,7 +265,12 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   />
                 );
               })}
-
+              {product_item_sold > 0 && (
+                <span className="text-sm text-brand-muted">
+                  {product_item_sold}
+                  {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
+                </span>
+              )}
               <div className="pb-2">
                 {/* check that item isInCart and place the available quantity or the item quantity */}
                 {isEmpty(variations) && (
@@ -367,13 +379,19 @@ export default function ProductPopup({ lang }: { lang: string }) {
                     dangerouslySetInnerHTML={{ __html: product_desc }}
                   />
                   {'...'}
-                  <span
+                  <Link
+                    href={`/${lang}${
+                      ROUTES.PRODUCTS
+                    }/${product_id}.${convertToSlug(product_name)}`}
                     onClick={navigateToProductPage}
-                    role="button"
-                    className="text-brand ltr:ml-0.5 rtl:mr-0.5"
                   >
-                    {t('text-read-more')}
-                  </span>
+                    <span
+                      role="button"
+                      className="text-brand ltr:ml-0.5 rtl:mr-0.5"
+                    >
+                      {t('text-read-more')}
+                    </span>
+                  </Link>
                 </Text>
               </div>
             </div>

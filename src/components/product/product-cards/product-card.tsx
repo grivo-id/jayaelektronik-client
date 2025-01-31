@@ -75,6 +75,7 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
     unit,
     slug,
     brand_name,
+    product_item_sold,
     product_promo,
     product_type,
   } = product ?? {};
@@ -161,26 +162,35 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
           href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(
             product_name
           )}`}
-          className="text-skin-base text-sm leading-5 min-h-[40px] line-clamp-2 mb-2 hover:text-brand"
+          className="text-skin-base text-sm leading-5 min-h-[10px] line-clamp-2 mb-2 hover:text-brand"
         >
           {product_name}
         </Link>
 
-        <div className="space-s-2 mb-4 lg:mb-4">
+        <div className="flex flex-col mb-2 lg:mb-4">
           {product_promo?.product_promo_is_discount && isValidPromoDate ? (
-            <>
+            <div className="flex flex-col gap-0 items-center justify-center">
               <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
                 {promoPrice}
               </span>
-              <del className="mx-1 text-sm text-gray-400 text-opacity-70">
-                {price}
-              </del>
-            </>
+              <div className="flex flex-row gap-1 justify-center items-center">
+                <del className="mx-1 text-sm text-gray-400 text-opacity-70">
+                  {price}
+                </del>
+                <span className="text-sm text-rose-500">
+                  {product_promo.product_promo_discount_percentage}%
+                </span>
+              </div>
+            </div>
           ) : (
             <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
               {price}
             </span>
           )}
+          <span className="text-sm text-brand-muted">
+            {product_item_sold}{product_item_sold > 100 ? '+' : ''}{' '}
+            {t('text-sold')}
+          </span>
         </div>
         <div className="inline-block product-cart-button">
           <RenderPopupOrAddToCart props={{ data: product, lang: lang }} />
