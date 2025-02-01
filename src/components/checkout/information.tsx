@@ -27,6 +27,7 @@ export default function CheckoutInformation({ lang }: Props) {
         user_phone: user.user_phone,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
