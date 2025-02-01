@@ -16,6 +16,10 @@ import { useEffect, useState } from 'react';
 import SearchResultLoader from '@components/ui/loaders/search-result-loader';
 import { redirectToWhatsAppCart } from '@utils/wa-redirect';
 import { useUI } from '@contexts/ui.context';
+import { useCreateOrderMutation } from '@framework/checkout/use-order';
+import useWindowSize from '@utils/use-window-size';
+import { toast } from 'react-toastify';
+import ErrorIcon from '@components/icons/error-icon';
 
 type Props = {
   lang: string;
@@ -24,8 +28,12 @@ type Props = {
 const CheckoutCard: React.FC<Props> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
   const router = useRouter();
+  const { width } = useWindowSize();
   const [isLoading, setLoading] = useState(true);
-  const { checkOutFormData } = useUI();
+  const { mutateAsync: createOrder, isLoading: submitting } =
+    useCreateOrderMutation();
+  const { checkOutFormData, user } = useUI();
+  const { resetCart } = useCart();
 
   useEffect(() => {
     setLoading(false);
@@ -36,8 +44,52 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
     amount: total,
     currencyCode: 'IDR',
   });
-  function orderHeader() {
-    !isEmpty && redirectToWhatsAppCart(checkOutFormData);
+  async function orderHeader() {
+    const cartString = localStorage.getItem('razor-cart');
+    const storedCart = JSON.parse(JSON.parse(cartString || '{"items":[]}'));
+    const defaultAddress = JSON.parse(
+      sessionStorage.getItem('default_address') || '{}'
+    );
+    if (!isEmpty) {
+      try {
+        const response = await createOrder({
+          order_email: checkOutFormData.user_email,
+          order_fname: checkOutFormData.user_fname,
+          order_lname: checkOutFormData.user_lname,
+          order_phone: checkOutFormData.user_phone,
+          order_address: defaultAddress.shipping_address_desc,
+          order_user_verified: user ? true : false,
+          products: storedCart.items.map((item: any) => ({
+            product_id: item.id,
+            product_qty: item.quantity,
+          })),
+        });
+        if (response.success) {
+          toast('Order success!', {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          resetCart();
+          redirectToWhatsAppCart(checkOutFormData);
+        }
+      } catch (error: any) {
+        toast.error(error.message || 'An unexpected error occurred', {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          icon: <ErrorIcon />,
+        });
+      }
+    }
   }
   const checkoutFooter = [
     {
@@ -91,6 +143,7 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
               ? 'opacity-40 cursor-not-allowed'
               : '!bg-brand !text-brand-light'
           )}
+          loading={submitting}
           onClick={orderHeader}
         >
           {t('button-order-now')}

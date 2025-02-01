@@ -1,5 +1,5 @@
 export const redirectToWhatsAppCart = (userData: any) => {
-  const phoneNumber = '+6285236891709';
+  const phoneNumber = '+62816270158';
   const cartString = localStorage.getItem('razor-cart');
   console.log('Cart String:', cartString);
 
