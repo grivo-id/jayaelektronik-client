@@ -30,6 +30,7 @@ const AddressPage: React.FC<Props> = ({ lang }) => {
     if (user) {
       fetchUserAdresses();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return !isLoading ? (
