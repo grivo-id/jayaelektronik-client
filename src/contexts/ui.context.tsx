@@ -282,7 +282,9 @@ function uiReducer(state: State, action: Action) {
     case 'SET_SHIPPING_ADDRESS': {
       return {
         ...state,
-        shippingAddress: action.shippingAddress,
+        shippingAddress: Array.isArray(action.shippingAddress)
+          ? action.shippingAddress
+          : [action.shippingAddress],
       };
     }
     case 'SET_CHECKOUT_FORM_DATA': {

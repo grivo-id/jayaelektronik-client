@@ -15,6 +15,12 @@ const ProductPopup = dynamic(() => import('@components/product/product-popup'));
 const AddressPopup = dynamic(
   () => import('@components/common/form/add-address')
 );
+const EditAddressPopup = dynamic(
+  () => import('@components/common/form/edit-address')
+);
+const DeleteAddressPopup = dynamic(
+  () => import('@components/common/form/delete-address')
+);
 const PaymentPopup = dynamic(
   () => import('@components/common/form/add-payment')
 );
@@ -47,6 +53,8 @@ export default function ManagedModal({ lang }: { lang: string }) {
       {view === 'FORGET_PASSWORD' && <ForgetPasswordForm lang={lang} />}
       {view === 'PRODUCT_VIEW' && <ProductPopup lang={lang} />}
       {view === 'ADDRESS_VIEW_AND_EDIT' && <AddressPopup lang={lang} />}
+      {view === 'EDIT_SHIPPING_ADDRESS' && <EditAddressPopup lang={lang} />}
+      {view === 'DELETE_SHIPPING_ADDRESS' && <DeleteAddressPopup lang={lang} />}
       {view === 'PAYMENT' && <PaymentPopup lang={lang} />}
       {view === 'PHONE_NUMBER' && <PhoneNumberPopup lang={lang} />}
       {view === 'DELIVERY_VIEW' && <DeliveryAddresses lang={lang} />}
