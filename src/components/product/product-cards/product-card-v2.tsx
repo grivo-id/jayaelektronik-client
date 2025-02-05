@@ -178,11 +178,12 @@ const ProductCardV2: React.FC<ProductProps> = ({
               {basePrice}
             </del>
           )}
-
-          <span className="text-sm text-brand-muted">
-            {product_item_sold}
-            {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
-          </span>
+          {product_item_sold > 0 && (
+            <span className="text-sm text-brand-muted">
+              {product_item_sold}
+              {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
+            </span>
+          )}
         </div>
 
         <div className="inline-block product-cart-button">
