@@ -19,4 +19,34 @@ export const faq = [
     title: 'faq-four-title',
     content: 'faq-four-content',
   },
+  {
+    id: 5,
+    title: 'faq-five-title',
+    content: 'faq-five-content',
+  },
+  {
+    id: 6,
+    title: 'faq-six-title',
+    content: 'faq-six-content',
+  },
+  {
+    id: 7,
+    title: 'faq-seven-title',
+    content: 'faq-seven-content',
+  },
+  {
+    id: 8,
+    title: 'faq-eight-title',
+    content: 'faq-eight-content',
+  },
+  {
+    id: 9,
+    title: 'faq-nine-title',
+    content: 'faq-nine-content',
+  },
+  {
+    id: 10,
+    title: 'faq-ten-title',
+    content: 'faq-ten-content',
+  },
 ];
