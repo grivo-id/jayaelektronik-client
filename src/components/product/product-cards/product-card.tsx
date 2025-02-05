@@ -77,6 +77,7 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
     brand_name,
     product_item_sold,
     product_promo,
+    product_is_available,
     product_type,
   } = product ?? {};
   const { openModal } = useModalAction();
@@ -134,16 +135,25 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
           )}
         </div>
         <div className="w-full h-full absolute top-0  z-10">
-          {product_promo?.product_promo_is_discount && isValidPromoDate && (
-            <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
-              {t('text-on-sale')}
+          {!product_is_available && (
+            <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-brand-danger rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+              {t('text-notavailable')}
             </span>
           )}
-          {product_promo?.product_promo_is_best_deal && (
-            <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
-              {t('text-best-deal')}
-            </span>
-          )}
+
+          {product_promo?.product_promo_is_discount &&
+            isValidPromoDate &&
+            product_is_available && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-on-sale')}
+              </span>
+            )}
+          {product_promo?.product_promo_is_best_deal &&
+            product_is_available && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-best-deal')}
+              </span>
+            )}
           <button
             className="buttons--quickview px-4 py-2 bg-brand-light rounded-full hover:bg-brand hover:text-brand-light"
             aria-label="Quick View Button"
@@ -155,14 +165,15 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
       </div>
 
       <div className="flex flex-col mb-2 h-full overflow-hidden text-center relative">
-        <div className="text-sm mt-auto leading-6 text-gray-400 mb-1.5">
+        <span className="text-sm mt-auto leading-6 text-gray-400 mb-1.5">
           {brand_name}
-        </div>
+        </span>
+
         <Link
           href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(
             product_name
           )}`}
-          className="text-skin-base text-sm leading-5 min-h-[10px] line-clamp-2 mb-2 hover:text-brand"
+          className={`text-skin-base text-sm leading-5 min-h-[10px] line-clamp-2 mb-2 hover:text-brand`}
         >
           {product_name}
         </Link>
@@ -187,10 +198,12 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
               {price}
             </span>
           )}
-          <span className="text-sm text-brand-muted">
-            {product_item_sold}{product_item_sold > 100 ? '+' : ''}{' '}
-            {t('text-sold')}
-          </span>
+          {product_item_sold > 0 && (
+            <span className="text-sm text-brand-muted">
+              {product_item_sold}
+              {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
+            </span>
+          )}
         </div>
         <div className="inline-block product-cart-button">
           <RenderPopupOrAddToCart props={{ data: product, lang: lang }} />
