@@ -30,7 +30,7 @@ const AddressPage: React.FC<Props> = ({ lang }) => {
     if (user) {
       fetchUserAdresses();
     }
-  }, [fetchUserAdresses, user]);
+  }, [user]);
 
   return !isLoading ? (
     <AddressGrid address={shippingAddress} lang={lang} />
