@@ -2,6 +2,7 @@
 import type { FC } from 'react';
 import { useBestSellerProductsQuery } from '@framework/product/get-all-best-seller-products';
 import ProductsCarousel from '@components/product/products-carousel';
+import { useFlexProductsNoPaginationQueries } from '@framework/product/get-flex-product-no-pagination';
 
 interface ProductFeedProps {
   lang: string;
@@ -14,10 +15,12 @@ const BestSellerProductFeed: FC<ProductFeedProps> = ({
   className,
   variant,
 }) => {
-  const { data, isLoading, error } = useBestSellerProductsQuery({
+  const { data, isLoading, error } = useFlexProductsNoPaginationQueries({
     page: 1,
-    limit: 10,
+    limit: 25,
     sort: 'desc',
+    product_is_new_arrival: false,
+    product_is_bestseller: true,
   });
 
   const products = data?.data || [];

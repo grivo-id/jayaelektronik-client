@@ -15,6 +15,7 @@ import Link from '@components/ui/link';
 import SearchIcon from '@components/icons/search-icon';
 import { Span } from 'next/dist/trace';
 import { useMediaQuery } from '@utils/media-query';
+import { usePromoCountdown } from '@utils/use-promo-countdown';
 const AddToCart = dynamic(() => import('@components/product/add-to-cart'), {
   ssr: false,
 });
@@ -81,6 +82,7 @@ const ProductCardV2: React.FC<ProductProps> = ({
     product_item_sold,
     product_is_available,
     product_is_bestseller,
+    product_is_new_arrival,
     product_promo,
   } = product ?? {};
   const isDesktop = useMediaQuery('(min-width: 1023px)');
@@ -88,6 +90,7 @@ const ProductCardV2: React.FC<ProductProps> = ({
   const { t } = useTranslation(lang, 'common');
   const { width } = useWindowSize();
   const iconSize = width! > 1024 ? '20' : '17';
+  const isValidPromoDate = usePromoCountdown(product_promo);
   const { price, basePrice, discount } = usePrice({
     amount: product?.sale_price ? product?.sale_price : product?.product_price,
     baseAmount: product?.product_price,
@@ -153,12 +156,36 @@ const ProductCardV2: React.FC<ProductProps> = ({
             </span>
           )}
 
-          {product_promo?.product_promo_is_discount && product_is_available && (
-            <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
-              {t('text-on-sale')}
-            </span>
-          )}
+          {product_promo?.product_promo_is_discount &&
+            product_is_available &&
+            isValidPromoDate && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-on-sale')}
+              </span>
+            )}
 
+          {product_promo?.product_promo_is_best_deal &&
+            product_is_available && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-best-deal')}
+              </span>
+            )}
+
+          {product_is_new_arrival &&
+            product_is_available &&
+            !product_is_bestseller && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-new-arrival-badge')}
+              </span>
+            )}
+
+          {product_is_bestseller &&
+            product_is_available &&
+            !product_is_new_arrival && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-best-seller-badge')}
+              </span>
+            )}
 
           <button
             className="buttons--quickview px-4 py-2 bg-brand-light rounded-full hover:bg-brand hover:text-brand-light"
