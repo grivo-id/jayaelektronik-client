@@ -166,11 +166,11 @@ export default function ProductPopup({ lang }: { lang: string }) {
       draggable: true,
     });
   }
-  console.log('lang', lang);
-  console.log(
-    'route',
-    `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
-  );
+  // console.log('lang', lang);
+  // console.log(
+  //   'route',
+  //   `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
+  // );
   function navigateToProductPage() {
     closeModal();
     // router.push(

@@ -17,8 +17,8 @@ export const fetchProductBasedOnTags = async ({ queryKey }: any) => {
   const requestBody = {
     product_tag_names: _params.tags ? _params.tags : [],
   };
-  console.log('Full URL:', url);
-  console.log('Request Body:', requestBody);
+//   console.log('Full URL:', url);
+//   console.log('Request Body:', requestBody);
   const { data } = await http.post(url, requestBody);
   return data as ResultBody;
 };
