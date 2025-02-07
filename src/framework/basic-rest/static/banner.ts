@@ -14,21 +14,21 @@ export const homeJayaHeroSlider = [
       },
     },
   },
-  // {
-  //   id: 2,
-  //   title: 'banner-thousand-grocery-title',
-  //   description: 'banner-thousand-grocery-title-description',
-  //   btnText: 'text-explore-more',
-  //   btnUrl: '/search',
-  //   image: {
-  //     mobile: {
-  //       url: '/assets/images/hero/home6/slideshow2.jpg',
-  //     },
-  //     desktop: {
-  //       url: '/assets/images/hero/home6/slideshow2.jpg',
-  //     },
-  //   },
-  // }
+  {
+    id: 2,
+    title: 'banner-welcome2',
+    description: 'banner-grand-welcome2',
+    btnText: 'text-explore-more',
+    btnUrl: '/search',
+    image: {
+      mobile: {
+        url: '/assets/images/hero/jaya/slideshow2.png',
+      },
+      desktop: {
+        url: '/assets/images/hero/jaya/slideshow2.png',
+      },
+    },
+  }
 ];
 
 export const homeOnesGridHero = [
@@ -96,12 +96,12 @@ export const homeOnesGridHero2 = [
     type: 'small',
     image: {
       mobile: {
-        url: '/assets/images/banner/jaya/home.png',
+        url: '/assets/images/banner/jaya/television.png',
         width: 560,
         height: 240,
       },
       desktop: {
-        url: '/assets/images/banner/jaya/home.png',
+        url: '/assets/images/banner/jaya/television.png',
         width: 560,
         height: 240,
       },

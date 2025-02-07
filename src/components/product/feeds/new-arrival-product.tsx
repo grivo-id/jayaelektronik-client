@@ -9,7 +9,7 @@ interface ProductFeedProps {
   variant?: string;
 }
 
-const BestSellerProductFeed: FC<ProductFeedProps> = ({
+const NewArrivalProductFeed: FC<ProductFeedProps> = ({
   lang,
   className,
   variant,
@@ -18,8 +18,8 @@ const BestSellerProductFeed: FC<ProductFeedProps> = ({
     page: 1,
     limit: 25,
     sort: 'desc',
-    product_is_new_arrival: false,
-    product_is_bestseller: true,
+    product_is_new_arrival: true,
+    product_is_bestseller: false,
   };
 
   const { data, isLoading, error } = useFlexProductsNoPaginationQueries(query);
@@ -49,12 +49,12 @@ const BestSellerProductFeed: FC<ProductFeedProps> = ({
 
   return (
     <ProductsCarousel
-      sectionHeading="text-best-sellers-product"
+      sectionHeading="text-new-arrivals-product"
       products={products}
       loading={isLoading}
       error={error?.message}
       limit={10}
-      uniqueKey="best-sellers"
+      uniqueKey="new-arrival"
       className="mb-8 lg:mb-12"
       borderCarousel={true}
       rowCarousel={2}
@@ -64,4 +64,4 @@ const BestSellerProductFeed: FC<ProductFeedProps> = ({
     />
   );
 };
-export default BestSellerProductFeed;
+export default NewArrivalProductFeed;
