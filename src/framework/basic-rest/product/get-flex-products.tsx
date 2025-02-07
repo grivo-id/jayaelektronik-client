@@ -35,6 +35,13 @@ const fetchFlexProducts = async ({
     page: pageParam,
     limit: _params.limit,
     sort: _params.sort,
+    ...(_params.priceSort ? { priceSort: _params.priceSort } : {}),
+    ...(_params.product_is_new_arrival
+      ? { product_is_new_arrival: _params.product_is_new_arrival }
+      : {}),
+    ...(_params.product_is_bestseller
+      ? { product_is_bestseller: _params.product_is_bestseller }
+      : {}),
   }).toString();
 
   const fullUrl = `${API_ENDPOINTS.FLEX_PRODUCTS}?${queryParams}`;
@@ -52,7 +59,7 @@ const fetchFlexProducts = async ({
   const { data } = await http.post<ApiResponse>(fullUrl, requestBody);
 
   return {
-    data: data.data as Product[], 
+    data: data.data as Product[],
     paginatorInfo: {
       nextPageUrl: data.pagination.hasNextPage
         ? data.pagination.currentPage + 1

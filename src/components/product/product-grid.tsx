@@ -19,6 +19,32 @@ interface ProductGridProps {
   viewAs: boolean;
 }
 
+interface SortTranslation {
+  product_is_new_arrival?: string;
+  product_is_bestseller?: string;
+  priceSort?: string;
+}
+
+const translateNewQuerySortBy: Record<string, SortTranslation> = {
+  'new-arrival': {
+    product_is_new_arrival: 'true',
+    product_is_bestseller: 'false',
+    priceSort: 'asc',
+  },
+  'best-seller': {
+    product_is_new_arrival: 'false',
+    product_is_bestseller: 'true',
+    priceSort: 'asc',
+  },
+  lowest: {
+    priceSort: 'asc',
+  },
+  highest: {
+    priceSort: 'desc',
+  },
+  '': {},
+};
+
 export const ProductGrid: FC<ProductGridProps> = ({
   className = '',
   lang,
@@ -31,7 +57,8 @@ export const ProductGrid: FC<ProductGridProps> = ({
     // @ts-ignore
     `${process.env.NEXT_PUBLIC_WEBSITE_URL}${query}`
   );
-
+  console.log('new query', newQuery);
+  const sortTranslation = translateNewQuerySortBy[newQuery.sort_by || ''] || {};
   const {
     isFetching: isLoading,
     isFetchingNextPage: loadingMore,
@@ -43,8 +70,9 @@ export const ProductGrid: FC<ProductGridProps> = ({
     page: 1,
     limit: 25,
     sort: 'desc',
-    // @ts-ignore
-    ...newQuery,
+    category: newQuery.category,
+    brand: newQuery.brand,
+    ...sortTranslation, 
   });
 
   // console.log(newQuery)

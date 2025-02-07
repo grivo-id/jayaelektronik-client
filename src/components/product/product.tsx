@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@components/ui/button';
 import Counter from '@components/ui/counter';
 import { useParams } from 'next/navigation';
@@ -24,6 +24,7 @@ import isEqual from 'lodash/isEqual';
 import { useTranslation } from 'src/app/i18n/client';
 import { useProductDetailQueryByProdId } from '@framework/product/get-product-detail';
 import { usePromoCountdown } from '@utils/use-promo-countdown';
+import { useUI } from '@contexts/ui.context';
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
@@ -68,13 +69,21 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     amount: product?.product_promo?.product_promo_final_price ?? 0,
     currencyCode: 'IDR',
   });
+  const { product_tags, setProdTag } = useUI();
+
+  useEffect(() => {
+    if (product?.product_tags) {
+      setProdTag(product.product_tags);
+    }
+  }, [product]); 
 
   const { payment } = footer;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
   if (isLoading) return <p className={'pt-8 pb-8'}>Loading...</p>;
-  const variations = getVariations(product?.variations);
+  // const variations = getVariations(product?.variations);
+  const variations = getVariations([]);
 
   const isSelected = !isEmpty(variations)
     ? !isEmpty(attributes) &&
