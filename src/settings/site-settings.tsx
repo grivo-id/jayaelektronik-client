@@ -10,10 +10,9 @@ import { IDFlag } from '@components/icons/language/IDFlag';
 
 export const siteSettings = {
   name: 'Jayaelektronik',
-  description:
-    'Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS.',
+  description: 'Best Online Electronic Store in Jayapura, Papua',
   author: {
-    name: 'Wikithemes, Inc.',
+    name: 'Grivo.id',
     websiteUrl: '#',
     address: '',
   },

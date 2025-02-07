@@ -74,10 +74,12 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
     image,
     unit,
     slug,
+    product_is_bestseller,
+    product_is_new_arrival,
+    product_is_available,
     brand_name,
     product_item_sold,
     product_promo,
-    product_is_available,
     product_type,
   } = product ?? {};
   const { openModal } = useModalAction();
@@ -134,6 +136,8 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
             />
           )}
         </div>
+
+        {/* Badges */}
         <div className="w-full h-full absolute top-0  z-10">
           {!product_is_available && (
             <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-brand-danger rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
@@ -154,6 +158,23 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
                 {t('text-best-deal')}
               </span>
             )}
+
+          {product_is_new_arrival &&
+            product_is_available &&
+            !product_is_bestseller && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-new-arrival-badge')}
+              </span>
+            )}
+
+          {product_is_bestseller &&
+            product_is_available &&
+            !product_is_new_arrival && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-best-seller-badge')}
+              </span>
+            )}
+
           <button
             className="buttons--quickview px-4 py-2 bg-brand-light rounded-full hover:bg-brand hover:text-brand-light"
             aria-label="Quick View Button"
