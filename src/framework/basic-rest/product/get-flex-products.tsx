@@ -53,8 +53,8 @@ const fetchFlexProducts = async ({
     sub_category_slugs: _params.category ? _params.category.split(',') : [],
   };
 
-  console.log('Full URL:', fullUrl);
-  console.log('Request Body:', requestBody);
+  // console.log('Full URL:', fullUrl);
+  // console.log('Request Body:', requestBody);
 
   const { data } = await http.post<ApiResponse>(fullUrl, requestBody);
 

@@ -1,7 +1,9 @@
 'use client';
 
 import ProductsCarousel from '@components/product/products-carousel';
+import { useUI } from '@contexts/ui.context';
 import { useBestSellerProductsQuery } from '@framework/product/get-all-best-seller-products';
+import { useProductTagsQuery } from '@framework/product/get-product-by-tag';
 import { useRelatedProductsQuery } from '@framework/product/get-related-product';
 import { LIMITS } from '@framework/utils/limits';
 
@@ -18,15 +20,12 @@ const RelatedProductFeed: React.FC<RelatedProductsProps> = ({
   className,
   uniqueKey = 'related-product-popup',
 }) => {
-  const { data, isLoading, error } = useBestSellerProductsQuery({
-    page: 1,
-    limit: 10,
-    sort: 'desc',
+  const { product_tags } = useUI();
+  const productTagNames =
+    product_tags?.map((tag: any) => tag.product_tag_name) || [];
+  const { data, isLoading, error } = useProductTagsQuery({
+    tags: productTagNames,
   });
-
-  // const { data, isLoading, error } = useRelatedProductsQuery({
-  //   limit: LIMITS.RELATED_PRODUCTS_LIMITS,
-  // });
 
   const products = data?.data || [];
 

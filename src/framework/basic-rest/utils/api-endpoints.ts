@@ -45,6 +45,7 @@ export const API_ENDPOINTS = {
   BLOGCATEGORIES: '/blog-categories',
   CATEGORY_BYID: '/product-categories',
   PRODUCTS_BYCATID: '/products',
+  PRODUCT_BYTAG: '/products/tag-flex',
 };
 
 // export const API_ENDPOINTS = {
