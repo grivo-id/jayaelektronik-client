@@ -4,8 +4,7 @@ import Container from '@components/ui/container';
 import WidgetSubscription from './widget-subscription';
 import { footer } from '../data';
 import cn from 'classnames';
-import { useBrandsQuery } from '@framework/brand/get-all-brands';
-import BrandLink from './brand-link';
+import { useUI } from '@contexts/ui.context';
 
 interface WidgetsProps {
   lang: string;
@@ -22,14 +21,26 @@ const Widgets: React.FC<WidgetsProps> = ({
   widgets,
   variant = 'default',
 }) => {
-  const { data, isLoading, error } = useBrandsQuery({
-    page: 1,
-    limit: 6,
-    sort: 'desc',
-  });
   const { social } = footer;
+  const { isAuthorized } = useUI();
   // console.log(isLoading, error)
-  const brands = data?.data || [];
+  // console.log(isAuthorized);
+
+  const getFilteredLists = (widgetId: number, lists: any[]) => {
+    if (widgetId === 2) {
+      if (isAuthorized) {
+        return lists.filter((item) =>
+          ['link-account', 'link-checkout', 'link-myoder'].includes(item.title)
+        );
+      } else {
+        return lists.filter((item) =>
+          ['link-signin', 'link-signup', 'link-checkout'].includes(item.title)
+        );
+      }
+    }
+
+    return lists;
+  };
 
   return (
     <Container>
@@ -42,18 +53,14 @@ const Widgets: React.FC<WidgetsProps> = ({
         {widgets?.slice(0, 3)?.map((widget) => (
           <WidgetLink
             key={`footer-widget--key${widget.id}`}
-            data={widget}
+            data={{
+              ...widget,
+              lists: getFilteredLists(widget.id, widget.lists),
+            }}
             className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2"
             lang={lang}
           />
         ))}
-
-        <BrandLink
-          data={brands}
-          className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2"
-          lang={lang}
-          header="Brands"
-        />
 
         <WidgetSubscription
           className={cn(
