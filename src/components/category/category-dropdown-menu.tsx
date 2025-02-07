@@ -10,7 +10,11 @@ interface CategoryDropdownProps {
   categoriesLimit?: number;
 }
 
-export default function CategoryDropdownMenu({ lang, className, categoriesLimit = 99 }: CategoryDropdownProps) {
+export default function CategoryDropdownMenu({
+  lang,
+  className,
+  categoriesLimit = 99,
+}: CategoryDropdownProps) {
   const {
     data,
     isLoading: loading,
@@ -18,8 +22,6 @@ export default function CategoryDropdownMenu({ lang, className, categoriesLimit 
   } = useCategoriesQuery({
     limit: 99,
   });
-
-
 
   return (
     <div className={cn('absolute z-30 w-72 lg:w-full', className)}>
