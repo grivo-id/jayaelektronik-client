@@ -26,11 +26,11 @@ module.exports = {
           danger: '#dc2626',
         },
         yellow: {
-          DEFAULT: '#f98f14',
           50: '#FAE642',
           100: '#f3b81f',
           200: '#ffc33c',
           300: '#edc537',
+          DEFAULT: '#f98f14',
         },
         fill: {
           base: '#3A3A3A',
@@ -41,15 +41,9 @@ module.exports = {
           two: '#f2f2f2',
           three: '#e8ebf0',
           four: '#F3F5F9',
-          dark: '#000'
+          dark: '#000',
         },
-        border: {
-          base: '#e7ecf0',
-          one: '#e3e8ec',
-          two: 'rgb(91 205 50)',
-          three: '#e6e6e6',
-          four: '#dee5ea',
-        },
+        border: 'hsl(var(--border))',
         gray: {
           50: '#FBFBFB',
           100: '#F1F1F1',
@@ -62,6 +56,45 @@ module.exports = {
           600: '#3A3A3A',
           700: '#222222',
           800: '#707070',
+        },
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          1: 'hsl(var(--chart-1))',
+          2: 'hsl(var(--chart-2))',
+          3: 'hsl(var(--chart-3))',
+          4: 'hsl(var(--chart-4))',
+          5: 'hsl(var(--chart-5))',
         },
       },
       fontSize: {
@@ -95,11 +128,17 @@ module.exports = {
       },
       keyframes: {
         shine: {
-          '100%': { left: '125%' },
+          '100%': {
+            left: '125%',
+          },
         },
         wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+          '0%, 100%': {
+            transform: 'rotate(-3deg)',
+          },
+          '50%': {
+            transform: 'rotate(3deg)',
+          },
         },
       },
       animation: {
@@ -138,7 +177,16 @@ module.exports = {
           '0px 1px 2px rgba(0, 0, 0, 0.03), 0px 1px 3px rgba(0, 0, 0, 0.05)',
         searchBox: '0px 4px 4px rgba(99, 113, 134, 0.1)',
       },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('tailwindcss-rtl')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('tailwindcss-rtl'),
+    require('tailwindcss-animate'),
+  ],
 };

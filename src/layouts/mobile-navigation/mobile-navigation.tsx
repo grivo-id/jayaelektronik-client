@@ -16,6 +16,8 @@ import { useTranslation } from 'src/app/i18n/client';
 import { useCallback, useEffect } from 'react';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import http from '@framework/utils/http';
+import SearchMobile from './search-mobile';
+
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
 });
@@ -88,13 +90,9 @@ export default function BottomNavigation({ lang }: { lang: string }) {
         >
           <MenuIcon />
         </button>
-        <button
-          className="relative flex items-center justify-center h-auto shrink-0 focus:outline-none"
-          onClick={toggleMobileSearch}
-          aria-label="Search Button"
-        >
-          <SearchIcon />
-        </button>
+
+        <SearchMobile lang={lang} />
+
         <Link href={`/${lang}${ROUTES.HOME}`} className="shrink-0">
           <span className="sr-only">{t('breadcrumb-home')}</span>
           <HomeIcon />
