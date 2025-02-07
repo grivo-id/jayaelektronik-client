@@ -20,7 +20,7 @@ import NewArrivalProductFeed from '@components/product/feeds/new-arrival-product
 export const metadata: Metadata = {
   title: 'Home',
   description:
-    'Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS.',
+    'Best Online Electronic Store in Jayapura, Papua',
 };
 
 export default async function Page({
