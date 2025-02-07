@@ -16,7 +16,7 @@ import { getDirection } from '@utils/get-direction';
 
 function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
   const { t } = useTranslation(lang, 'common');
-  const { name, children: items, icon, type } = item;
+  const { name, children: items, icon, type, slug } = item;
   const dir = getDirection(lang);
   return (
     <>
@@ -30,7 +30,7 @@ function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
         }`}
       >
         <Link
-          href={`/${lang}${ROUTES.SEARCH}`}
+          href={`/${lang}${ROUTES.SEARCH}?category=${slug}`}
           className={cn(
             'flex items-center w-full py-3 text-start outline-none focus:outline-none focus:ring-0 focus:text-skin-base'
           )}
@@ -94,7 +94,6 @@ function SidebarMenu({ items, className, categoriesLimit, lang }: any) {
   const [categoryMenuToggle, setcategoryMenuToggle] = useState(Boolean(false));
   const { t } = useTranslation(lang, 'common');
 
-  console.log('item', items);
   function handleCategoryMenu() {
     setcategoryMenuToggle(!categoryMenuToggle);
   }

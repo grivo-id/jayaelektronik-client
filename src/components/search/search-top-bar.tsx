@@ -65,10 +65,11 @@ const SearchTopBar: React.FC<Props> = ({ onNavClick, viewAs, lang }) => {
 
         <ListBox
           options={[
+            { name: 'text-default-opt', value: '' },
             { name: 'text-lowest-price', value: 'lowest' },
             { name: 'text-highest-price', value: 'highest' },
             { name: 'text-new-arrival', value: 'new-arrival' },
-            { name: 'text-most-order', value: 'most-order' },
+            { name: 'text-best-seller', value: 'best-seller' },
           ]}
           lang={lang}
         />

@@ -91,17 +91,13 @@ const ProductCardV2: React.FC<ProductProps> = ({
   const { width } = useWindowSize();
   const iconSize = width! > 1024 ? '20' : '17';
   const isValidPromoDate = usePromoCountdown(product_promo);
-  const { price, basePrice, discount } = usePrice({
+  const { price, basePrice } = usePrice({
     amount: product?.sale_price ? product?.sale_price : product?.product_price,
     baseAmount: product?.product_price,
     currencyCode: 'IDR',
   });
-  const { price: minPrice } = usePrice({
-    amount: product?.min_price ?? 0,
-    currencyCode: 'IDR',
-  });
-  const { price: maxPrice } = usePrice({
-    amount: product?.max_price ?? 0,
+  const { price: promoPrice } = usePrice({
+    amount: product?.product_promo?.product_promo_final_price ?? 0,
     currencyCode: 'IDR',
   });
 
@@ -213,14 +209,26 @@ const ProductCardV2: React.FC<ProductProps> = ({
         </Link>
 
         <div className="flex flex-col mb-2 lg:mb-4">
-          <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
-            {product_type === 'variable' ? `${minPrice} - ${maxPrice}` : price}
-          </span>
-          {basePrice && (
-            <del className="mx-1 text-sm text-gray-400 text-opacity-70">
-              {basePrice}
-            </del>
+          {product_promo?.product_promo_is_discount && isValidPromoDate ? (
+            <div className="flex flex-col gap-0 items-center justify-center">
+              <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
+                {promoPrice}
+              </span>
+              <div className="flex flex-row gap-1 justify-center items-center">
+                <del className="mx-1 text-sm text-gray-400 text-opacity-70">
+                  {price}
+                </del>
+                <span className="text-sm text-rose-500">
+                  {product_promo.product_promo_discount_percentage}%
+                </span>
+              </div>
+            </div>
+          ) : (
+            <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
+              {price}
+            </span>
           )}
+
           {product_item_sold > 0 && (
             <span className="text-sm text-brand-muted">
               {product_item_sold}

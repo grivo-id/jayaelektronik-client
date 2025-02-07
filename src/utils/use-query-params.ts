@@ -30,7 +30,9 @@ export default function useQueryParam(pathname: string = '/') {
     let url = new URL(location.href);
     key.forEach((item) => url.searchParams.delete(item));
     setQuery(url.search);
-    router.push(`${pathname}${url.search}`);
+
+    window.history.replaceState(null, '', `${pathname}${url.search}`);
+    router.push(`${pathname}${url.search}`, { scroll: false });
   };
 
   const setQueryparams = (data: any) => {
@@ -62,12 +64,18 @@ export default function useQueryParam(pathname: string = '/') {
       clearQueryParam([key]);
       return;
     }
+
     const url = new URL(location.href);
     url.searchParams.set(key, value.toString());
     setQuery(url.search);
-    router.push(`${pathname}${url.search}`);
-  };
 
+    window.history.replaceState(null, '', `${pathname}${url.search}`);
+
+    router.push(`${pathname}${url.search}`, {
+      scroll: false,
+    });
+  };
+  
   return {
     query,
     loading,
