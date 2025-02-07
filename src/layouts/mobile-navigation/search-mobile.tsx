@@ -57,7 +57,7 @@ export default function SearchMobile({ lang }: Props) {
       <SheetTrigger>
         <SearchIcon />
       </SheetTrigger>
-      <SheetContent className="w-full max-w-[1023px] md:max-w-[578px] ">
+      <SheetContent className="w-full max-w-[1023px] md:max-w-[578px] overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Search</SheetTitle>
           <SheetDescription className="sr-only">
