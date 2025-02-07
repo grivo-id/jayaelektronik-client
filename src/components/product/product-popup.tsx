@@ -322,7 +322,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                 <Button
                   onClick={addToCart}
                   className="w-full px-1.5"
-                  disabled={!isSelected}
+                  disabled={!isSelected || !product_is_available}
                   loading={addToCartLoader}
                 >
                   <CartIcon color="#ffffff" className="ltr:mr-3 rtl:ml-3" />
@@ -380,6 +380,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   />
                   {'...'}
                   <Link
+               
                     href={`/${lang}${
                       ROUTES.PRODUCTS
                     }/${product_id}.${convertToSlug(product_name)}`}

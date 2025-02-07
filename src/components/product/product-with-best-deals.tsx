@@ -41,8 +41,18 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
     limit: limit,
     sort: 'desc',
   });
+  const now = new Date();
+  const validProducts = (data?.data || []).filter((product) => {
+    if (!product.product_promo) return false;
+    const createdDate = new Date(
+      product.product_promo.product_promo_created_date
+    );
+    const expiredDate = new Date(
+      product.product_promo.product_promo_expired_date
+    );
+    return now >= createdDate && now < expiredDate;
+  });
 
-  const products = data?.data || [];
   return (
     <div className={`mb-8 ${className}`}>
       <SectionHeader
@@ -61,7 +71,7 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
             prevButtonClassName="start-3  -top-12 3xl:top-auto 3xl:-translate-y-2 4xl:-translate-y-10"
             nextButtonClassName={`end-3  -top-12 3xl:top-auto transform 2xl:translate-x-0 3xl:-translate-y-2 xl:-translate-x-2.5`}
           >
-            {isLoading && !products ? (
+            {isLoading && !validProducts ? (
               Array.from({ length: limit! }).map((_, idx) => (
                 <ProductCardLoader
                   uniqueKey={`${uniqueKey}-${idx}`}
@@ -70,7 +80,7 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
               ))
             ) : (
               <>
-                {products?.slice(0, limit).map((product: any) => (
+                {validProducts?.slice(0, limit).map((product: any) => (
                   <SwiperSlide
                     key={`${uniqueKey}-${product.product_id}`}
                     className="py-1.5 "

@@ -90,6 +90,13 @@ function Header({ lang }: { lang: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  const filteredTopMenu = site_header.topmenu.filter((menuItem) => {
+    if (menuItem.label === 'menu-wishlists') {
+      return isAuthorized;
+    }
+    return true;
+  });
+
   return (
     <>
       <header
@@ -109,7 +116,7 @@ function Header({ lang }: { lang: string }) {
                 </text> */}
                 <div className="flex flex-shrink-0 smx-auto max-w-[1920px]pace-s-5">
                   <HeaderMenutop
-                    data={site_header.topmenu}
+                    data={filteredTopMenu}
                     className="flex transition-all duration-200 ease-in-out"
                     lang={lang}
                   />

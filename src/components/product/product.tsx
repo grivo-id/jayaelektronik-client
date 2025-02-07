@@ -248,26 +248,29 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
           </div>
 
           <div className="pt-1.5 lg:pt-3 xl:pt-4 space-y-2.5 md:space-y-3.5">
-            <Counter
-              variant="single"
-              value={selectedQuantity}
-              onIncrement={() => setSelectedQuantity((prev) => prev + 1)}
-              onDecrement={() =>
-                setSelectedQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
-              }
-              disabled={
-                isInCart(item.id)
-                  ? getItemFromCart(item.id).quantity + selectedQuantity >=
-                    Number(item.stock)
-                  : selectedQuantity >= Number(item.stock)
-              }
-              lang={lang}
-            />
+            {product?.product_is_available && (
+              <Counter
+                variant="single"
+                value={selectedQuantity}
+                onIncrement={() => setSelectedQuantity((prev) => prev + 1)}
+                onDecrement={() =>
+                  setSelectedQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
+                }
+                disabled={
+                  isInCart(item.id)
+                    ? getItemFromCart(item.id).quantity + selectedQuantity >=
+                      Number(item.stock)
+                    : selectedQuantity >= Number(item.stock)
+                }
+                lang={lang}
+              />
+            )}
+
             <div className="flex flex-col md:flex-row gap-2.5">
               <Button
                 onClick={addToCart}
                 className="flex-auto w-full px-1.5"
-                disabled={!isSelected}
+                disabled={!isSelected || !product?.product_is_available}
                 loading={addToCartLoader}
               >
                 <CartIcon color="#ffffff" className="ltr:mr-3 rtl:ml-3" />
