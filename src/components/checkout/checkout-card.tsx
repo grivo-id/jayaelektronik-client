@@ -32,24 +32,57 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
   const [isLoading, setLoading] = useState(true);
   const { mutateAsync: createOrder, isLoading: submitting } =
     useCreateOrderMutation();
-  const { checkOutFormData, user } = useUI();
+  const { checkOutFormData, user, shippingAddress } = useUI();
   const { resetCart } = useCart();
+  const [isValid, setValid] = useState(false);
+
+  const getStoredCartAndAddress = () => ({
+    storedCart: JSON.parse(
+      JSON.parse(localStorage.getItem('razor-cart') || '{"items":[]}')
+    ),
+    defaultAddress: JSON.parse(
+      sessionStorage.getItem('default_address') || '{}'
+    ),
+  });
 
   useEffect(() => {
+    const hasValidForm =
+      checkOutFormData?.user_email &&
+      checkOutFormData?.user_fname &&
+      checkOutFormData?.user_lname &&
+      checkOutFormData?.user_phone &&
+      shippingAddress[0]?.shipping_address_desc;
+
+    setValid(Boolean(hasValidForm));
     setLoading(false);
-  }, []);
+  }, [checkOutFormData, shippingAddress]);
+
   const { items, total, isEmpty } = useCart();
-  // console.log('item', items, total);
   const { price: subtotal } = usePrice({
     amount: total,
     currencyCode: 'IDR',
   });
   async function orderHeader() {
-    const cartString = localStorage.getItem('razor-cart');
-    const storedCart = JSON.parse(JSON.parse(cartString || '{"items":[]}'));
-    const defaultAddress = JSON.parse(
-      sessionStorage.getItem('default_address') || '{}'
-    );
+    if (!isValid) {
+      let message;
+      if (lang === 'ina') {
+        message = 'Mohon lengkapi data diri dan alamat pengiriman!';
+      } else {
+        message = 'Please fill your data and shipping address in the form!';
+      }
+      toast.error(message, {
+        progressClassName: 'fancy-progress-bar',
+        position: width! > 768 ? 'bottom-right' : 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: <ErrorIcon />,
+      });
+      return;
+    }
+    const { storedCart, defaultAddress } = getStoredCartAndAddress();
     if (!isEmpty) {
       try {
         const response = await createOrder({

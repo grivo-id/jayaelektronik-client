@@ -4,6 +4,7 @@ import React from 'react';
 import { getToken } from '@framework/utils/get-token';
 import { CartProvider } from './cart/cart.context';
 import { ModalProvider } from '@components/common/modal/modal.context';
+import { ProdTag } from '@framework/types';
 
 export interface State {
   isAuthorized: boolean;
@@ -24,6 +25,7 @@ export interface State {
     user_email: string;
     user_phone: string;
   };
+  product_tags?: ProdTag[];
   data?: any;
 }
 
@@ -47,6 +49,7 @@ const initialState = {
     user_phone: '',
   },
   shippingAddress: [],
+  product_tags: [],
 };
 
 type Action =
@@ -131,9 +134,14 @@ type Action =
       };
     }
   | {
+      type: 'SET_PROD_TAGS';
+      product_tags: any;
+    }
+  | {
       type: 'SET_SHIPPING_ADDRESS';
       shippingAddress: any;
     };
+
 type DRAWER_VIEWS = 'CART_SIDEBAR' | 'MOBILE_MENU' | 'ORDER_DETAILS';
 type ToastText = string;
 
@@ -296,6 +304,14 @@ function uiReducer(state: State, action: Action) {
         },
       };
     }
+    case 'SET_PROD_TAGS': {
+      return {
+        ...state,
+        product_tags: Array.isArray(action.product_tags) 
+          ? action.product_tags
+          : [action.product_tags]
+      }
+    }
   }
 }
 
@@ -349,6 +365,8 @@ export function UIProvider(props: React.PropsWithChildren<any>) {
     dispatch({ type: 'SET_SHIPPING_ADDRESS', shippingAddress });
   const setCheckOutFormData = (checkOutFormData: any) =>
     dispatch({ type: 'SET_CHECKOUT_FORM_DATA', checkOutFormData });
+  const setProdTag = (product_tags: any) =>
+    dispatch({type: 'SET_PROD_TAGS', product_tags})
 
   const value = React.useMemo(
     () => ({
@@ -381,6 +399,7 @@ export function UIProvider(props: React.PropsWithChildren<any>) {
       setUser,
       setShippingAddress,
       setCheckOutFormData,
+      setProdTag,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [state]

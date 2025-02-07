@@ -108,12 +108,11 @@ function CategoryFilterMenuItem({
             </div>
           )}
           {depth > 0 && (
-              <span
-                  className={`w-[20px] h-[20px] text-[11px] flex items-center justify-center border-2 border-border-four rounded-full transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${
-                      formState.includes(item.slug) &&
-                      'border-[#ff751a] bg-[#ff751a]'
-                  }`}
-              >
+            <span
+              className={`w-[20px] h-[20px] text-[11px] flex items-center justify-center border-2 border-border-four rounded-full transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${
+                formState.includes(item.slug) && 'border-[#ff751a] bg-[#ff751a]'
+              }`}
+            >
               {formState.includes(item.slug) && <FaCheck />}
             </span>
           )}
