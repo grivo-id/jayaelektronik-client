@@ -82,13 +82,15 @@ const AddressGrid: React.FC<{ address?: any; lang: string }> = ({
                   <span className="sr-only">{t(item?.title)}</span>
                   <TiPencil />
                 </button>
-                <button
-                  onClick={() => handlePopupDeleteView(item)}
-                  className="flex items-center justify-center w-6 h-6 text-base rounded-full bg-skin-red text-brand-light text-opacity-80"
-                >
-                  <span className="sr-only">{t(item?.title)}</span>
-                  <TrashIcon />
-                </button>
+                {user && (
+                  <button
+                    onClick={() => handlePopupDeleteView(item)}
+                    className="flex items-center justify-center w-6 h-6 text-base rounded-full bg-skin-red text-brand-light text-opacity-80"
+                  >
+                    <span className="sr-only">{t(item?.title)}</span>
+                    <TrashIcon />
+                  </button>
+                )}
               </div>
             </RadioGroup.Option>
           ))
