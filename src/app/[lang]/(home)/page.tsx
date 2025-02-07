@@ -15,11 +15,12 @@ import {
   homeJayaHeroSlider as heroSlider,
 } from '@framework/static/banner';
 import ProductWithBestDeals from '@components/product/product-with-best-deals';
+import NewArrivalProductFeed from '@components/product/feeds/new-arrival-product';
 
 export const metadata: Metadata = {
   title: 'Home',
   description:
-    'Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS.',
+    'Best Online Electronic Store in Jayapura, Papua',
 };
 
 export default async function Page({
@@ -42,20 +43,22 @@ export default async function Page({
         <FeatureCarousel lang={lang} />
         <BannerAllCarousel lang={lang} className="mb-2 lg:mb-4" />
         <ProductWithBestDeals lang={lang} />
-        <BestSellerProductFeed lang={lang} variant={`cardv2`} />
         <BannerGridTwo
           lang={lang}
           data={bannerTwo}
           className="mb-8 lg:mb-12"
           girdClassName="xl:gap-5 "
         />
-        <SupperCategoryElectronicFeed lang={lang} />
+        <BestSellerProductFeed lang={lang} variant={`cardv2`} />
+        <NewArrivalProductFeed lang={lang} variant={`cardv2`} />
         <BannerGridTwo
           lang={lang}
           data={bannerTwo2}
-          className="mb-8 lg:mb-12"
+          className="mb-0 lg:mb-12"
           girdClassName="xl:gap-5 "
         />
+        <SupperCategoryElectronicFeed lang={lang} />
+
         {/* <BannerGridTwo
           lang={lang}
           data={bannerTwo2}

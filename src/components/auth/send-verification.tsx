@@ -26,7 +26,6 @@ const SendVerification: React.FC<SendVerificationProps> = ({
   const { user } = useUI();
 
   const handleResend = async () => {
-    console.log(' user', user.user_email);
     setIsLoading(true);
     const response = await sendEmailVerification(user.user_email);
     if (response.success) {

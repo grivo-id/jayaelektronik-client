@@ -1,11 +1,9 @@
 export const redirectToWhatsAppCart = (userData: any) => {
   const phoneNumber = '+62816270158';
   const cartString = localStorage.getItem('razor-cart');
-  console.log('Cart String:', cartString);
 
   // Parse twice since the string is double-escaped
   const storedCart = JSON.parse(JSON.parse(cartString || '{"items":[]}'));
-  console.log('Parsed Cart:', storedCart);
 
   let message = `Hi Jaya Elektronik,\n\nI would like to place an order with the following details:\n\n`;
 

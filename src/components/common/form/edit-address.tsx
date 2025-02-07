@@ -15,19 +15,20 @@ import Map from '@components/ui/map';
 import { useTranslation } from 'src/app/i18n/client';
 import { useUI } from '@contexts/ui.context';
 import { useAddShippingMutation } from '@framework/checkout/use-shipping-address';
+import { useEditShippingMutation } from '@framework/checkout/use-edit-address';
 
 interface ContactFormValues {
   shipping_address_title: string;
   shipping_address_desc: string;
 }
 
-const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
+const EditAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang);
   const { width } = useWindowSize();
   const { data } = useModalState();
   const { user, setShippingAddress, shippingAddress } = useUI();
-  const { mutateAsync: AddShippingAddress, isLoading } =
-    useAddShippingMutation();
+  const { mutateAsync: EditShippingAddress, isLoading } =
+    useEditShippingMutation();
 
   const { closeModal } = useModalAction();
 
@@ -37,17 +38,22 @@ const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
   ) {
     if (user) {
       try {
-        const response = await AddShippingAddress({
+        const response = await EditShippingAddress({
+          id: data.shipping_address_id,
           shipping_address_desc,
           shipping_address_title,
         });
         if (response.success) {
-          setShippingAddress([
-            ...(Array.isArray(shippingAddress) ? shippingAddress : []),
-            response.data,
-          ]);
+          setShippingAddress(
+            (Array.isArray(shippingAddress) ? shippingAddress : []).map(
+              (address: any) =>
+                address.shipping_address_id === data.shipping_address_id
+                  ? { ...address, ...response.data }
+                  : address
+            )
+          );
           closeModal();
-          toast('Address added successful!', {
+          toast('Address edited successful!', {
             progressClassName: 'fancy-progress-bar',
             position: width! > 768 ? 'bottom-right' : 'top-right',
             autoClose: 1500,
@@ -90,8 +96,8 @@ const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
     formState: { errors },
   } = useForm<ContactFormValues>({
     defaultValues: {
-      shipping_address_title: '',
-      shipping_address_desc: '',
+      shipping_address_title: data ? data?.shipping_address_title : '',
+      shipping_address_desc: data ? data?.shipping_address_desc : '',
     },
   });
 
@@ -99,7 +105,7 @@ const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
     <div className="w-full md:w-[600px] lg:w-[900px] xl:w-[1000px] mx-auto p-5 sm:p-8 bg-brand-light rounded-md">
       <CloseButton onClick={closeModal} />
       <Heading variant="title" className="mb-8 -mt-1.5">
-        {t('common:text-add-delivery-address')}
+        {t('common:text-edit-delivery-address')}
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="mb-6">
@@ -136,23 +142,13 @@ const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
           />
         </div>
         <div className="flex justify-end w-full">
-          {user ? (
-            <Button
-              loading={isLoading}
-              className="h-11 md:h-12 mt-1.5"
-              type="submit"
-            >
-              {t('common:text-save-address')}
-            </Button>
-          ) : (
-            <Button className="h-11 md:h-12 mt-1.5" type="submit">
-              {t('common:text-save-address')}
-            </Button>
-          )}
+          <Button className="h-11 md:h-12 mt-1.5" type="submit">
+            {t('common:text-save-address')}
+          </Button>
         </div>
       </form>
     </div>
   );
 };
 
-export default AddAddressForm;
+export default EditAddressForm;

@@ -30,7 +30,8 @@ const AddressPage: React.FC<Props> = ({ lang }) => {
     if (user) {
       fetchUserAdresses();
     }
-  }, [fetchUserAdresses, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return !isLoading ? (
     <AddressGrid address={shippingAddress} lang={lang} />
