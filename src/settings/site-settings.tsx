@@ -50,29 +50,34 @@ export const siteSettings = {
         path: '/products',
         label: 'menu-catalog',
       },
-
       {
         id: 3,
-        path: '/shops/',
+        path: '/brands',
+        label: 'menu-brands',
+      },
+
+      {
+        id: 4,
+        path: '/shops',
         label: 'menu-shops',
       },
       {
-        id: 4,
-        path: '/blog/',
+        id: 5,
+        path: '/blog',
         label: 'menu-blog-list',
       },
       {
-        id: 5,
+        id: 6,
         path: '/about-us',
         label: 'menu-about-us',
       },
       {
-        id: 6,
+        id: 7,
         path: '/contact-us',
         label: 'menu-contact-us',
       },
       {
-        id: 7,
+        id: 8,
         path: '/faq',
         label: 'menu-faq',
       },

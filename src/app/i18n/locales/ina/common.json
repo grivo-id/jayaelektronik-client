@@ -251,6 +251,7 @@
   "text-phone-number": "Phone",
   "text-website": "Website",
   "text-shop-page": "Our Stores",
+  "text-brands-page": "Our Brands",
   "text-about-page": "About Us",
   "text-all-shops": "Visit Our Stores:",
   "text-more-info": "More Info",
@@ -281,5 +282,7 @@
   "feature4-title-four-description": "Dedicated 24/7 support",
   "feature4-title-five": "Friendly Services",
   "feature4-title-five-description": "30 day satisfaction guarantee",
-  "text-all-keywords": "Categories"
+  "text-all-keywords": "Categories",
+  "text-brand-sellingpoint": "We are trusted by many brands worldwide",
+  "text-brand-invite": "Want to grow your brand with us?"
 }
