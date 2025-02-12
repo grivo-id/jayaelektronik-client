@@ -47,12 +47,17 @@ const VendorCard: React.FC<VendorCardProps> = ({ lang, shop, index }) => {
             className="object-cover aspect-square "
           />
         </div>
-        <div className="max-w-xl w-full flex flex-col justify-center items-center gap-4 px-4 md:px-0">
+        <div className="max-w-xl w-full flex flex-col justify-center items-center gap-4 py-4 px-4 md:px-0">
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0">
             {name}
           </h2>
           <Text className="xl:leading-6 mt-2">{address}</Text>
-          <button onClick={mapNav} className='bg-brand px-4 py-2.5 rounded-md text-white shadow-sm'>See on Google Maps</button>
+          <button
+            onClick={mapNav}
+            className="bg-brand px-4 py-2.5 rounded-md text-white shadow-sm  hover:opacity-80 duration-200 ease-in-out"
+          >
+            See on Google Maps
+          </button>
         </div>
       </div>
     </div>
