@@ -47,7 +47,7 @@ const VendorCard: React.FC<VendorCardProps> = ({ lang, shop, index }) => {
             className="object-cover aspect-square "
           />
         </div>
-        <div className="max-w-xl w-full flex flex-col justify-center items-center gap-4">
+        <div className="max-w-xl w-full flex flex-col justify-center items-center gap-4 px-4 md:px-0">
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0">
             {name}
           </h2>
