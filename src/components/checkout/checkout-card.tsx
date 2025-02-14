@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { useCart } from '@contexts/cart/cart.context';
 import Text from '@components/ui/text';
 import Button from '@components/ui/button';
+import { OrderApiResponse } from '@framework/types';
 import { CheckoutItem } from '@components/checkout/checkout-card-item';
 import { CheckoutCardFooterItem } from './checkout-card-footer-item';
 import { useRouter } from 'next/navigation';
@@ -14,7 +15,9 @@ import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
 import { useEffect, useState } from 'react';
 import SearchResultLoader from '@components/ui/loaders/search-result-loader';
-import { redirectToWhatsAppCart } from '@utils/wa-redirect';
+import {
+  redirectToWhatsAppCartV2,
+} from '@utils/wa-redirect';
 import { useUI } from '@contexts/ui.context';
 import { useCreateOrderMutation } from '@framework/checkout/use-order';
 import useWindowSize from '@utils/use-window-size';
@@ -97,6 +100,7 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
             product_qty: item.quantity,
           })),
         });
+        const orderResult: OrderApiResponse = response.data;
         if (response.success) {
           toast('Order success!', {
             progressClassName: 'fancy-progress-bar',
@@ -107,8 +111,9 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
             pauseOnHover: true,
             draggable: true,
           });
+
           resetCart();
-          redirectToWhatsAppCart(checkOutFormData);
+          redirectToWhatsAppCartV2(orderResult);
         }
       } catch (error: any) {
         toast.error(error.message || 'An unexpected error occurred', {
