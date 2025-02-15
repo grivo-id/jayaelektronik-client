@@ -46,7 +46,8 @@ export const API_ENDPOINTS = {
   CATEGORY_BYID: '/product-categories',
   PRODUCTS_BYCATID: '/products',
   PRODUCT_BYTAG: '/products/tag-flex',
-  ANNOUNCERS: '/toast-announcers'
+  ANNOUNCERS: '/toast-announcers',
+  COUPON_BYCODE: '/coupon-discounts',
 };
 
 // export const API_ENDPOINTS = {

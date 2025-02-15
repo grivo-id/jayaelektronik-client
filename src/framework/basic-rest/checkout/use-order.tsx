@@ -4,6 +4,7 @@ import http from '@framework/utils/http';
 import { useMutation } from 'react-query';
 
 export interface OrderInputType {
+  coupon_code?: string;
   order_email: string;
   order_fname: string;
   order_lname: string;
