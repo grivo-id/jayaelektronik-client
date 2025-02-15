@@ -18,6 +18,8 @@ const AddressGrid: React.FC<{ address?: any; lang: string }> = ({
   const { openModal } = useModalAction();
   const { user, shippingAddress } = useUI();
 
+  console.log(address);
+
   function handlePopupView(item: any) {
     openModal('ADDRESS_VIEW_AND_EDIT', item);
   }
