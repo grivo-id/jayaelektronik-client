@@ -218,32 +218,50 @@ export type Blog = {
   [key: string]: unknown;
 };
 
-// export type Blog = {
-//   id: number | string;
-//   title: string;
-//   subTitle: string;
-//   shortDescription: string;
-//   authorName: string;
-//   date: {
-//     month: string;
-//     date: number;
-//     year: number;
-//   };
-//   totalWatchCount?: number;
-//   totalCommentCount?: number;
-//   titleTwo: string;
-//   category: string;
-//   image: string;
-//   sku?: string;
-//   content?: string;
-//   contentTwo?: string;
-//   contentThree?: string;
-//   quote: {
-//     content: string;
-//   };
-//   postList?: object;
-//   discount?: object;
-//   tags: {};
-//   comments?: object;
-//   [key: string]: unknown;
-// };
+export type ProductFromOrderResult = {
+  brand_id: string;
+  brand_name: string;
+  product_id: string;
+  product_qty: number | string;
+  product_name: string;
+  product_price: number;
+  product_subtotal: number;
+  product_subcategory_id: string | number;
+  product_subcategory_name: string;
+  order_discount_percentage: string | number;
+  product_price_at_purchase: number;
+};
+
+export type CouponDetail = {
+  coupon_name?: string;
+};
+
+export type OrderApiResponse = {
+  order_id: string | number;
+  coupon_code?: string | number;
+  order_email: string;
+  order_user_name: string;
+  order_phone: string | number;
+  order_address: string;
+  order_grand_total: number;
+  order_is_completed?: boolean;
+  order_user_verified?: boolean;
+  order_updated_at: Date | string;
+  order_created_date: Date | string;
+  products: ProductFromOrderResult[];
+  coupon_detail?: CouponDetail;
+};
+
+export type Coupon = {
+  coupon_discount_id: number | string;
+  user_id: string;
+  coupon_code: string;
+  coupon_percentage: number;
+  coupon_min_product_qty: number | string;
+  coupon_min_transaction: number;
+  coupon_max_discount: number;
+  coupon_expired_date: string | Date;
+  coupon_used: number | string;
+  coupon_created_date: string | Date;
+  created_by?: string;
+};

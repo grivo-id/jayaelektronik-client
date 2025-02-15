@@ -50,7 +50,7 @@ export default function CheckoutInformation({ lang }: Props) {
             name="user_fname"
             value={checkOutFormData.user_fname}
             type="text"
-            variant="solid"
+            variant="normal"
             lang={lang}
             disabled
           />

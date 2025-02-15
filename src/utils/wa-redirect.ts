@@ -1,3 +1,5 @@
+import { OrderApiResponse, ProductFromOrderResult } from '@framework/types';
+
 export const redirectToWhatsAppCart = (userData: any) => {
   const phoneNumber = '+62816270158';
   const cartString = localStorage.getItem('razor-cart');
@@ -33,6 +35,38 @@ export const redirectToWhatsAppCart = (userData: any) => {
 
   message += `*Total Order*: Rp${storedCart.total.toLocaleString()}\n\n`;
   message += `Please let me know if you need any further information.\n\nThank you!`;
+
+  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    message
+  )}`;
+  window.open(whatsappURL, '_blank');
+};
+
+export const redirectToWhatsAppCartV2 = (orderResult: OrderApiResponse) => {
+  // const phoneNumber = '+6281394757477';
+  const phoneNumber = '+62816270158';
+
+  let message = `Hi,\n\nI would like to place an order: ${orderResult.order_id} with products:\n`;
+  orderResult.products.forEach(
+    (item: ProductFromOrderResult, index: number) => {
+      message += `${index + 1}. ${item.product_name}\n`;
+    }
+  );
+
+  // Add shipping address
+  const defaultAddress = JSON.parse(
+    sessionStorage.getItem('default_address') || '{}'
+  );
+  message += `\n*Shipping Address:*\n`;
+  message += `- *Ship To:*: ${defaultAddress.shipping_address_title}\n`;
+  message += `- *Full Address*: ${defaultAddress.shipping_address_desc}\n\n`;
+
+  if (orderResult.coupon_code) {
+    message += `Coupon Used: ${orderResult.coupon_code}\n`;
+  }
+
+  message += `*Total*: Rp${orderResult.order_grand_total.toLocaleString()}\n\n`;
+  message += `Thank you!`;
 
   const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     message

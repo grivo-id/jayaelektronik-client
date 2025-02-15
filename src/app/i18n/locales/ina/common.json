@@ -89,6 +89,7 @@
   "text-delivery-address": "Shipping Address",
   "text-delivery-userinfo": "Information",
   "text-delivery-schedule": "Delivery Schedule",
+  "text-coupon": "Coupon (Optional)",
   "text-contact-number": "Contact Number",
   "text-payment-option": "Payment",
   "text-delivery-instructions": "Delivery Instructions",
@@ -162,6 +163,7 @@
   "text-cart": "My Cart",
   "text-product": "Product",
   "text-shipping": "Shipping",
+  "text-discount": "Discount",
   "text-amountsold": "Sold Amount",
   "text-checkout-heading": "Checkout",
   "text-plus": "Plus",
@@ -251,6 +253,7 @@
   "text-phone-number": "Phone",
   "text-website": "Website",
   "text-shop-page": "Our Stores",
+  "text-brands-page": "Our Brands",
   "text-about-page": "About Us",
   "text-all-shops": "Visit Our Stores:",
   "text-more-info": "More Info",
@@ -281,5 +284,11 @@
   "feature4-title-four-description": "Dedicated 24/7 support",
   "feature4-title-five": "Friendly Services",
   "feature4-title-five-description": "30 day satisfaction guarantee",
-  "text-all-keywords": "Categories"
+  "text-all-keywords": "Categories",
+  "text-brand-sellingpoint": "We are trusted by many brands worldwide",
+  "text-brand-invite": "Want to grow your brand with us?",
+  "text-coupon-not-authorized": "You need to login first before applying coupon",
+  "text-coupon-invalid": "Coupon doesn't exist",
+  "text-coupon-applied-successfully": "Coupon Applied Successfully",
+  "apply-coupon-btn": "Apply Coupon"
 }

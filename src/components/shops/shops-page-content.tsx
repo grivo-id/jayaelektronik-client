@@ -15,10 +15,9 @@ type Shop = {
   imageUrl: string;
 };
 
-
 type Props = {
   lang: string;
-  shops: Shop[]
+  shops: Shop[];
 };
 
 export default function ShopsPageContent({ lang, shops }: Props) {
@@ -28,17 +27,10 @@ export default function ShopsPageContent({ lang, shops }: Props) {
   // if (error) return <Alert message={error?.message} />;
 
   return (
-    <div className="px-4 pt-10 lg:pt-12 xl:pt-14 pb-14 lg:pb-16 xl:pb-20 md:px-8">
-      <div className="w-full xl:max-w-[1490px] mx-auto">
-        <Heading variant="titleLarge" className="mb-4 lg:mb-6">
-          {t('text-all-shops')}
-        </Heading>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 md:gap-4 lg:gap-5 xl:gap-6 pb-10">
-          {data.map((item) => (
-            <VendorCard key={item.id} shop={item} lang={lang} />
-          ))}
-        </div>
-      </div>
+    <div className=" flex flex-col gap-4 md:gap-6 my-4 md:my-8">
+      {data.map((item, index) => (
+        <VendorCard key={item.id} shop={item} lang={lang} index={index} />
+      ))}
     </div>
   );
 }
