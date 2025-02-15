@@ -6,18 +6,16 @@ import cn from 'classnames';
 import { useCart } from '@contexts/cart/cart.context';
 import Text from '@components/ui/text';
 import Button from '@components/ui/button';
-import { OrderApiResponse } from '@framework/types';
+import { Coupon, OrderApiResponse } from '@framework/types';
 import { CheckoutItem } from '@components/checkout/checkout-card-item';
 import { CheckoutCardFooterItem } from './checkout-card-footer-item';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchResultLoader from '@components/ui/loaders/search-result-loader';
-import {
-  redirectToWhatsAppCartV2,
-} from '@utils/wa-redirect';
+import { redirectToWhatsAppCartV2 } from '@utils/wa-redirect';
 import { useUI } from '@contexts/ui.context';
 import { useCreateOrderMutation } from '@framework/checkout/use-order';
 import useWindowSize from '@utils/use-window-size';
@@ -26,9 +24,10 @@ import ErrorIcon from '@components/icons/error-icon';
 
 type Props = {
   lang: string;
+  couponData?: Coupon;
 };
 
-const CheckoutCard: React.FC<Props> = ({ lang }) => {
+const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
   const { t } = useTranslation(lang, 'common');
   const router = useRouter();
   const { width } = useWindowSize();
@@ -38,6 +37,8 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
   const { checkOutFormData, user, shippingAddress } = useUI();
   const { resetCart } = useCart();
   const [isValid, setValid] = useState(false);
+  const [isOrderSuccess, setIsOrderSuccess] = useState<boolean>(false);
+  const [orderResponse, setOrderResponse] = useState<OrderApiResponse>();
 
   const getStoredCartAndAddress = () => ({
     storedCart: JSON.parse(
@@ -61,10 +62,34 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
   }, [checkOutFormData, shippingAddress]);
 
   const { items, total, isEmpty } = useCart();
+  const calculateDiscount = useCallback(() => {
+    if (!couponData) return 0;
+
+    if (total < couponData.coupon_min_transaction) return 0;
+
+    const percentageDiscount = (total * couponData.coupon_percentage) / 100;
+
+    return Math.min(percentageDiscount, couponData.coupon_max_discount);
+  }, [total, couponData]);
+
+  const discountAmount = calculateDiscount();
+  const finalTotal = total - discountAmount;
+
   const { price: subtotal } = usePrice({
     amount: total,
     currencyCode: 'IDR',
   });
+
+  const { price: discount } = usePrice({
+    amount: discountAmount,
+    currencyCode: 'IDR',
+  });
+
+  const { price: finalTotalPrice } = usePrice({
+    amount: finalTotal,
+    currencyCode: 'IDR',
+  });
+
   async function orderHeader() {
     if (!isValid) {
       let message;
@@ -89,6 +114,7 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
     if (!isEmpty) {
       try {
         const response = await createOrder({
+          coupon_code: couponData?.coupon_code,
           order_email: checkOutFormData.user_email,
           order_fname: checkOutFormData.user_fname,
           order_lname: checkOutFormData.user_lname,
@@ -129,6 +155,7 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
       }
     }
   }
+
   const checkoutFooter = [
     {
       id: 1,
@@ -140,10 +167,20 @@ const CheckoutCard: React.FC<Props> = ({ lang }) => {
       name: t('text-shipping'),
       price: '0',
     },
+    ...(couponData
+      ? [
+          {
+            id: 3,
+            name: t('text-discount'),
+            price: `-${discount}`,
+            details: `${couponData.coupon_code} (${couponData.coupon_percentage}%)`,
+          },
+        ]
+      : []),
     {
-      id: 3,
+      id: 4,
       name: t('text-total'),
-      price: subtotal,
+      price: finalTotalPrice,
     },
   ];
   const mounted = useIsMounted();

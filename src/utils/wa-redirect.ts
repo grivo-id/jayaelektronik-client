@@ -58,14 +58,14 @@ export const redirectToWhatsAppCartV2 = (orderResult: OrderApiResponse) => {
     sessionStorage.getItem('default_address') || '{}'
   );
   message += `\n*Shipping Address:*\n`;
-  message += `- *Title*: ${defaultAddress.shipping_address_title}\n`;
-  message += `- *Address*: ${defaultAddress.shipping_address_desc}\n\n`;
+  message += `- *Ship To:*: ${defaultAddress.shipping_address_title}\n`;
+  message += `- *Full Address*: ${defaultAddress.shipping_address_desc}\n\n`;
 
   if (orderResult.coupon_code) {
-    message += `Coupun Used: ${orderResult.coupon_code}\n`;
+    message += `Coupon Used: ${orderResult.coupon_code}\n`;
   }
 
-  message += `*Grand Total*: Rp${orderResult.order_grand_total.toLocaleString()}\n\n`;
+  message += `*Total*: Rp${orderResult.order_grand_total.toLocaleString()}\n\n`;
   message += `Thank you!`;
 
   const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(

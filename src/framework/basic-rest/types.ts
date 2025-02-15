@@ -252,3 +252,16 @@ export type OrderApiResponse = {
   coupon_detail?: CouponDetail;
 };
 
+export type Coupon = {
+  coupon_discount_id: number | string;
+  user_id: string;
+  coupon_code: string;
+  coupon_percentage: number;
+  coupon_min_product_qty: number | string;
+  coupon_min_transaction: number;
+  coupon_max_discount: number;
+  coupon_expired_date: string | Date;
+  coupon_used: number | string;
+  coupon_created_date: string | Date;
+  created_by?: string;
+};

@@ -14,7 +14,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   variant?: 'normal' | 'solid' | 'outline';
 }
 const classes = {
-  root: 'py-2 px-4 md:px-5 w-full appearance-none transition duration-150 ease-in-out border text-input text-13px lg:text-sm font-body rounded-md placeholder-body min-h-12 transition duration-200 ease-in-out',
+  root: 'py-2 px-4 md:px-5 w-full appearance-none transition duration-150 ease-in-out border text-brand-muted focus:text-brand-dark text-13px lg:text-sm font-body rounded-md placeholder-body min-h-12 transition duration-200 ease-in-out',
   normal:
     'bg-gray-100 border-gray-300 focus:shadow focus:bg-white focus:border-skin-primary',
   solid:

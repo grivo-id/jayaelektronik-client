@@ -1,23 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@components/ui/button';
-import Heading from '@components/ui/heading';
-import Contact from '@components/contact/contact';
-import Address from './address';
-import DeliveryNotes from './delivery-instruction';
-import DeliverySchedule from './schedule';
-import DeliveryTips from './delivery-tips';
-import StripeCheckoutInlineForm from './stripe-checkout-inline-form';
 import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
+import Button from '@components/ui/button';
+import Heading from '@components/ui/heading';
+import Address from './address';
 import CheckoutInformation from './information';
+import Coupon from './coupon';
+import { Coupon as CouponType } from '@framework/types';
 
 type Props = {
   lang: string;
+  coupon?: CouponType
+  setCoupon: Function
 };
 
-const CheckoutDetails: React.FC<Props> = ({ lang }) => {
+const CheckoutDetails: React.FC<Props> = ({ lang, setCoupon, coupon }) => {
   const isLoggedin = false;
   const { t } = useTranslation(lang, 'common');
   const [bindIndex, setBindIndex] = useState(0);
@@ -32,11 +31,11 @@ const CheckoutDetails: React.FC<Props> = ({ lang }) => {
       title: 'text-delivery-address',
       component: <Address lang={lang} />,
     },
-    // {
-    //   id: 3,
-    //   title: 'text-delivery-schedule',
-    //   component: <DeliverySchedule lang={lang} />,
-    // },
+    {
+      id: 3,
+      title: 'text-coupon',
+      component: <Coupon lang={lang} setCoupon={setCoupon} couponData={coupon} />,
+    },
 
     // {
     //   id: 4,
