@@ -57,7 +57,7 @@ export const ProductGrid: FC<ProductGridProps> = ({
     // @ts-ignore
     `${process.env.NEXT_PUBLIC_WEBSITE_URL}${query}`
   );
-  console.log('new query', newQuery);
+  // console.log('new query', newQuery);
   const sortTranslation = translateNewQuerySortBy[newQuery.sort_by || ''] || {};
   const {
     isFetching: isLoading,
@@ -70,6 +70,7 @@ export const ProductGrid: FC<ProductGridProps> = ({
     page: 1,
     limit: 25,
     sort: 'desc',
+    product_is_show: true,
     category: newQuery.category,
     brand: newQuery.brand,
     ...sortTranslation, 

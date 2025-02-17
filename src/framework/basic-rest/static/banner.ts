@@ -14,21 +14,21 @@ export const homeJayaHeroSlider = [
       },
     },
   },
-  {
-    id: 2,
-    title: 'banner-welcome2',
-    description: 'banner-grand-welcome2',
-    btnText: 'text-explore-more',
-    btnUrl: '/search',
-    image: {
-      mobile: {
-        url: '/assets/images/hero/jaya/slideshow2.png',
-      },
-      desktop: {
-        url: '/assets/images/hero/jaya/slideshow2.png',
-      },
-    },
-  }
+  // {
+  //   id: 2,
+  //   title: 'banner-welcome2',
+  //   description: 'banner-grand-welcome2',
+  //   btnText: 'text-explore-more',
+  //   btnUrl: '/search',
+  //   image: {
+  //     mobile: {
+  //       url: '/assets/images/hero/jaya/slideshow2.png',
+  //     },
+  //     desktop: {
+  //       url: '/assets/images/hero/jaya/slideshow2.png',
+  //     },
+  //   },
+  // }
 ];
 
 export const homeOnesGridHero = [

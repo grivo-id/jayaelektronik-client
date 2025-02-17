@@ -35,6 +35,7 @@ const fetchFlexProducts = async ({
     page: pageParam,
     limit: _params.limit,
     sort: _params.sort,
+    product_is_show: _params.product_is_show,
     ...(_params.priceSort ? { priceSort: _params.priceSort } : {}),
     ...(_params.product_is_new_arrival
       ? { product_is_new_arrival: _params.product_is_new_arrival }
