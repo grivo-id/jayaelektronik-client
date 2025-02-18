@@ -1,58 +1,127 @@
 'use client';
-
+import { Fragment, useState } from 'react';
 import { useOrdersQuery } from '@framework/order/get-all-orders';
 import { Table } from '@components/ui/table';
-import OrderTable, { CreatedAt, Status } from '@components/order/order-table';
+import { CreatedAt, Status } from '@components/order/order-table';
 import Alert from '@components/ui/alert';
-import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import { TotalPrice } from '@components/order/price';
 import ActionsButton from '@components/ui/action-button';
 import usePrice from '@framework/product/use-price';
+import Button from '@components/ui/button';
 
 export default function OrdersPageContent({ lang }: { lang: string }) {
   // const { data, isLoading } = useOrdersQuery({});
-  const {
-    isFetching: isLoading,
-    isFetchingNextPage: loadingMore,
-    fetchNextPage,
-    hasNextPage,
-    data,
-    error,
-  } = useOrdersQuery({
-    page: 1,
-    limit: 25,
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  const { data, isLoading, error } = useOrdersQuery({
+    page,
+    limit,
     sort: 'desc',
   });
-  console.log(data?.pages);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const getPageNumbers = () => {
+    if (!data?.pagination.totalPages) return [];
+
+    const totalPages = data.pagination.totalPages;
+    const currentPage = data.pagination.currentPage;
+    let pages: number[] = [];
+
+    if (totalPages <= 5) {
+      pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    } else {
+      pages = [1];
+
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      if (start > 2) pages.push(-1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (end < totalPages - 1) pages.push(-1);
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center text-center justify-start gap-1 text-lg text-brand-dark">
+        <span className="font-semibold ">Order History</span>
+        {data && (
+          <span className="opacity-70">({data.pagination.totalData})</span>
+        )}
+      </div>
+
       {error ? (
         <div className="col-span-full">
           <Alert message={error?.message} />
         </div>
-      ) : isLoading && !data?.pages?.length ? (
+      ) : isLoading ? (
         Array.from({ length: 3 }).map((_, idx) => (
-          <ProductCardLoader
-            key={`order--key-${idx}`}
-            uniqueKey={`order--key-${idx}`}
-          />
+          <span key={idx}>loading</span>
         ))
-      ) : data?.pages ? (
-        data.pages.map((page, pageIndex) => (
-          <div
-            key={`order-table-${pageIndex}`}
-            className="order-list-table-wraper"
-          >
+      ) : data ? (
+        <>
+          <div className="order-list-table-wraper">
             <Table
-              className="order-list-table "
+              className="order-list-table"
               columns={columns}
-              data={page.data}
+              data={data.data}
               rowKey="order_id"
               scroll={{ x: 750 }}
             />
           </div>
-        ))
+
+          {/* Pagination */}
+          <div className="flex items-center justify-center gap-2 mt-4 text-sm">
+            <button
+              onClick={() => handlePageChange(page - 1)}
+              className={`bg-brand px-2 py-1 text-white rounded-md hover:opacity-80 transition duration-200  ease-in-out ${
+                !data.pagination.hasPrevPage ? 'opacity-75' : ''
+              }`}
+              disabled={!data.pagination.hasPrevPage}
+            >
+              Previous
+            </button>
+
+            {getPageNumbers().map((pageNum, index) => (
+              <Fragment key={index}>
+                {pageNum === -1 ? (
+                  <span className="px-2">...</span>
+                ) : (
+                  <button
+                    // variant={pageNum === page ? 'primary' : 'border'}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={` text-white px-2 py-1 rounded-md ${
+                      pageNum === page ? 'bg-brand' : 'bg-brand/50'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                )}
+              </Fragment>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              className={`bg-brand px-2 py-1 text-white rounded-md hover:opacity-80 transition duration-200  ease-in-out ${
+                !data.pagination.hasNextPage ? 'opacity-75' : ''
+              }`}
+              disabled={!data.pagination.hasNextPage}
+            >
+              Next
+            </button>
+          </div>
+        </>
       ) : null}
     </div>
   );
@@ -76,10 +145,13 @@ const columns = [
     },
   },
   {
-    title: 'Address',
-    dataIndex: 'order_address',
-    key: 'order_address',
-    width: 160,
+    title: 'Total Product',
+    dataIndex: 'products',
+    key: 'products',
+    width: 120,
+    render: function status(item: any) {
+      return <TotalProduct item={item} />;
+    },
   },
   {
     title: 'Total',
@@ -132,6 +204,16 @@ export const Coupon: React.FC<{ item?: any }> = ({ item }) => {
           <span className="opacity-75">{item.coupon_percentage}%</span>
           <span className="opacity-75">Max {price}</span>
         </div>
+      ) : null}
+    </>
+  );
+};
+
+export const TotalProduct: React.FC<{ item?: any }> = ({ item }) => {
+  return (
+    <>
+      {item ? (
+        <span className=" text-brand-dark">{item.length} Product</span>
       ) : null}
     </>
   );

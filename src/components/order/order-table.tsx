@@ -35,7 +35,7 @@ export const Status: React.FC<{ item?: any }> = ({ item }) => {
       ) : (
         <>
           <span>
-            <span className="bullet bg-brand-muted" />
+            <span className="bullet bg-brand-danger" />
             Pending
           </span>
         </>
