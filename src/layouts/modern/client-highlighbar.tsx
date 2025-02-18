@@ -25,7 +25,7 @@ export default function ClientRenderedHighLightedBar({ lang }: Props) {
     sort: 'desc',
   };
   const { data, isLoading, error } = useAllAnouncerQuery(query);
-  console.log(data?.data);
+  // console.log(data?.data);
 
   if (isLoading) return <></>;
 

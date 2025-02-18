@@ -146,24 +146,17 @@ export type Product = {
 };
 
 export type OrderItem = {
-  id: number | string;
-  name: string;
-  price: number;
-  quantity: number;
-};
-export type Order = {
-  id: string | number;
-  name: string;
-  slug: string;
-  products: OrderItem[];
-  total: number;
-  tracking_number: string;
-  customer: {
-    id: number;
-    email: string;
-  };
-  shipping_fee: number;
-  payment_gateway: string;
+  brand_id: number | string;
+  brand_name: string;
+  product_id: string | number;
+  product_qty: string | number;
+  product_name: string;
+  product_price: string | number;
+  product_subtotal: string | number;
+  product_subcategory_id: string;
+  product_subcategory_name: string;
+  order_discount_percentage: string | number;
+  product_price_at_purchase: string | number;
 };
 
 export type ShopsQueryOptionsType = {
@@ -264,4 +257,26 @@ export type Coupon = {
   coupon_used: number | string;
   coupon_created_date: string | Date;
   created_by?: string;
+};
+
+type CouponUsed = Omit<
+  Coupon,
+  'user_id' | 'coupon_created_date' | 'created_by'
+>;
+
+export type Order = {
+  order_id: string | number;
+  coupon_code: string;
+  order_email: string;
+  order_user_name: string;
+  order_phone: string | number;
+  order_address: string;
+  order_grand_total: number | string;
+  order_is_completed: boolean;
+  order_user_verified: boolean;
+  order_updated_at: string | Date;
+  order_created_date: string | Date;
+  products: OrderItem[];
+  slug?: string;
+  coupon_detail: CouponUsed;
 };
