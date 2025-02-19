@@ -12,17 +12,23 @@ import {
 
 import { useUI } from '@contexts/ui.context';
 import { useTranslation } from 'src/app/i18n/client';
+import usePrice from '@framework/product/use-price';
 
 const OrderDrawer: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
   const { data, closeDrawer } = useUI();
-  let { shipping_address } = data;
+  const { order_address, order_is_completed, coupon_detail } = data;
+  console.log('data drawer', data);
+  const { price } = usePrice({
+    amount: coupon_detail.coupon_max_discount,
+    currencyCode: 'IDR',
+  });
 
   return (
     <>
       {data !== '' && (
         <>
-          <div className="block">
+          <div className="flex flex-col gap-4 w-full h-full">
             <div className="relative flex items-center justify-between w-full border-b ltr:pl-5 rtl:pr-5 md:ltr:pl-7 md:rtl:pr-7 border-border-base">
               <Heading variant="titleMedium">
                 {t('text-order-details')}:
@@ -35,36 +41,43 @@ const OrderDrawer: React.FC<{ lang: string }> = ({ lang }) => {
                 <IoClose />
               </button>
             </div>
-            <div className="p-5 md:p-8">
-              <div className="text-[14px] opacity-70 mb-3 text-brand-dark">
-                {t('text-delivery-address')}
-              </div>
-              <div className="rounded border border-solid min-h-[90px] bg-fill-secondary p-4 border-border-two text-[12px] md:text-[14px]">
-                <p className="text-brand-dark opacity-70">
-                  {formatAddress(shipping_address)}
-                </p>
-              </div>
-              <OrderStatus status={data?.status?.serial} />
-              <div className="grid grid-cols-12 bg-fill-secondary py-3 rounded-[3px] text-brand-dark/70 text-[12px] md:text-[14px]">
-                <div className="col-span-2"></div>
-                <div className="col-span-5">Items Name</div>
-                <div className="col-span-3 text-center md:ltr:text-left md:rtl:text-right">
-                  Quantity
+            <div className="flex flex-col justify-between w-full h-full">
+              <div className="px-5 md:px-8 flex flex-col gap-4">
+                <div className=" opacity-70 text-brand-dark flex flex-row items-center gap-2">
+                  <span className="text-base">Status:</span>
+                  <span
+                    className={`text-white text-[12px] rounded-full px-2.5 py-1 ${
+                      order_is_completed ? 'bg-brand-tree' : 'bg-brand-muted'
+                    }`}
+                  >
+                    {order_is_completed ? 'Completed' : 'Pending'}
+                  </span>
                 </div>
-                <div className="col-span-2">Price</div>
-              </div>
-              {data?.products?.map((item: any, index: string) => (
-                <OrderDetailsContent key={index} item={item} />
-              ))}
-              <div className="mt-3 ltr:text-right rtl:text-left">
-                <div className="text-black inline-flex flex-col text-[12px] md:text-[14px]">
-                  <div className="pb-1 mb-2 border-b border-border-base ltr:pl-20 rtl:pr-20">
-                    <p className="flex justify-between mb-1">
-                      <span className="ltr:mr-8 rtl:ml-8">Sub total: </span>
-                      <span className="font-medium">
-                        <SubTotalPrice items={data?.products} />
-                      </span>
+                <div className="flex flex-col gap-2">
+                  <div className="text-[14px] opacity-70 text-brand-dark">
+                    {t('text-delivery-address')}
+                  </div>
+                  <div className="rounded border border-solid min-h-[90px] bg-fill-secondary p-4 border-border-two text-[12px] md:text-[14px]">
+                    <p className="text-brand-dark opacity-70">
+                      {order_address}
                     </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 bg-fill-secondary py-3 rounded-[3px] text-brand-dark/70 text-[12px] md:text-[14px]">
+                  <div className="col-span-2"></div>
+                  <div className="col-span-5">Product Name</div>
+                  <div className="col-span-3 text-center md:ltr:text-left md:rtl:text-right">
+                    Qty
+                  </div>
+                  <div className="col-span-2">Price</div>
+                </div>
+                {data?.products?.map((item: any, index: string) => (
+                  <OrderDetailsContent key={index} item={item} />
+                ))}
+                <div className="mt-3 ltr:text-right rtl:text-left">
+                  <div className="text-black inline-flex flex-col text-[12px] md:text-[14px]">
+                    {/* <div className="pb-1 mb-2 ltr:pl-20 rtl:pr-20">
                     {typeof data?.discount === 'number' && (
                       <p className="flex justify-between mb-2">
                         <span className="ltr:mr-8 rtl:ml-8">Discount: </span>
@@ -81,16 +94,40 @@ const OrderDrawer: React.FC<{ lang: string }> = ({ lang }) => {
                         </span>
                       </p>
                     )}
+                  </div> */}
+                    {coupon_detail && (
+                      <div className="border-b mb-2 pb-2">
+                        <p className="flex justify-between mb-2 ltr:pl-20 rtl:pr-20">
+                          <span className="ltr:mr-8 rtl:ml-8">Coupon Used</span>
+                          <span className="font-medium">
+                            {coupon_detail.coupon_code}
+                          </span>
+                        </p>
+                        <p className="flex justify-between mb-2 ltr:pl-20 rtl:pr-20">
+                          <span className="ltr:mr-8 rtl:ml-8">Discount</span>
+                          <span className="font-medium">
+                            {coupon_detail.coupon_percentage}%
+                          </span>
+                        </p>
+                        <p className="flex justify-between mb-2 ltr:pl-20 rtl:pr-20">
+                          <span className="ltr:mr-8 rtl:ml-8">
+                            Maximum Discount Price
+                          </span>
+                          <span className="font-medium">- {price}</span>
+                        </p>
+                      </div>
+                    )}
+
+                    <p className="flex justify-between mb-2 ltr:pl-20 rtl:pr-20">
+                      <span className="ltr:mr-8 rtl:ml-8">Grand Total:</span>
+                      <span className="font-medium">
+                        <TotalPrice items={data} />
+                      </span>
+                    </p>
                   </div>
-                  <p className="flex justify-between mb-2 ltr:pl-20 rtl:pr-20">
-                    <span className="ltr:mr-8 rtl:ml-8">Total Cost:</span>
-                    <span className="font-medium">
-                      <TotalPrice items={data} />
-                    </span>
-                  </p>
                 </div>
               </div>
-              <div className="mt-12 ltr:text-right rtl:text-left">
+              <div className="mt-12 ltr:text-right rtl:text-left p-5 md:p-8">
                 <span className="py-3 px-5 cursor-pointer inline-block text-[12px] md:text-[14px] text-black font-medium bg-white rounded border border-solid border-[#DEE5EA] ltr:mr-4 rtl:ml-4 hover:bg-[#F35C5C] hover:text-white hover:border-[#F35C5C] transition-all capitalize">
                   Report order
                 </span>
@@ -98,7 +135,7 @@ const OrderDrawer: React.FC<{ lang: string }> = ({ lang }) => {
                   onClick={closeDrawer}
                   className="py-3 px-5 cursor-pointer inline-block text-[12px] md:text-[14px] text-white font-medium bg-[#F35C5C] rounded border border-solid border-[#F35C5C]  hover:bg-white hover:text-black hover:border-[#DEE5EA] transition-all capitalize"
                 >
-                  Cancel order
+                  Close
                 </span>
               </div>
             </div>

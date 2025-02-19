@@ -24,13 +24,23 @@ export const CreatedAt: React.FC<{ createdAt?: any }> = ({ createdAt }) => {
 
 export const Status: React.FC<{ item?: any }> = ({ item }) => {
   return (
-    <span className={item?.status?.name?.replace(/\s/g, '_').toLowerCase()}>
-      <span
-        className="bullet"
-        style={{ backgroundColor: item?.status?.color }}
-      />
-      {item?.status?.name}
-    </span>
+    <>
+      {item.order_is_completed ? (
+        <>
+          <span>
+            <span className="bullet bg-brand-tree" />
+            Completed
+          </span>
+        </>
+      ) : (
+        <>
+          <span>
+            <span className="bullet bg-brand-danger" />
+            Pending
+          </span>
+        </>
+      )}
+    </>
   );
 };
 
@@ -93,12 +103,12 @@ const OrderTable: React.FC<{ orders?: any; lang: string }> = ({
   const countPerPage = 5;
   let [filterData, setDataValue] = useState(orders.slice(0, countPerPage));
 
-  const updatePage = (p: any) => {
-    setCurrentPage(p);
-    const to = countPerPage * p;
-    const from = to - countPerPage;
-    setDataValue(orders.slice(from, to));
-  };
+  // const updatePage = (p: any) => {
+  //   setCurrentPage(p);
+  //   const to = countPerPage * p;
+  //   const from = to - countPerPage;
+  //   setDataValue(orders.slice(from, to));
+  // };
 
   const onChangeSearch = (e: any) => {
     setCurrentPage(1);
@@ -111,7 +121,7 @@ const OrderTable: React.FC<{ orders?: any; lang: string }> = ({
       .slice(0, countPerPage);
     setValue(e.target.value);
     if (!e.target.value) {
-      updatePage(1);
+      // updatePage(1);
     }
     setDataValue(filter);
   };
@@ -125,7 +135,7 @@ const OrderTable: React.FC<{ orders?: any; lang: string }> = ({
         <h2 className="mb-4 text-sm font-semibold md:text-xl text-brand-dark md:mb-0">
           My order list
         </h2>
-        <form onSubmit={onSubmitHandle} className="relative">
+        {/* <form onSubmit={onSubmitHandle} className="relative">
           <span className="absolute ltr:right-3 rtl:left-3 top-[80%] transform -translate-y-1/2 order-icon-color">
             <BsSearch size={19} />
           </span>
@@ -138,18 +148,18 @@ const OrderTable: React.FC<{ orders?: any; lang: string }> = ({
             inputClassName=" h-[46px] w-full bg-white border border-[#E3E8EC] rounded-md order-search focus:border-2 focus:outline-none focus:border-brand focus:text-brand-muted"
             lang={lang}
           />
-        </form>
+        </form> */}
       </div>
       <div className="order-list-table-wraper">
         <Table
           className="order-list-table"
           columns={columns}
-          data={filterData}
+          data={orders}
           rowKey="id"
           scroll={{ x: 750 }}
         />
       </div>
-      {!value.trim() && (
+      {/* {!value.trim() && (
         <div className="mt-5 ltr:text-right rtl:text-left">
           <Pagination
             current={currentPage}
@@ -161,7 +171,7 @@ const OrderTable: React.FC<{ orders?: any; lang: string }> = ({
             className="order-table-pagination"
           />
         </div>
-      )}
+      )} */}
     </>
   );
 };

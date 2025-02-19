@@ -32,11 +32,11 @@ const accountMenu = [
     name: 'text-address',
     icon: <MapIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
   },
-  {
-    slug: ROUTES.NOTIFICATION,
-    name: 'text-notifications',
-    icon: <NotificationIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
-  },
+  // {
+  //   slug: ROUTES.NOTIFICATION,
+  //   name: 'text-notifications',
+  //   icon: <NotificationIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
+  // },
   {
     slug: ROUTES.CHANGE_PASSWORD,
     name: 'text-change-password',
