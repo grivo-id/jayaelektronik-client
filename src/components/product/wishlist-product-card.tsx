@@ -20,13 +20,14 @@ const WishlistProductCard: FC<ProductProps> = ({
   lang,
 }) => {
   const { t } = useTranslation(lang, 'common');
-  const { name, image, unit } = product ?? {};
+  const { product_name, product_image1, product_is_available, unit } =
+    product ?? {};
   const placeholderImage = `/assets/placeholder/product.svg`;
   const [favorite, setFavorite] = useState<boolean>(false);
   const { price, basePrice, discount } = usePrice({
-    amount: product.sale_price ? product.sale_price : product.price,
-    baseAmount: product.price,
-    currencyCode: 'USD',
+    amount: product.sale_price ? product.sale_price : product.product_price,
+    baseAmount: product.product_price,
+    currencyCode: 'IDR',
   });
 
   return (
@@ -35,8 +36,8 @@ const WishlistProductCard: FC<ProductProps> = ({
         <div className="relative mt-1 shrink-0">
           <div className="flex overflow-hidden max-w-[80px]  transition duration-200 ease-in-out transform group-hover:scale-105">
             <Image
-              src={image?.thumbnail ?? placeholderImage}
-              alt={name || 'Product Image'}
+              src={product_image1 ?? placeholderImage}
+              alt={product_name || 'Product Image'}
               width={80}
               height={80}
               quality={100}
@@ -48,9 +49,17 @@ const WishlistProductCard: FC<ProductProps> = ({
 
         <div className="flex flex-col ltr:ml-2 rtl:mr-2 2xl:ltr:ml-3.5 2xl:rtl:mr-3.5 h-full">
           <h2 className="text-brand-dark text-13px sm:text-sm lg:text-15px leading-5 sm:leading-6 mb-1.5">
-            {name}
+            {product_name}
           </h2>
-          <div className="mb-1 text-13px sm:text-sm lg:mb-2">{unit}</div>
+          <div
+            className={`mb-1 rounded-lg px-2 py-0.5 w-fit text-13px sm:text-sm  text-gray-50 ${
+              product_is_available ? 'bg-brand-tree' : 'bg-brand-danger'
+            }`}
+          >
+            {product_is_available
+              ? t('text-wishlist-available')
+              : t('text-wistlist-not-available')}
+          </div>
           <div className="-mx-1">
             <span className="inline-block mx-1 text-sm font-semibold sm:text-15px lg:text-base text-brand-dark">
               {price}
