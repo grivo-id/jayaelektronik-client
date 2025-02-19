@@ -7,10 +7,8 @@ import Alert from '@components/ui/alert';
 import { TotalPrice } from '@components/order/price';
 import ActionsButton from '@components/ui/action-button';
 import usePrice from '@framework/product/use-price';
-import Button from '@components/ui/button';
 
 export default function OrdersPageContent({ lang }: { lang: string }) {
-  // const { data, isLoading } = useOrdersQuery({});
   const [page, setPage] = useState(1);
   const limit = 10;
 
@@ -66,8 +64,15 @@ export default function OrdersPageContent({ lang }: { lang: string }) {
           <Alert message={error?.message} />
         </div>
       ) : isLoading ? (
-        Array.from({ length: 3 }).map((_, idx) => (
-          <span key={idx}>loading</span>
+        Array.from({ length: 5 }).map((_, index) => (
+          <div
+            key={index}
+            className="w-full flex flex-col gap-4 items-center justify-start"
+          >
+            <div className="animate-pulse flex space-x-4 w-full">
+              <div className="rounded-lg bg-gray-200 h-14 w-full" />
+            </div>
+          </div>
         ))
       ) : data ? (
         <>
@@ -99,7 +104,6 @@ export default function OrdersPageContent({ lang }: { lang: string }) {
                   <span className="px-2">...</span>
                 ) : (
                   <button
-                    // variant={pageNum === page ? 'primary' : 'border'}
                     onClick={() => handlePageChange(pageNum)}
                     className={` text-white px-2 py-1 rounded-md ${
                       pageNum === page ? 'bg-brand' : 'bg-brand/50'
@@ -169,15 +173,15 @@ const columns = [
       return <Status item={item} />;
     },
   },
-  {
-    title: 'Coupon',
-    dataIndex: 'coupon_detail',
-    key: 'coupon_detail',
-    width: 120,
-    render: function status(item: any) {
-      return <Coupon item={item} />;
-    },
-  },
+  // {
+  //   title: 'Coupon',
+  //   dataIndex: 'coupon_detail',
+  //   key: 'coupon_detail',
+  //   width: 120,
+  //   render: function status(item: any) {
+  //     return <Coupon item={item} />;
+  //   },
+  // },
 
   {
     title: 'Actions',

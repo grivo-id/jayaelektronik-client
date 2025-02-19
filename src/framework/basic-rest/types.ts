@@ -151,6 +151,7 @@ export type OrderItem = {
   product_id: string | number;
   product_qty: string | number;
   product_name: string;
+  product_image: string;
   product_price: string | number;
   product_subtotal: string | number;
   product_subcategory_id: string;
