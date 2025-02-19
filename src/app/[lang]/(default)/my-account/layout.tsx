@@ -10,6 +10,7 @@ import HelpIcon from '@components/icons/account-help';
 import NoticeIcon from '@components/icons/account-notice';
 import { IoSettingsOutline } from 'react-icons/io5';
 import AccountNavMobile from '@components/my-account/account-nav-mobile';
+import AuthorizedRouteWrapper from './authorized-wrapper';
 
 const accountMenu = [
   {
@@ -56,23 +57,25 @@ export default function AccountLayout({
   };
 }) {
   return (
-    <div className="border-t border-b border-border-base">
-      <Container>
-        <div className="pt-10 2xl:pt-12 pb-12 lg:pb-14 xl:pb-16 2xl:pb-20 mx-auto">
-          <div className="flex flex-col w-full lg:flex-row">
-            <div className="lg:hidden">
-              <AccountNavMobile options={accountMenu} lang={lang} />
-            </div>
-            <div className="hidden lg:block flex-shrink-0 w-72 me-7 xl:me-8">
-              <AccountNav options={accountMenu} lang={lang} />
-            </div>
+    <AuthorizedRouteWrapper>
+      <div className="border-t border-b border-border-base">
+        <Container>
+          <div className="pt-10 2xl:pt-12 pb-12 lg:pb-14 xl:pb-16 2xl:pb-20 mx-auto">
+            <div className="flex flex-col w-full lg:flex-row">
+              <div className="lg:hidden">
+                <AccountNavMobile options={accountMenu} lang={lang} />
+              </div>
+              <div className="hidden lg:block flex-shrink-0 w-72 me-7 xl:me-8">
+                <AccountNav options={accountMenu} lang={lang} />
+              </div>
 
-            <div className="w-full mt-4 lg:mt-0 border border-border-base p-4 sm:p-5 lg:py-8 2xl:py-10 lg:px-9 2xl:px-10 rounded-md">
-              {children}
+              <div className="w-full mt-4 lg:mt-0 border border-border-base p-4 sm:p-5 lg:py-8 2xl:py-10 lg:px-9 2xl:px-10 rounded-md">
+                {children}
+              </div>
             </div>
           </div>
-        </div>
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </AuthorizedRouteWrapper>
   );
 }
