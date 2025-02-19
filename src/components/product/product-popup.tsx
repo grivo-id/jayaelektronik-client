@@ -10,15 +10,14 @@ import { generateCartItem } from '@utils/generate-cart-item';
 import usePrice from '@framework/product/use-price';
 import { getVariations } from '@framework/utils/get-variations';
 import { useTranslation } from 'src/app/i18n/client';
+import { useUI } from '@contexts/ui.context';
 import ThumbnailCarousel from '@components/ui/carousel/thumbnail-carousel';
 import Image from '@components/ui/image';
 import CartIcon from '@components/icons/cart-icon';
 import Heading from '@components/ui/heading';
 import Text from '@components/ui/text';
 import { footer } from '../../layouts/footer/data';
-import LabelIcon from '@components/icons/label-icon';
 import { IoArrowRedoOutline } from 'react-icons/io5';
-import RelatedProductFeed from '@components/product/feeds/related-product-feed';
 import SocialShareBox from '@components/ui/social-share-box';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { toast } from 'react-toastify';
@@ -65,6 +64,7 @@ const convertToSlug = (text: string): string => {
 
 export default function ProductPopup({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
+  const { isAuthorized } = useUI();
   const { data } = useModalState();
   const { width } = useWindowSize();
   const { closeModal } = useModalAction();
@@ -328,24 +328,27 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   <CartIcon color="#ffffff" className="ltr:mr-3 rtl:ml-3" />
                   {t('text-add-to-cart')}
                 </Button>
-                <div className="grid grid-cols-2 gap-2.5">
-                  <Button
-                    variant="border"
-                    onClick={addToWishlist}
-                    loading={addToWishlistLoader}
-                    className={`group hover:text-brand ${
-                      favorite === true && 'text-brand'
-                    }`}
-                  >
-                    {favorite === true ? (
-                      <IoIosHeart className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all" />
-                    ) : (
-                      <IoIosHeartEmpty className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all group-hover:text-brand" />
-                    )}
+                <div className="flex flex-row gap-4 w-full">
+                  {isAuthorized && (
+                    <Button
+                      variant="border"
+                      onClick={addToWishlist}
+                      loading={addToWishlistLoader}
+                      className={`group hover:text-brand w-full ${
+                        favorite === true && 'text-brand'
+                      }`}
+                    >
+                      {favorite === true ? (
+                        <IoIosHeart className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all" />
+                      ) : (
+                        <IoIosHeartEmpty className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all group-hover:text-brand" />
+                      )}
 
-                    {t('text-wishlist')}
-                  </Button>
-                  <div className="relative group">
+                      {t('text-wishlist')}
+                    </Button>
+                  )}
+
+                  <div className="relative group w-full">
                     <Button
                       variant="border"
                       className={`w-full hover:text-brand ${
@@ -368,7 +371,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   </div>
                 </div>
               </div>
-              <div className="pt-6 xl:pt-8">
+              <div className="pt-6 xl:pt-8 pb-12">
                 <Heading className="mb-3 lg:mb-3.5">
                   {t('text-product-details')}:
                 </Heading>
@@ -380,7 +383,6 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   />
                   {'...'}
                   <Link
-               
                     href={`/${lang}${
                       ROUTES.PRODUCTS
                     }/${product_id}.${convertToSlug(product_name)}`}

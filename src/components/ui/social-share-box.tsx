@@ -56,7 +56,7 @@ const SocialShareBox: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        'shadow-card bg-brand-light rounded-md p-4 md:p-6 lg:p-7',
+        'shadow-card bg-brand-light rounded-md p-4 md:p-6 lg:p-7 shadow border',
         className
       )}
     >
@@ -84,13 +84,13 @@ const SocialShareBox: React.FC<Props> = ({
             className="transition-all hover:opacity-90"
           />
         </WhatsappShareButton>
-        <LinkedinShareButton url={shareUrl} className="mx-1">
+        {/* <LinkedinShareButton url={shareUrl} className="mx-1">
           <LinkedinIcon
             size={40}
             round
             className="transition-all hover:opacity-90"
           />
-        </LinkedinShareButton>
+        </LinkedinShareButton> */}
       </div>
       <Text variant="small">{t('text-or-copy-link')}</Text>
       <form noValidate className="space-y-5">
