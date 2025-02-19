@@ -31,7 +31,7 @@ export const API_ENDPOINTS = {
   CLOTH_CATEGORY: '/',
   SEARCH: '/products/search',
   CREATE_ORDER: '/orders',
-  ORDERS: '/',
+  ORDERS: '/orders/member',
   ORDER: '/',
   ORDER_STATUS: '/',
   ADDRESS: '/',
