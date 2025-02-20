@@ -1,7 +1,7 @@
 'use client';
 import { Fragment, useState } from 'react';
 import WishlistProductCard from '@components/product/wishlist-product-card';
-import { useWishlistProductsQuery } from '@framework/product/get-wishlist-product';
+import { useWishlistProductsQuery } from '@framework/wishlist/get-wishlist-product';
 import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import Alert from '@components/ui/alert';
 import cn from 'classnames';

@@ -25,6 +25,7 @@ import { useTranslation } from 'src/app/i18n/client';
 import { useProductDetailQueryByProdId } from '@framework/product/get-product-detail';
 import { usePromoCountdown } from '@utils/use-promo-countdown';
 import { useUI } from '@contexts/ui.context';
+import { useCreateWishlist } from '@framework/wishlist/add-to-wishlist';
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
@@ -35,6 +36,8 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { data, isLoading } = useProductDetailQueryByProdId({
     product_id: productId,
   });
+  const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
+    useCreateWishlist();
 
   const { addItemToCart, isInCart, getItemFromCart, isInStock } = useCart();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -146,6 +149,42 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
       draggable: true,
     });
   }
+
+  const handleAddToWishlist = (productId: string) => {
+    setAddToWishlistLoader(true);
+    saveToWishlist(
+      { product_id: productId },
+      {
+        onSuccess: () => {
+          // console.log('Added to wishlist successfully');
+          setAddToWishlistLoader(false);
+          setFavorite(true);
+          toast(t('text-added-favorite'), {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        },
+        onError: (error) => {
+          // console.error('Failed to add to wishlist:', error);
+          toast('Failed to add to favorite list', {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          setAddToWishlistLoader(false);
+        },
+      }
+    );
+  };
 
   return (
     <div className="pt-6 pb-2 md:pt-7">
@@ -288,7 +327,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
               {isAuthorized && (
                 <Button
                   variant="border"
-                  onClick={addToWishlist}
+                  onClick={() => handleAddToWishlist(productId)}
                   loading={addToWishlistLoader}
                   className={`w-full md:w-96 group hover:text-brand ${
                     favorite === true && 'text-brand'
