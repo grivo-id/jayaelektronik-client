@@ -1,16 +1,16 @@
 'use client';
 
 import VendorCard from '@components/cards/vendor-card';
-import { useShopsQuery } from '@framework/shop/get-shops';
-import Alert from '@components/ui/alert';
-import { useTranslation } from 'src/app/i18n/client';
-import Heading from '@components/ui/heading';
 
 type Shop = {
   id: string | number;
   address: string;
   phone: string | number;
   name: string;
+  operationWeekday: string;
+  operationWeekend: string;
+  operationWeekdayEn: string;
+  operationWeekendEn: string;
   slug?: string;
   imageUrl: string;
 };
@@ -21,7 +21,6 @@ type Props = {
 };
 
 export default function ShopsPageContent({ lang, shops }: Props) {
-  const { t } = useTranslation(lang, 'common');
   const data = shops;
 
   // if (error) return <Alert message={error?.message} />;

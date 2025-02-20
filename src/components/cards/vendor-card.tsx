@@ -10,6 +10,10 @@ type Shop = {
   address: string;
   phone: string | number;
   name: string;
+  operationWeekday: string;
+  operationWeekend: string;
+  operationWeekdayEn: string;
+  operationWeekendEn: string;
   slug?: string;
   imageUrl: string;
 };
@@ -23,11 +27,22 @@ type VendorCardProps = {
 const VendorCard: React.FC<VendorCardProps> = ({ lang, shop, index }) => {
   const { t } = useTranslation(lang);
   const placeholderImage = `/assets/placeholder/products/product-grid.svg`;
-  const { name, slug, address, imageUrl } = shop;
+  const {
+    name,
+    operationWeekday,
+    operationWeekend,
+    operationWeekdayEn,
+    operationWeekendEn,
+    address,
+    imageUrl,
+  } = shop;
 
   const mapNav = () => {
     window.open('https://maps.app.goo.gl/upummRANJ3cR3HC46');
   };
+
+  const opWeekday = lang === 'ina' ? operationWeekday : operationWeekdayEn;
+  const opWeekend = lang === 'ina' ? operationWeekend : operationWeekendEn;
 
   return (
     <div
@@ -51,7 +66,12 @@ const VendorCard: React.FC<VendorCardProps> = ({ lang, shop, index }) => {
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0">
             {name}
           </h2>
-          <Text className="xl:leading-6 mt-2">{address}</Text>
+          <div className="text-center flex flex-col gap-1 text-brand-dark">
+            <p className="">{address}</p>
+            <span className="text-sm">{opWeekday}</span>
+            <span className="text-sm">{opWeekend}</span>
+          </div>
+
           <button
             onClick={mapNav}
             className="bg-brand px-4 py-2.5 rounded-md text-white shadow-sm  hover:opacity-80 duration-200 ease-in-out"
