@@ -1,6 +1,6 @@
 
 export const intro = {
-  imageUrl: '/assets/images/about/intro-about.jpg',
+  imageUrl: '/assets/images/about/about-jaya.jpeg',
 };
 
 export const personList = [
