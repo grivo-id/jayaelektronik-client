@@ -32,6 +32,7 @@ import isEqual from 'lodash/isEqual';
 import { productGalleryPlaceholder } from '@assets/placeholders';
 import { usePromoCountdown } from '@utils/use-promo-countdown';
 import Link from '@components/ui/link';
+import { useCreateWishlist } from '@framework/wishlist/add-to-wishlist';
 
 const breakpoints = {
   '1536': {
@@ -64,6 +65,8 @@ const convertToSlug = (text: string): string => {
 
 export default function ProductPopup({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
+  const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
+    useCreateWishlist();
   const { isAuthorized } = useUI();
   const { data } = useModalState();
   const { width } = useWindowSize();
@@ -166,6 +169,43 @@ export default function ProductPopup({ lang }: { lang: string }) {
       draggable: true,
     });
   }
+
+  const handleAddToWishlist = (productId: string) => {
+    setAddToWishlistLoader(true);
+    saveToWishlist(
+      { product_id: productId },
+      {
+        onSuccess: () => {
+          // console.log('Added to wishlist successfully');
+          setAddToWishlistLoader(false);
+          setFavorite(true);
+          toast(t('text-added-favorite'), {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        },
+        onError: (error) => {
+          // console.error('Failed to add to wishlist:', error);
+          toast('Failed to add to favorite list', {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          setAddToWishlistLoader(false);
+        },
+      }
+    );
+  };
+
   // console.log('lang', lang);
   // console.log(
   //   'route',
@@ -332,7 +372,7 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   {isAuthorized && (
                     <Button
                       variant="border"
-                      onClick={addToWishlist}
+                      onClick={() => handleAddToWishlist(product_id)}
                       loading={addToWishlistLoader}
                       className={`group hover:text-brand w-full ${
                         favorite === true && 'text-brand'
