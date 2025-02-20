@@ -290,5 +290,7 @@
   "text-coupon-not-authorized": "You need to login first before applying coupon",
   "text-coupon-invalid": "Coupon doesn't exist",
   "text-coupon-applied-successfully": "Coupon Applied Successfully",
-  "apply-coupon-btn": "Apply Coupon"
+  "apply-coupon-btn": "Apply Coupon",
+  "text-wistlist-not-available": "Currently Not Available in Store",
+  "text-wishlist-available": "Available in Store"
 }

@@ -39,7 +39,7 @@ export const API_ENDPOINTS = {
   CONTACT: '/',
   SHOP: '/',
   SHOPS: '/',
-  WISHLIST: '/',
+  WISHLISTS: '/wishlists',
   BLOGS: '/blogs',
   BLOGDETAILS: '/blogs',
   BLOGCATEGORIES: '/blog-categories',

@@ -69,13 +69,13 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     amount: product?.product_promo?.product_promo_final_price ?? 0,
     currencyCode: 'IDR',
   });
-  const { product_tags, setProdTag } = useUI();
+  const { product_tags, setProdTag, isAuthorized } = useUI();
 
   useEffect(() => {
     if (product?.product_tags) {
       setProdTag(product.product_tags);
     }
-  }, [product]); 
+  }, [product]);
 
   const { payment } = footer;
   const handleChange = () => {
@@ -285,22 +285,25 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
                 <CartIcon color="#ffffff" className="ltr:mr-3 rtl:ml-3" />
                 {t('text-add-to-cart')}
               </Button>
-              <Button
-                variant="border"
-                onClick={addToWishlist}
-                loading={addToWishlistLoader}
-                className={`w-full md:w-96 group hover:text-brand ${
-                  favorite === true && 'text-brand'
-                }`}
-              >
-                {favorite === true ? (
-                  <IoIosHeart className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all" />
-                ) : (
-                  <IoIosHeartEmpty className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all group-hover:text-brand" />
-                )}
+              {isAuthorized && (
+                <Button
+                  variant="border"
+                  onClick={addToWishlist}
+                  loading={addToWishlistLoader}
+                  className={`w-full md:w-96 group hover:text-brand ${
+                    favorite === true && 'text-brand'
+                  }`}
+                >
+                  {favorite === true ? (
+                    <IoIosHeart className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all" />
+                  ) : (
+                    <IoIosHeartEmpty className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all group-hover:text-brand" />
+                  )}
 
-                {t('text-wishlist')}
-              </Button>
+                  {t('text-wishlist')}
+                </Button>
+              )}
+
               <div className="w-full md:w-80 relative group">
                 <Button
                   variant="border"
