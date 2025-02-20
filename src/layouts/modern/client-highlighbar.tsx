@@ -52,7 +52,10 @@ export default function ClientRenderedHighLightedBar({ lang }: Props) {
             {activeMessages.map((toast) => (
               <SwiperSlide key={toast.toast_id}>
                 <div className="flex items-center justify-center gap-2 w-full">
-                  <p className="text-center">{toast.toast_message}</p>
+                  <p
+                    className="text-center"
+                    dangerouslySetInnerHTML={{ __html: toast.toast_message }}
+                  />
                   <Countdown date={new Date(toast.toast_expired_date)} />
                 </div>
               </SwiperSlide>
