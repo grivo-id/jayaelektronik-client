@@ -17,7 +17,7 @@ export default function Introduction({ intro }: Props) {
           width={640}
           height={426}
           quality={100}
-          className="w-full h-full object-cover bg-skin-thumbnail"
+          className="w-full h-full object-cover aspect-video bg-skin-thumbnail rounded-sm"
         />
       </div>
       <div className="max-w-[640px] flex flex-col gap-2">
