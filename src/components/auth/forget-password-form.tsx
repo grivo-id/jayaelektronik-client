@@ -5,18 +5,26 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'src/app/i18n/client';
 import { useModalAction } from '@components/common/modal/modal.context';
 import CloseButton from '@components/ui/close-button';
+import {
+  ForgetPasswordType,
+  useForgetPasswordMutation,
+} from '@framework/auth/use-forget-password';
+import { toast } from 'react-toastify';
+import ErrorIcon from '@components/icons/error-icon';
+import useWindowSize from '@utils/use-window-size';
 
 type FormValues = {
-  email: string;
+  user_email: string;
 };
 
 const defaultValues = {
-  email: '',
+  user_email: '',
 };
 
 const ForgetPasswordForm = ({ lang }: { lang: string }) => {
   const { t } = useTranslation(lang);
   const { closeModal, openModal } = useModalAction();
+  const { width } = useWindowSize();
   const {
     register,
     handleSubmit,
@@ -24,26 +32,54 @@ const ForgetPasswordForm = ({ lang }: { lang: string }) => {
   } = useForm<FormValues>({
     defaultValues,
   });
+  const { mutateAsync: forgetPassword, isLoading } =
+    useForgetPasswordMutation();
 
   function handleSignIn() {
-    return openModal('LOGIN_VIEW');
+    closeModal();
   }
 
-  const onSubmit = (values: FormValues) => {
-    console.log(values, 'token');
-  };
+  async function onSubmit({ user_email }: ForgetPasswordType) {
+    try {
+      const response = await forgetPassword({ user_email });
+      if (response.success) {
+        toast('Password reset link sent successfully to your email', {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'An unexpected error occurred', {
+        progressClassName: 'fancy-progress-bar',
+        position: width! > 768 ? 'bottom-right' : 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: <ErrorIcon />,
+      });
+    }
+  }
 
   return (
     <div className="w-full px-5 py-6 mx-auto rounded-lg sm:p-8 bg-brand-light sm:w-96 md:w-450px">
       <CloseButton onClick={closeModal} />
       <div className="text-center mb-9 pt-2.5">
-
         <p className="mt-3 mb-8 text-sm md:text-base text-body sm:mt-4 sm:mb-10">
           {t('common:forgot-password-helper')}
         </p>
       </div>
       <form
-        onSubmit={handleSubmit((data) => onSubmit(data))}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center"
         noValidate
       >
@@ -52,7 +88,7 @@ const ForgetPasswordForm = ({ lang }: { lang: string }) => {
           type="email"
           variant="solid"
           className="mb-4"
-          {...register('email', {
+          {...register('user_email', {
             required: `${t('forms:email-required')}`,
             pattern: {
               value:
@@ -60,7 +96,7 @@ const ForgetPasswordForm = ({ lang }: { lang: string }) => {
               message: t('forms:email-error'),
             },
           })}
-          error={errors.email?.message}
+          error={errors.user_email?.message}
           lang={lang}
         />
 
@@ -68,6 +104,7 @@ const ForgetPasswordForm = ({ lang }: { lang: string }) => {
           type="submit"
           variant="formButton"
           className="w-full mt-0 h-11 md:h-12"
+          loading={isLoading}
         >
           {t('common:text-reset-password')}
         </Button>
