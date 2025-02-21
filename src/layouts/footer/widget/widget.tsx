@@ -1,7 +1,6 @@
 import WidgetLink from './widget-link';
 import WidgetAbout from './widget-about-us';
 import Container from '@components/ui/container';
-import WidgetSubscription from './widget-subscription';
 import { footer } from '../data';
 import cn from 'classnames';
 import { useUI } from '@contexts/ui.context';
@@ -30,7 +29,12 @@ const Widgets: React.FC<WidgetsProps> = ({
     if (widgetId === 2) {
       if (isAuthorized) {
         return lists.filter((item) =>
-          ['link-account', 'link-checkout', 'link-myoder'].includes(item.title)
+          [
+            'link-account',
+            'link-checkout',
+            'link-myoder',
+            'link-wishlist',
+          ].includes(item.title)
         );
       } else {
         return lists.filter((item) =>
@@ -61,13 +65,6 @@ const Widgets: React.FC<WidgetsProps> = ({
             lang={lang}
           />
         ))}
-
-        <WidgetSubscription
-          className={cn(
-            'col-span-full sm:col-span-1 md:col-start-4 xl:col-start-auto md:col-span-4 xl:col-span-3'
-          )}
-          lang={lang}
-        />
       </div>
     </Container>
   );

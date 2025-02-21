@@ -14,19 +14,19 @@ export const footer = {
           title: 'link-contact-us',
           path: '/contact-us',
         },
+        // {
+        //   id: 3,
+        //   title: 'link-about-team',
+        //   path: '/privacy',
+        // },
         {
           id: 3,
-          title: 'link-about-team',
-          path: '/privacy',
-        },
-        {
-          id: 4,
           title: 'link-terms',
           path: '/terms',
         },
 
         {
-          id: 6,
+          id: 4,
           title: 'link-faq',
           path: '/faq',
         },
@@ -58,6 +58,11 @@ export const footer = {
         },
         {
           id: 5,
+          title: 'link-wishlist',
+          path: '/my-account/wishlist',
+        },
+        {
+          id: 6,
           title: 'link-checkout',
           path: '/checkout',
         },
@@ -109,7 +114,7 @@ export const footer = {
   social: [
     {
       id: 1,
-      path: 'https://www.facebook.com/',
+      path: 'https://www.facebook.com/profile.php?id=100008667818696&mibextid=ZbWKwL',
       image: '/assets/images/social/facebook.svg',
       name: 'facebook',
       width: 20,
@@ -117,27 +122,28 @@ export const footer = {
     },
     {
       id: 2,
-      path: 'https://twitter.com/',
-      image: '/assets/images/social/twitter.svg',
-      name: 'twitter',
-      width: 20,
-      height: 20,
-    },
-    {
-      id: 3,
-      path: 'https://www.instagram.com/',
+      path: 'https://www.instagram.com/jayaelektronik_jpr/?hl=en',
       image: '/assets/images/social/instagram.svg',
       name: 'instagram',
       width: 20,
       height: 20,
     },
-    {
-      id: 4,
-      path: 'https://www.youtube.com/',
-      image: '/assets/images/social/youtube.svg',
-      name: 'youtube',
-      width: 20,
-      height: 20,
-    },
+    // {
+    //   id: 3,
+    //   path: 'https://twitter.com/',
+    //   image: '/assets/images/social/twitter.svg',
+    //   name: 'twitter',
+    //   width: 20,
+    //   height: 20,
+    // },
+
+    // {
+    //   id: 4,
+    //   path: 'https://www.youtube.com/',
+    //   image: '/assets/images/social/youtube.svg',
+    //   name: 'youtube',
+    //   width: 20,
+    //   height: 20,
+    // },
   ],
 };
