@@ -15,6 +15,7 @@ export default function ProductWishlistGrid({
   className = '',
   lang,
 }: ProductWishlistProps) {
+  
   const [page, setPage] = useState(1);
   const limit = 5;
 

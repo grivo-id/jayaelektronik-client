@@ -33,6 +33,8 @@ import { productGalleryPlaceholder } from '@assets/placeholders';
 import { usePromoCountdown } from '@utils/use-promo-countdown';
 import Link from '@components/ui/link';
 import { useCreateWishlist } from '@framework/wishlist/add-to-wishlist';
+import { useIsProductOnWishlistQuery } from '@framework/wishlist/check-is-wishlist';
+import { useDeleteWishlist } from '@framework/wishlist/delete-wishlist';
 
 const breakpoints = {
   '1536': {
@@ -65,8 +67,7 @@ const convertToSlug = (text: string): string => {
 
 export default function ProductPopup({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
-  const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
-    useCreateWishlist();
+
   const { isAuthorized } = useUI();
   const { data } = useModalState();
   const { width } = useWindowSize();
@@ -107,6 +108,30 @@ export default function ProductPopup({ lang }: { lang: string }) {
   } = data;
   const isValidPromoDate = usePromoCountdown(product_promo);
   const gallery = [product_image1, product_image2, product_image3];
+
+  const {
+    data: isWishlistAvailableData,
+    isLoading: isWishlistAvailableLoading,
+    error,
+  } = useIsProductOnWishlistQuery({
+    product_id: product_id,
+  });
+  const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
+    useCreateWishlist();
+
+  const { mutate: deleteWishlist, isLoading: deleteWishlistLoading } =
+    useDeleteWishlist();
+
+  useEffect(() => {
+    if (
+      isWishlistAvailableData?.data &&
+      isWishlistAvailableData?.success === true
+    ) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }, [isWishlistAvailableData]);
 
   const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${lang}${
     ROUTES.PRODUCT
@@ -172,38 +197,74 @@ export default function ProductPopup({ lang }: { lang: string }) {
 
   const handleAddToWishlist = (productId: string) => {
     setAddToWishlistLoader(true);
-    saveToWishlist(
-      { product_id: productId },
-      {
-        onSuccess: () => {
-          // console.log('Added to wishlist successfully');
-          setAddToWishlistLoader(false);
-          setFavorite(true);
-          toast(t('text-added-favorite'), {
-            progressClassName: 'fancy-progress-bar',
-            position: width! > 768 ? 'bottom-right' : 'top-right',
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
-        },
-        onError: (error) => {
-          // console.error('Failed to add to wishlist:', error);
-          toast('Failed to add to favorite list', {
-            progressClassName: 'fancy-progress-bar',
-            position: width! > 768 ? 'bottom-right' : 'top-right',
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
-          setAddToWishlistLoader(false);
-        },
-      }
-    );
+
+    if (isWishlistAvailableData?.data) {
+      deleteWishlist(
+        { product_id: productId },
+        {
+          onSuccess: () => {
+            // console.log('Added to wishlist successfully');
+            setAddToWishlistLoader(false);
+            setFavorite(false);
+            toast(t('text-remove-favorite'), {
+              progressClassName: 'fancy-progress-bar',
+              position: width! > 768 ? 'bottom-right' : 'top-right',
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+          },
+          onError: (error) => {
+            // console.error('Failed to add to wishlist:', error);
+            toast('Failed to add to favorite list', {
+              progressClassName: 'fancy-progress-bar',
+              position: width! > 768 ? 'bottom-right' : 'top-right',
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+            setAddToWishlistLoader(false);
+          },
+        }
+      );
+    } else {
+      saveToWishlist(
+        { product_id: productId },
+        {
+          onSuccess: () => {
+            // console.log('Added to wishlist successfully');
+            setAddToWishlistLoader(false);
+            setFavorite(true);
+            toast(t('text-added-favorite'), {
+              progressClassName: 'fancy-progress-bar',
+              position: width! > 768 ? 'bottom-right' : 'top-right',
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+          },
+          onError: (error) => {
+            // console.error('Failed to add to wishlist:', error);
+            toast('Failed to add to favorite list', {
+              progressClassName: 'fancy-progress-bar',
+              position: width! > 768 ? 'bottom-right' : 'top-right',
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+            setAddToWishlistLoader(false);
+          },
+        }
+      );
+    }
   };
 
   // console.log('lang', lang);

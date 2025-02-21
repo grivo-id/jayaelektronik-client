@@ -7,6 +7,9 @@ import usePrice from '@framework/product/use-price';
 import { Product } from '@framework/types';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { useTranslation } from 'src/app/i18n/client';
+import { useDeleteWishlist } from '@framework/wishlist/delete-wishlist';
+import { toast } from 'react-toastify';
+import useWindowSize from '@utils/use-window-size';
 
 interface ProductProps {
   product: Product;
@@ -20,15 +23,55 @@ const WishlistProductCard: FC<ProductProps> = ({
   lang,
 }) => {
   const { t } = useTranslation(lang, 'common');
-  const { product_name, product_image1, product_is_available, unit } =
-    product ?? {};
+  const {
+    product_id,
+    product_name,
+    product_image1,
+    product_is_available,
+    unit,
+  } = product ?? {};
   const placeholderImage = `/assets/placeholder/product.svg`;
   const [favorite, setFavorite] = useState<boolean>(false);
+  const { width } = useWindowSize();
   const { price, basePrice, discount } = usePrice({
     amount: product.sale_price ? product.sale_price : product.product_price,
     baseAmount: product.product_price,
     currencyCode: 'IDR',
   });
+
+  const { mutate: deleteWishlist, isLoading: deleteWishlistLoading } =
+    useDeleteWishlist();
+
+  const handleAddToWishlist = (productId: string) => {
+    deleteWishlist(
+      { product_id: productId },
+      {
+        onSuccess: () => {
+          setFavorite(false);
+          toast(t('text-remove-favorite'), {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        },
+        onError: (error) => {
+          toast('Failed to add to favorite list', {
+            progressClassName: 'fancy-progress-bar',
+            position: width! > 768 ? 'bottom-right' : 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        },
+      }
+    );
+  };
 
   return (
     <div className="flex flex-col py-4 border-b md:flex-row border-border-base 2xl:py-5 wishlist-card last:pb-0 first:-mt-8 lg:first:-mt-4 2xl:first:-mt-7">
@@ -74,9 +117,7 @@ const WishlistProductCard: FC<ProductProps> = ({
       </div>
       <div
         className="flex cursor-pointer ltr:ml-auto rtl:mr-auto md:pt-7"
-        onClick={() => {
-          setFavorite(!favorite);
-        }}
+        onClick={() => handleAddToWishlist(product_id)}
       >
         {favorite ? (
           <>

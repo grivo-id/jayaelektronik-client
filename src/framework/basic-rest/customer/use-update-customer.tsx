@@ -1,27 +1,29 @@
-import { useMutation } from 'react-query';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
+import http from '@framework/utils/http';
+import { useMutation, useQueryClient } from 'react-query';
 
-export interface UpdateUserType {
-  firstName: string;
-  lastName: string;
-  displayName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: string;
-  shareProfileData: boolean;
-  setAdsPerformance: boolean;
-}
-async function updateUser(input: UpdateUserType) {
-  return input;
+type FormData = {
+  user_fname: string;
+  user_lname: string;
+  user_phone: number | string;
+  user_address: string;
+};
+
+export type UpdateUserType = FormData; 
+
+async function updateUser(formData: UpdateUserType) {
+  const { data: response } = await http.patch(
+    API_ENDPOINTS.UPDATE_PROFILE,
+    formData
+  );
+  return response;
 }
 export const useUpdateUserMutation = () => {
-  return useMutation((input: UpdateUserType) => updateUser(input), {
-    onSuccess: (data) => {
-      console.log(data, 'UpdateUser success response');
-    },
-    onError: (data) => {
-      console.log(data, 'UpdateUser error response');
+  const queryClient = useQueryClient();
+
+  return useMutation(updateUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.USER_PROFILE);
     },
   });
 };

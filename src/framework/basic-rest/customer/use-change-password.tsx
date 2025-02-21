@@ -1,22 +1,27 @@
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
+import http from '@framework/utils/http';
 import { useMutation } from 'react-query';
 
-export interface ChangePasswordInputType {
+type FormData = {
   newPassword: string;
   oldPassword: string;
-}
-async function changePassword(input: ChangePasswordInputType) {
-  return input;
+};
+
+export type ChangePasswordType = FormData;
+
+async function changePassword(formData: ChangePasswordType) {
+  const translateFormData = {
+    old_password: formData.oldPassword,
+    new_password: formData.newPassword,
+  };
+  const { data: response } = await http.put(
+    API_ENDPOINTS.CHANGE_PASW,
+    translateFormData
+  );
+  return response;
 }
 export const useChangePasswordMutation = () => {
-  return useMutation(
-    (input: ChangePasswordInputType) => changePassword(input),
-    {
-      onSuccess: (data) => {
-        console.log(data, 'ChangePassword success response');
-      },
-      onError: (data) => {
-        console.log(data, 'ChangePassword error response');
-      },
-    }
-  );
+  return useMutation(changePassword, {
+    onSuccess: () => {},
+  });
 };

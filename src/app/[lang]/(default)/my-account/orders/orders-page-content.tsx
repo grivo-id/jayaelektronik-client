@@ -7,8 +7,10 @@ import Alert from '@components/ui/alert';
 import { TotalPrice } from '@components/order/price';
 import ActionsButton from '@components/ui/action-button';
 import usePrice from '@framework/product/use-price';
+import { useTranslation } from 'src/app/i18n/client';
 
 export default function OrdersPageContent({ lang }: { lang: string }) {
+  const { t } = useTranslation(lang, 'common');
   const [page, setPage] = useState(1);
   const limit = 10;
 
@@ -53,7 +55,7 @@ export default function OrdersPageContent({ lang }: { lang: string }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center text-center justify-start gap-1 text-lg text-brand-dark">
-        <span className="font-semibold ">Order History</span>
+        <span className="font-semibold ">{t('text-orders')}</span>
         {data && (
           <span className="opacity-70">({data.pagination.totalData})</span>
         )}
