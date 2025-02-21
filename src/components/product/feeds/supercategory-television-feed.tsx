@@ -1,20 +1,13 @@
 'use client';
 
-import { LIMITS } from '@framework/utils/limits';
 import SupperCategoryList from '@components/suppercategory/suppercategory-list';
 import SupperCategoryContainer from '@components/suppercategory/suppercategory-container';
-
-import { useElectronicCategoryQuery } from '@framework/product/get-electronic-category';
-import { useElectronicProductsQuery } from '@framework/product/get-all-electronic-products';
-
 import { getDirection } from '@utils/get-direction';
-
 import Image from '@components/ui/image';
-import cn from 'classnames';
 import { useProductByCatQuery } from '@framework/product/get-product-by-categoryId';
 import { useFlexCategoryQuery } from '@framework/category/get-category-byId';
 
-export default function SupperCategoryElectronicFeed({
+export default function SuperCategoryTelevisionFeed({
   lang,
 }: {
   lang: string;
@@ -36,8 +29,8 @@ export default function SupperCategoryElectronicFeed({
   const dir = getDirection(lang);
   const backgroundThumbnail =
     dir === 'ltr'
-      ? '/assets/images/collection/cate_1.jpg'
-      : '/assets/images/collection/cate_1_rtl.jpg';
+      ? '/assets/images/collection/tv-banner.png'
+      : '/assets/images/collection/tv-banner.png';
 
   return (
     <div className="mb-8 lg:mb-12">
@@ -45,14 +38,14 @@ export default function SupperCategoryElectronicFeed({
         <div
           className={`xl:w-[420px] p-7 relative min-h-[365px] overflow-hidden`}
         >
-          <div className={'absolute inset-0 '}>
+          <div className={'absolute inset-y-0  right-0'}>
             <Image
               src={backgroundThumbnail}
               alt={'Product Image'}
               width={419}
               height={365}
               quality={75}
-              className="object-cover"
+              className="object-cover aspect-square pl-[4rem] pt-[4rem]"
             />
           </div>
 

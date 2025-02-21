@@ -28,7 +28,7 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
 
   return (
     <div className={`pb-10 sm:pb-0 ${className}`}>
-      <div className="text-sm max-w-[350px] mx-auto sm:ms-0 pb-2">
+      <div className="text-sm max-w-[350px]  sm:ms-0 pb-2">
         <div className="w-48">
           <Logo href={ROUTES.HOME} className="mb-3 lg:mb-6 mx-auto sm:ms-0" />
         </div>
@@ -48,9 +48,9 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
             </p>
           </div>
         </div>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           {t('text-address')} {t('link-address')}
-        </div>
+        </div> */}
         <div className="mb-3">
           {t('text-email')} {t('link-email')}
         </div>

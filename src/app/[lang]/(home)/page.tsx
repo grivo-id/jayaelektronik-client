@@ -7,8 +7,6 @@ import BannerAllCarousel from '@components/common/banner-all-carousel';
 import CategoryGridListBlock from '@components/common/category-grid-list-block';
 import BestSellerProductFeed from '@components/product/feeds/best-seller-top-product';
 import { bundleDataTwo as bundle } from '@framework/static/bundle';
-import SupperCategoryElectronicFeed from '@components/product/feeds/suppercategory-electronic-feed';
-import SupperCategoryClothFeed from '@components/product/feeds/suppercategory-cloth-feed';
 import {
   homeOnesGridHero as bannerTwo,
   homeOnesGridHero2 as bannerTwo2,
@@ -16,11 +14,12 @@ import {
 } from '@framework/static/banner';
 import ProductWithBestDeals from '@components/product/product-with-best-deals';
 import NewArrivalProductFeed from '@components/product/feeds/new-arrival-product';
+import SupperCategoryAcFeed from '@components/product/feeds/supercategory-ac-feed';
+import SuperCategoryTelevisionFeed from '@components/product/feeds/supercategory-television-feed';
 
 export const metadata: Metadata = {
   title: 'Home',
-  description:
-    'Best Online Electronic Store in Jayapura, Papua',
+  description: 'Best Online Electronic Store in Jayapura, Papua',
 };
 
 export default async function Page({
@@ -57,15 +56,9 @@ export default async function Page({
           className="mb-0 lg:mb-12"
           girdClassName="xl:gap-5 "
         />
-        <SupperCategoryElectronicFeed lang={lang} />
+        <SupperCategoryAcFeed lang={lang} />
+        <SuperCategoryTelevisionFeed lang={lang} />
 
-        {/* <BannerGridTwo
-          lang={lang}
-          data={bannerTwo2}
-          className="mb-8 lg:mb-12"
-          girdClassName="xl:gap-5 2xl:grid-cols-[minmax(1138px,_1fr)_1fr] "
-        /> */}
-        {/* <SupperCategoryClothFeed lang={lang} /> */}
         {/* <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" /> */}
       </Container>
     </>

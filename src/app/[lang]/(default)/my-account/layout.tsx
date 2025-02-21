@@ -5,10 +5,6 @@ import SettingsIcon from '@components/icons/account-settings';
 import OrdersIcon from '@components/icons/account-order';
 import WishlistIcon from '@components/icons/account-wishlist';
 import MapIcon from '@components/icons/account-address';
-import NotificationIcon from '@components/icons/account-notification';
-import HelpIcon from '@components/icons/account-help';
-import NoticeIcon from '@components/icons/account-notice';
-import { IoSettingsOutline } from 'react-icons/io5';
 import AccountNavMobile from '@components/my-account/account-nav-mobile';
 import AuthorizedRouteWrapper from './authorized-wrapper';
 
