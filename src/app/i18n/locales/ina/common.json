@@ -70,6 +70,8 @@
   "text-register": "Register",
   "text-welcome-back": "Sign into you account",
   "text-email-verification": "Email Verification",
+  "text-enter-new-password": "Enter New Password",
+  "text-password-changed": "Password Changed Successfully!",
   "text-verify-email": "Verify your email address",
   "text-send-email": "We have sent email verification to email",
   "text-inbox-spam": "You might need to check your spam folder",
