@@ -60,12 +60,12 @@ export default function EditUserProfileForm({ lang }: Props) {
     defaultValues,
   });
   function onSubmit(formData: UpdateUserType) {
-    console.log('formdata', formData);
+    // console.log('formdata', formData);
     updateUser(formData, {
       onSuccess: () => {
         closeModal();
         fetchUser();
-        toast('Update Success', {
+        toast(t('common:edit-success-text'), {
           progressClassName: 'fancy-progress-bar',
           position: width! > 768 ? 'bottom-right' : 'top-right',
           autoClose: 1500,
@@ -76,7 +76,7 @@ export default function EditUserProfileForm({ lang }: Props) {
         });
       },
       onError: (error) => {
-        toast.error('Failed to update user, contact admin', {
+        toast.error(t('common:edit-fail-text'), {
           progressClassName: 'fancy-progress-bar',
           position: width! > 768 ? 'bottom-right' : 'top-right',
           autoClose: 1500,

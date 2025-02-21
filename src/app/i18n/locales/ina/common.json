@@ -147,6 +147,8 @@
   "text-contact-page-explore": "We are passionate about building carefully thought out  products that will improve your design workflow.",
   "text-account-details-personal": "Personal Information",
   "text-edit-details-personal": "Edit Personal Information",
+  "edit-success-text": "Profile Update Success",
+  "edit-fail-text": "Failed to update profile, contact admin",
   "text-account-details-account": "Account Information",
   "text-account-details-help": "Help Center",
   "text-account-details-password": "Change Password",
