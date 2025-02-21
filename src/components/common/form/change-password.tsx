@@ -7,6 +7,7 @@ import Heading from '@components/ui/heading';
 import { useTranslation } from 'src/app/i18n/client';
 import { useChangePasswordMutation } from '@framework/customer/use-change-password';
 import PasswordInput from '@components/ui/form/password-input';
+import { toast } from 'react-toastify';
 
 type Props = {
   lang: string;
@@ -41,9 +42,33 @@ export default function ChangePasswordForm({ lang }: Props) {
   const newPassword = watch('newPassword');
 
   function onSubmit(formData: ChangePasswordInputType) {
-    console.log('formdata pasw', formData);
+    // console.log('formdata pasw', formData);
     const { passwordConfirmation, ...submitData } = formData;
-    changePassword(submitData);
+    changePassword(submitData, {
+      onSuccess: () => {
+        closeModal();
+        toast(t('common:change-pasw-success'), {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
+      onError: (error) => {
+        toast.error(t('common:change-pasw-fail'), {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
+    });
   }
 
   return (

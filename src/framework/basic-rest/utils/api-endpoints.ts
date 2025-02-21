@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
   REGISTER: '/auth/register',
   SEND_VERIFICATION: '/auth/send-verification',
   VERIFY_EMAIL: 'auth/verify-email',
+  CHANGE_PASW: '/users/change-pass',
   LOGOUT: '/',
   USER_PROFILE: '/users/profile',
   UPDATE_PROFILE: '/users',

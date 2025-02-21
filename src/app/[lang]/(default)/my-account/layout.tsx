@@ -19,6 +19,11 @@ const accountMenu = [
     icon: <SettingsIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
   },
   {
+    slug: ROUTES.ADDRESS,
+    name: 'text-shipping-address',
+    icon: <MapIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
+  },
+  {
     slug: ROUTES.ORDERS,
     name: 'text-orders',
     icon: <OrdersIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
@@ -27,11 +32,6 @@ const accountMenu = [
     slug: ROUTES.WISHLIST,
     name: 'text-wishlist',
     icon: <WishlistIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
-  },
-  {
-    slug: ROUTES.ADDRESS,
-    name: 'text-address',
-    icon: <MapIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
   },
 ];
 
