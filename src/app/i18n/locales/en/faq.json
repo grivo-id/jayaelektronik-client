@@ -1,23 +1,33 @@
 {
   "faq-one-title": "Is there a shipping fee?",
-  "faq-one-content": "The shipping fee depends on the delivery location and the weight of the item. We offer free shipping for purchases above a certain amount. Please check the shipping page for more information.",
-  "faq-two-title": "How long does delivery take?",
-  "faq-two-content": "Delivery time varies depending on your location. Generally, delivery will take between 1-7 business days after payment is confirmed.",
+  "faq-one-content": "Shipping costs depend on the delivery location and the weight of the item. For more information, please contact us via WhatsApp.",
+
+  "faq-two-title": "How long does shipping take?",
+  "faq-two-content": "Shipping time varies depending on your location. Generally, delivery takes between 1-7 business days after payment is confirmed.",
+
   "faq-three-title": "Can I return a purchased item?",
-  "faq-three-content": "Yes, we have a return policy. You can return the item within 14 days of receipt if the item is in good condition and unused. Please visit the return policy page for more details.",
-  "faq-four-title": "Do the products sold come with a warranty?",
-  "faq-four-content": "Yes, all electronic products we sell come with an official manufacturer's warranty. The warranty duration varies depending on the product. Please check the product description for more information.",
-  "faq-five-title": "Are there discounts for bulk purchases?",
-  "faq-five-content": "We offer special discounts for bulk purchases. Please contact our customer service team for more information about offers and terms.",
+  "faq-three-content": "Returns are not allowed.",
+
+  "faq-four-title": "Do the products come with a warranty?",
+  "faq-four-content": "Yes, all electronic products we sell come with an official manufacturer warranty. The warranty duration varies depending on the product. Please check the product description for more details.",
+
+  "faq-five-title": "Is there a discount for bulk purchases?",
+  "faq-five-content": "We offer special discounts for bulk purchases. Please contact our customer service team for more details on offers and conditions.",
+
   "faq-six-title": "How can I contact customer service?",
-  "faq-six-content": "You can contact our customer service via email: support@tokoelektronik.com or phone: 0800-123-4567.",
+  "faq-six-content": "You can contact our customer service via email: jaya_elektronik@yahoo.co.id or phone: 0813-5653-0099.",
+
   "faq-seven-title": "Does shipping stop on holidays?",
-  "faq-seven-content": "",
+  "faq-seven-content": "No.",
+
   "faq-eight-title": "What should I do if I receive a defective product?",
-  "faq-eight-content": "",
+  "faq-eight-content": "For technical defects, claims must be made within 24 hours. We ensure that the physical condition of the received item is not defective.",
+
   "faq-nine-title": "What should I do if the product I received does not match my order?",
-  "faq-nine-content": "If you receive a product that does not match your order, please contact our customer service within 7 days of receiving the item. Include your order number and a description of the issue to facilitate the return or exchange process.",
-  "faq-ten-title": "Do the electronic products sold include tax?",
-  "faq-ten-content": "Yes, all prices listed on our website include tax. You do not need to worry about additional costs when making a purchase.",
+  "faq-nine-content": "We ensure this will not happen, as every item goes through a thorough inspection before delivery and upon receipt by the customer.",
+
+  "faq-ten-title": "Are electronic products sold already inclusive of tax?",
+  "faq-ten-content": "Yes, all prices listed on our site include taxes. You do not need to worry about additional costs when making a purchase.",
+
   "end": "end"
 }
