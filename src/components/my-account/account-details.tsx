@@ -1,131 +1,113 @@
 'use client';
 
 import Input from '@components/ui/form/input';
-import PasswordInput from '@components/ui/form/password-input';
-import Button from '@components/ui/button';
 import Heading from '@components/ui/heading';
+import { UserPenIcon } from 'lucide-react';
+import { useUI } from '@contexts/ui.context';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  useUpdateUserMutation,
-  UpdateUserType,
-} from '@framework/customer/use-update-customer';
 import Switch from '@components/ui/switch';
 import Text from '@components/ui/text';
 import { useTranslation } from 'src/app/i18n/client';
+import { useModalAction } from '@components/common/modal/modal.context';
+import { IoSettingsOutline } from 'react-icons/io5';
 
-const defaultValues = {};
-
+interface UpdateUserType {
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  shareProfileData: boolean;
+  setAdsPerformance: boolean;
+}
 const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
-  const { mutate: updateUser, isLoading } = useUpdateUserMutation();
+  const { user } = useUI();
   const { t } = useTranslation(lang);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm<UpdateUserType>({
-    defaultValues,
-  });
-  function onSubmit(input: UpdateUserType) {
-    updateUser(input);
+  const { openModal } = useModalAction();
+
+  function handleChangePaswPopupView(item: any) {
+    openModal('CHANGE_PASSWORD_VIEW', item);
   }
+
+  function handleEditUserPopupView(item: any) {
+    openModal('EDIT_USERPROFILE_VIEW', item);
+  }
+
   return (
     <div className="flex flex-col w-full">
-      <Heading variant="titleLarge" className="mb-5 md:mb-6 lg:mb-7 lg:-mt-1">
-        {t('common:text-account-details-personal')}
-      </Heading>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center w-full mx-auto"
-        noValidate
-      >
+      <div className="flex flex-wrap w-full justify-between gap-2 items-center mb-5 md:mb-6 lg:mb-7 lg:-mt-1">
+        <Heading variant="titleLarge" className="">
+          {t('common:text-account-details-personal')}
+        </Heading>
+        <div className="flex flex-row gap-2">
+          <button
+            onClick={handleChangePaswPopupView}
+            className="bg-transparent border border-brand px-4 py-2 text-brand text-sm flex flex-row gap-1 items-center rounded-md shadow transition duration-200 ease-in-out hover:opacity-70"
+          >
+            <IoSettingsOutline className="w-5 md:w-[22px] h-5 md:h-[22px] text-brand" />
+            {t('text-change-password')}
+          </button>
+          <button
+            onClick={handleEditUserPopupView}
+            className="bg-brand px-4 py-2 text-white text-sm flex flex-row gap-1 items-center rounded-md shadow transition duration-200 ease-in-out hover:opacity-70"
+          >
+            <UserPenIcon className="w-5 md:w-[22px] h-5 md:h-[22px] text-white" />
+            {t('text-edit-profile')}
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-center w-full mx-auto">
         <div className="border-b border-border-base pb-7 md:pb-8 lg:pb-10">
           <div className="flex flex-col space-y-4 sm:space-y-5">
             <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
               <Input
                 label={t('forms:label-first-name') as string}
-                {...register('firstName', {
-                  required: 'forms:first-name-required',
-                })}
+                name="firstName"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                error={errors.firstName?.message}
+                value={user?.user_fname}
                 lang={lang}
+                disabled
               />
               <Input
                 label={t('forms:label-last-name') as string}
-                {...register('lastName', {
-                  required: 'forms:last-name-required',
-                })}
+                name="lastName"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                error={errors.lastName?.message}
+                value={user?.user_lname}
                 lang={lang}
+                disabled
               />
             </div>
-            <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
-              <Input
-                type="tel"
-                label={t('forms:label-phone') as string}
-                {...register('phoneNumber', {
-                  required: 'forms:phone-required',
-                })}
-                variant="solid"
-                className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                error={errors.phoneNumber?.message}
-                lang={lang}
-              />
-            </div>
-          </div>
-        </div>
-        <Heading
-          variant="titleLarge"
-          className="pt-6 mb-5 xl:mb-8 md:pt-7 lg:pt-8"
-        >
-          {t('common:text-account-details-account')}
-        </Heading>
-        <div className="border-b border-border-base pb-7 md:pb-9 lg:pb-10">
-          <div className="flex flex-col space-y-4 sm:space-y-5">
             <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
               <Input
                 type="email"
                 label={t('forms:label-email-star') as string}
-                {...register('email', {
-                  required: 'forms:email-required',
-                  pattern: {
-                    value:
-                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: 'forms:email-error',
-                  },
-                })}
+                name="email"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                error={errors.email?.message}
+                value={user?.user_email}
                 lang={lang}
+                disabled
               />
-            </div>
-            <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
-              <PasswordInput
-                label={t('forms:label-password')}
-                {...register('password', {
-                  required: 'forms:password-required',
-                })}
+              <Input
+                type="tel"
+                label={t('forms:label-phone') as string}
+                name="phoneNumber"
+                variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                error={errors.password?.message}
+                value={user?.user_phone}
                 lang={lang}
-              />
-              <PasswordInput
-                label={t('forms:label-confirm-password')}
-                {...register('confirmPassword', {
-                  required: 'forms:password-required',
-                })}
-                error={errors.confirmPassword?.message}
-                className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                lang={lang}
+                disabled
               />
             </div>
           </div>
         </div>
+
         <div className="relative flex pt-6 md:pt-8 lg:pt-10">
           <div className="ltr:pr-2.5 rtl:pl-2.5">
             <Heading className="mb-1 font-medium">
@@ -135,30 +117,18 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
               {t('common:text-share-profile-data-description')}
             </Text>
           </div>
-          <div className="ltr:ml-auto rtl:mr-auto">
+          {/* <div className="ltr:ml-auto rtl:mr-auto">
             <Controller
               name="shareProfileData"
-              control={control}
+              // control={control}
               defaultValue={true}
               render={({ field: { value, onChange } }) => (
                 <Switch onChange={onChange} checked={value} />
               )}
             />
-          </div>
+          </div> */}
         </div>
-       
-        <div className="relative flex pb-2 mt-5 sm:ltr:ml-auto sm:rtl:mr-auto lg:pb-0">
-          <Button
-            type="submit"
-            loading={isLoading}
-            disabled={isLoading}
-            variant="formButton"
-            className="w-full sm:w-auto"
-          >
-            {t('common:button-save-changes')}
-          </Button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

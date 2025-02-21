@@ -1,16 +1,10 @@
 import { useMutation } from 'react-query';
 
 export interface UpdateUserType {
-  firstName: string;
-  lastName: string;
-  displayName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: string;
-  shareProfileData: boolean;
-  setAdsPerformance: boolean;
+  user_fname: string;
+  user_lname: string;
+  user_phone: string | number;
+  user_email: string;
 }
 async function updateUser(input: UpdateUserType) {
   return input;
