@@ -1,6 +1,5 @@
 import Input from '@components/ui/form/input';
 import Button from '@components/ui/button';
-import TextArea from '@components/ui/form/text-area';
 import { useForm } from 'react-hook-form';
 import {
   useModalAction,
@@ -8,29 +7,18 @@ import {
 } from '@components/common/modal/modal.context';
 import useWindowSize from '@utils/use-window-size';
 import { toast } from 'react-toastify';
-import ErrorIcon from '@components/icons/error-icon';
 import CloseButton from '@components/ui/close-button';
 import Heading from '@components/ui/heading';
-import Map from '@components/ui/map';
 import { useTranslation } from 'src/app/i18n/client';
 import { useUI } from '@contexts/ui.context';
-import { useAddShippingMutation } from '@framework/checkout/use-shipping-address';
 import {
   UpdateUserType,
   useUpdateUserMutation,
 } from '@framework/customer/use-update-customer';
-
-interface ContactFormValues {
-  shipping_address_title: string;
-  shipping_address_desc: string;
-}
-
-type UserInfo = {
-  firstName: string;
-  lastName: string;
-  phoneNumber: number | string;
-  email: string;
-};
+import { useCallback } from 'react';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
+import http from '@framework/utils/http';
+import TextArea from '@components/ui/form/text-area';
 
 type Props = {
   lang: string;
@@ -40,15 +28,28 @@ export default function EditUserProfileForm({ lang }: Props) {
   const { t } = useTranslation(lang);
   const { width } = useWindowSize();
   const { data } = useModalState();
-  const { user } = useUI();
+  const { user, setUser } = useUI();
   const { mutate: updateUser, isLoading } = useUpdateUserMutation();
   const { closeModal } = useModalAction();
+  console.log('user', user);
   const defaultValues: UpdateUserType = {
     user_fname: user.user_fname,
     user_lname: user.user_lname,
-    user_email: user.user_email,
     user_phone: user.user_phone,
+    user_address: user.user_address,
   };
+
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await http.get(API_ENDPOINTS.USER_PROFILE);
+      if (response.status === 200) {
+        setUser(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const {
     register,
@@ -58,9 +59,34 @@ export default function EditUserProfileForm({ lang }: Props) {
   } = useForm<UpdateUserType>({
     defaultValues,
   });
-  function onSubmit(input: UpdateUserType) {
-    console.log('formdata', input);
-    updateUser(input);
+  function onSubmit(formData: UpdateUserType) {
+    console.log('formdata', formData);
+    updateUser(formData, {
+      onSuccess: () => {
+        closeModal();
+        fetchUser();
+        toast('Update Success', {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
+      onError: (error) => {
+        toast.error('Failed to update user, contact admin', {
+          progressClassName: 'fancy-progress-bar',
+          position: width! > 768 ? 'bottom-right' : 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
+    });
   }
 
   return (
@@ -102,24 +128,6 @@ export default function EditUserProfileForm({ lang }: Props) {
             </div>
             <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
               <Input
-                type="email"
-                label={t('forms:label-email-star') as string}
-                {...register('user_email', {
-                  required: 'forms:email-required',
-                  pattern: {
-                    value:
-                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: 'forms:email-error',
-                  },
-                })}
-                variant="solid"
-                className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                error={errors.user_email?.message}
-                defaultValue={user.user_email}
-                lang={lang}
-              />
-
-              <Input
                 type="number"
                 label={t('forms:label-phone') as string}
                 {...register('user_phone', {
@@ -132,6 +140,17 @@ export default function EditUserProfileForm({ lang }: Props) {
                 lang={lang}
               />
             </div>
+            <TextArea
+              label="Address"
+              {...register('user_address', {
+                required: 'forms:address-required',
+              })}
+              error={errors.user_address?.message}
+              className="text-brand-dark"
+              variant="solid"
+              defaultValue={user.user_address}
+              lang={lang}
+            />
           </div>
         </div>
 

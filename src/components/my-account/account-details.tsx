@@ -10,6 +10,7 @@ import Text from '@components/ui/text';
 import { useTranslation } from 'src/app/i18n/client';
 import { useModalAction } from '@components/common/modal/modal.context';
 import { IoSettingsOutline } from 'react-icons/io5';
+import TextArea from '@components/ui/form/text-area';
 
 interface UpdateUserType {
   firstName: string;
@@ -69,7 +70,7 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
                 name="firstName"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                value={user?.user_fname}
+                defaultValue={user?.user_fname || ''}
                 lang={lang}
                 disabled
               />
@@ -78,7 +79,7 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
                 name="lastName"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                value={user?.user_lname}
+                defaultValue={user?.user_lname || ''}
                 lang={lang}
                 disabled
               />
@@ -90,7 +91,7 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
                 name="email"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                value={user?.user_email}
+                defaultValue={user?.user_email || ''}
                 lang={lang}
                 disabled
               />
@@ -100,16 +101,24 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
                 name="phoneNumber"
                 variant="solid"
                 className="w-full sm:w-1/2 px-1.5 md:px-2.5"
-                value={user?.user_phone}
+                defaultValue={user?.user_phone || ''}
                 lang={lang}
                 disabled
               />
             </div>
           </div>
         </div>
+        <div className="relative flex w-full pt-4 md:pt-6 lg:pt-8">
+          <TextArea
+            label="Address"
+            name="user_address"
+            className="text-brand-dark w-full"
+            variant="solid"
+            defaultValue={user?.user_address || ''}
+            lang={lang}
+          />
 
-        <div className="relative flex pt-6 md:pt-8 lg:pt-10">
-          <div className="ltr:pr-2.5 rtl:pl-2.5">
+          {/* <div className="ltr:pr-2.5 rtl:pl-2.5">
             <Heading className="mb-1 font-medium">
               {t('common:text-share-profile-data')}
             </Heading>
@@ -117,7 +126,7 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
               {t('common:text-share-profile-data-description')}
             </Text>
           </div>
-          {/* <div className="ltr:ml-auto rtl:mr-auto">
+          <div className="ltr:ml-auto rtl:mr-auto">
             <Controller
               name="shareProfileData"
               // control={control}

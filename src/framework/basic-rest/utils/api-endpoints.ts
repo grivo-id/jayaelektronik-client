@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
   VERIFY_EMAIL: 'auth/verify-email',
   LOGOUT: '/',
   USER_PROFILE: '/users/profile',
+  UPDATE_PROFILE: '/users',
   FORGET_PASSWORD: '/',
   SHIPPING_ADDRESS: '/shipping-addresses',
   CATEGORIES: '/product-categories/sub-categories',
