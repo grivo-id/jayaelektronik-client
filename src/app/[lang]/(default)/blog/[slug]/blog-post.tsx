@@ -12,11 +12,17 @@ interface blogGridProps {
   lang: string;
 }
 
+const convertFromSlug = (slug: string): string => {
+  return slug
+    ?.replace(/-/g, ' ')
+};
+
 export const BlogPost: FC<blogGridProps> = ({ className, lang }) => {
   const params = useParams();
   const decodedSlug = decodeURIComponent(params.slug as string);
+  const originalTitle = convertFromSlug(decodedSlug);
   const opt = {
-    blog_title: decodedSlug,
+    blog_title: originalTitle,
   };
   const { data, isLoading, error } = useBlogPostQuery(opt);
   // console.log(data);\

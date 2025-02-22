@@ -5,6 +5,7 @@ import { useWishlistProductsQuery } from '@framework/wishlist/get-wishlist-produ
 import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import Alert from '@components/ui/alert';
 import cn from 'classnames';
+import { useUI } from '@contexts/ui.context';
 
 interface ProductWishlistProps {
   className?: string;
@@ -15,15 +16,18 @@ export default function ProductWishlistGrid({
   className = '',
   lang,
 }: ProductWishlistProps) {
-  
+  const { isAuthorized } = useUI();
   const [page, setPage] = useState(1);
   const limit = 5;
 
-  const { data, isLoading, error } = useWishlistProductsQuery({
-    page,
-    limit,
-    sort: 'desc',
-  });
+  const { data, isLoading, error } = useWishlistProductsQuery(
+    {
+      page,
+      limit,
+      sort: 'desc',
+    },
+    isAuthorized
+  );
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);

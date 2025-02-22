@@ -100,7 +100,6 @@ export default function ProductPopup({ lang }: { lang: string }) {
     product_image3,
     brand_name,
     product_desc,
-    product_tags,
     product_is_available,
     product_promo,
     product_item_sold,
@@ -113,9 +112,12 @@ export default function ProductPopup({ lang }: { lang: string }) {
     data: isWishlistAvailableData,
     isLoading: isWishlistAvailableLoading,
     error,
-  } = useIsProductOnWishlistQuery({
-    product_id: product_id,
-  });
+  } = useIsProductOnWishlistQuery(
+    {
+      product_id: product_id,
+    },
+    isAuthorized
+  );
   const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
     useCreateWishlist();
 
@@ -139,7 +141,6 @@ export default function ProductPopup({ lang }: { lang: string }) {
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
-  const { payment } = footer;
   const isSelected = !isEmpty(variations)
     ? !isEmpty(attributes) &&
       Object.keys(variations).every((variation) =>
@@ -167,24 +168,6 @@ export default function ProductPopup({ lang }: { lang: string }) {
     addItemToCart(item, selectedQuantity);
     // @ts-ignore
     toast(t('text-added-bag'), {
-      progressClassName: 'fancy-progress-bar',
-      position: width! > 768 ? 'bottom-right' : 'top-right',
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
-  }
-  function addToWishlist() {
-    setAddToWishlistLoader(true);
-    setFavorite(!favorite);
-    const toastStatus: string =
-      favorite === true ? t('text-remove-favorite') : t('text-added-favorite');
-    setTimeout(() => {
-      setAddToWishlistLoader(false);
-    }, 1500);
-    toast(toastStatus, {
       progressClassName: 'fancy-progress-bar',
       position: width! > 768 ? 'bottom-right' : 'top-right',
       autoClose: 1500,
@@ -267,16 +250,8 @@ export default function ProductPopup({ lang }: { lang: string }) {
     }
   };
 
-  // console.log('lang', lang);
-  // console.log(
-  //   'route',
-  //   `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
-  // );
   function navigateToProductPage() {
     closeModal();
-    // router.push(
-    //   `${lang}/${ROUTES.PRODUCT}/${product_id}.${convertToSlug(product_name)}`
-    // );
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);

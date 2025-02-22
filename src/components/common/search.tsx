@@ -7,6 +7,8 @@ import SearchResultLoader from '@components/ui/loaders/search-result-loader';
 import useFreezeBodyScroll from '@utils/use-freeze-body-scroll';
 import Scrollbar from '@components/ui/scrollbar';
 import { useUI } from '@contexts/ui.context';
+import useDebounce from '@utils/debounce';
+import { useTranslation } from 'src/app/i18n/client';
 
 type Props = {
   lang: string;
@@ -25,6 +27,7 @@ const Search = React.forwardRef<HTMLDivElement, Props>(
     },
     ref
   ) => {
+    const { t } = useTranslation(lang, 'common');
     const {
       displayMobileSearch,
       closeMobileSearch,
@@ -32,14 +35,21 @@ const Search = React.forwardRef<HTMLDivElement, Props>(
       closeSearch,
     } = useUI();
     const [searchText, setSearchText] = useState('');
+    const debouncedSearchText = useDebounce(searchText, 300);
+
     const [inputFocus, setInputFocus] = useState<boolean>(false);
-    const { data, isLoading } = useSearchQuery({
-      text: searchText,
-    });
-
-    const products = data?.data || []
-
-    // console.log('search', searchText, products)
+    const { data, isLoading, error } = useSearchQuery(
+      {
+        page: 1,
+        limit: 25,
+        sort: 'desc',
+        product_is_show: true,
+        product_search: debouncedSearchText,
+      },
+      {
+        enabled: debouncedSearchText.trim().length > 0,
+      }
+    );
 
     useFreezeBodyScroll(
       inputFocus === true || displaySearch || displayMobileSearch
@@ -113,7 +123,7 @@ const Search = React.forwardRef<HTMLDivElement, Props>(
                           />
                         </div>
                       ))
-                    : products?.map((item, index) => (
+                    : data?.data.map((item, index) => (
                         <div
                           key={`search-result-key-${index}`}
                           className="py-2.5 ps-5 pe-10 border-b border-black/5 scroll-snap-align-start transition-colors duration-200 hover:bg-fill-four"
@@ -124,6 +134,19 @@ const Search = React.forwardRef<HTMLDivElement, Props>(
                       ))}
                 </div>
               </Scrollbar>
+              {data?.data && (
+                <div className="text-start  text-sm px-4 py-2 mt-2 border-t flex flex-row items-center gap-1">
+                  <span className={' text-brand-dark '}>
+                    {t('total-search-result')}
+                  </span>
+                  <span className="text-brand font-medium">
+                    {data?.pagination.totalData}
+                  </span>
+                  <span className="text-brand-dark ">
+                    {t('total-product-found')}
+                  </span>
+                </div>
+              )}
             </div>
           )}
           {/* End of search result */}
