@@ -113,9 +113,12 @@ export default function ProductPopup({ lang }: { lang: string }) {
     data: isWishlistAvailableData,
     isLoading: isWishlistAvailableLoading,
     error,
-  } = useIsProductOnWishlistQuery({
-    product_id: product_id,
-  });
+  } = useIsProductOnWishlistQuery(
+    {
+      product_id: product_id,
+    },
+    isAuthorized
+  );
   const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
     useCreateWishlist();
 

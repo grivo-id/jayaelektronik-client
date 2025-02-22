@@ -31,6 +31,7 @@ import { useDeleteWishlist } from '@framework/wishlist/delete-wishlist';
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
+  const { product_tags, setProdTag, isAuthorized } = useUI();
   const pathname = useParams();
   const { slug }: any = pathname;
   const [productId, productNameWithHyphens] = slug.split('.');
@@ -44,7 +45,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     error,
   } = useIsProductOnWishlistQuery({
     product_id: productId,
-  });
+  }, isAuthorized);
   const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
     useCreateWishlist();
 
@@ -84,7 +85,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     amount: product?.product_promo?.product_promo_final_price ?? 0,
     currencyCode: 'IDR',
   });
-  const { product_tags, setProdTag, isAuthorized } = useUI();
+
 
   useEffect(() => {
     if (product?.product_tags) {
@@ -142,25 +143,6 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     );
     addItemToCart(item, quantity);
     toast('Added to the bag', {
-      progressClassName: 'fancy-progress-bar',
-      position: width! > 768 ? 'bottom-right' : 'top-right',
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
-  }
-  function addToWishlist() {
-    // to show btn feedback while product wishlist
-    setAddToWishlistLoader(true);
-    setFavorite(!favorite);
-    const toastStatus: string =
-      favorite === true ? t('text-remove-favorite') : t('text-added-favorite');
-    setTimeout(() => {
-      setAddToWishlistLoader(false);
-    }, 1500);
-    toast(toastStatus, {
       progressClassName: 'fancy-progress-bar',
       position: width! > 768 ? 'bottom-right' : 'top-right',
       autoClose: 1500,
