@@ -141,7 +141,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
       selectedVariation,
       isValidPromoDate
     );
-    addItemToCart(item, quantity);
+    addItemToCart(item, selectedQuantity);
     toast('Added to the bag', {
       progressClassName: 'fancy-progress-bar',
       position: width! > 768 ? 'bottom-right' : 'top-right',
