@@ -60,7 +60,7 @@ export type Category = {
 export type BlogCategory = {
   blog_category_id: number | string;
   blog_category_name: string;
-  slug: string;
+  slug?: string;
   blog_category_desc?: string;
 };
 
