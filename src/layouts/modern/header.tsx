@@ -20,6 +20,7 @@ import { useTranslation } from 'src/app/i18n/client';
 import Link from 'next/link';
 import http from '@framework/utils/http';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
+import { useCategoryStore } from 'src/zustandStore/categoryStore';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -46,7 +47,9 @@ function Header({ lang }: { lang: string }) {
   const siteSearchRef = useRef() as DivElementRef;
   const { t } = useTranslation(lang, 'common');
   const siteHeaderRef = useRef() as DivElementRef;
-  const [categoryMenu, setCategoryMenu] = useState(Boolean(false));
+  const setCategoryMenu = useCategoryStore((state) => state.setCategoryMenu);
+  const categoryMenu = useCategoryStore(state => state.categoryMenu)
+
 
   const fetchUser = useCallback(async () => {
     try {
