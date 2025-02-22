@@ -13,11 +13,14 @@ import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
 import SubMegaVertical from '@components/ui/mega/sub-mega-vertical';
 import { getDirection } from '@utils/get-direction';
+import { useCategoryStore } from 'src/zustandStore/categoryStore';
 
 function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
   const { t } = useTranslation(lang, 'common');
   const { name, children: items, icon, type, slug } = item;
   const dir = getDirection(lang);
+  const setCategoryMenu = useCategoryStore((state) => state.setCategoryMenu);
+
   return (
     <>
       <li
@@ -29,8 +32,7 @@ function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
             : 'text-sm hover:text-brand px-3.5 2xl:px-4 border-b border-border-base last:border-b-0'
         }`}
       >
-        <Link
-          href={`/${lang}${ROUTES.SEARCH}?category=${slug}`}
+        <div
           className={cn(
             'flex items-center w-full py-3 text-start outline-none focus:outline-none focus:ring-0 focus:text-skin-base'
           )}
@@ -56,7 +58,7 @@ function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
               )}
             </span>
           )}
-        </Link>
+        </div>
         {Array.isArray(items) && items.length > 0 ? (
           <>
             {type != 'mega' ? (
@@ -67,15 +69,20 @@ function SidebarMenuItem({ className, item, depth = 0, lang }: any) {
                   {items?.map((currentItem) => {
                     const childDepth = depth + 1;
                     return (
-                      <SidebarMenuItem
+                      <Link
                         key={`${currentItem.name}${currentItem.slug}`}
-                        item={currentItem}
-                        depth={childDepth}
-                        lang={lang}
-                        className={cn(
-                          'text-sm px-3 ltr:pr-3 rtl:pl-3 text-brand-muted hover:text-brand mb-0.5'
-                        )}
-                      />
+                        href={`/${lang}${ROUTES.SEARCH}?category=${currentItem.slug}`}
+                        onClick={() => setCategoryMenu(false)}
+                      >
+                        <SidebarMenuItem
+                          item={currentItem}
+                          depth={childDepth}
+                          lang={lang}
+                          className={cn(
+                            'text-sm px-3 ltr:pr-3 rtl:pl-3 text-brand-muted hover:text-brand mb-0.5'
+                          )}
+                        />
+                      </Link>
                     );
                   })}
                 </ul>
