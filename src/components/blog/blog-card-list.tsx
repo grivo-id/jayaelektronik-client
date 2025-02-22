@@ -5,7 +5,6 @@ import { Blog } from '@framework/types';
 import { useTranslation } from 'src/app/i18n/client';
 import { productPlaceholder } from '@assets/placeholders';
 import { ROUTES } from '@utils/routes';
-import { getCountview } from '@utils/get-countview';
 import { BsArrowRight, BsClock } from 'react-icons/bs';
 
 interface BlogProps {
@@ -57,7 +56,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
     >
       <div className="relative flex-shrink-0 w-[360px] lg:w-[440px]">
         <Link
-          href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
+          href={`/${lang}${ROUTES.BLOG}/${slug}`}
           className="text-skin-base "
         >
           <div className="card-img-container flex overflow-hidden  mx-auto relative sm:rounded-l-xl h-[360px] ">
@@ -80,7 +79,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
         <span className='text-white bg-brand w-fit px-2 py-0.5 text-xs rounded shadow-sm'>{blog_category_name}</span>
         <h4 className={'font-medium text-2xl lg:text-3xl mb-3.5 '}>
           <Link
-            href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
+            href={`/${lang}${ROUTES.BLOG}/${slug}`}
             className="text-skin-base line-clamp-2 hover:text-skin-primary"
           >
             {blog_title}
@@ -104,7 +103,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
               </span> */}
           </div>
           <Link
-            href={`/${lang}${ROUTES.BLOG}/${blog_title}`}
+            href={`/${lang}${ROUTES.BLOG}/${slug}`}
             className="text-gray-500 hover:text-skin-primary text-13px flex items-center gap-1.5"
           >
             {t('text-read-more')}
