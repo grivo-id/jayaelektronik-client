@@ -61,11 +61,11 @@ const LoadingSkeleton = ({ count = 5 }: { count: number }) =>
   Array.from({ length: count }).map((_, index) => (
     <div
       key={index}
-      className="w-full flex flex-col gap-4 items-center justify-start"
+      className="w-full flex flex-col gap-2 items-center justify-start"
     >
       <div className="animate-pulse flex space-x-4 flex-col md:flex-row w-full">
-        <div className="rounded-lg bg-gray-200 h-40 md:h-60 w-full md:w-60" />
-        <div className="rounded-lg bg-gray-200 h-40 md:h-60 w-full" />
+        <div className="rounded-lg bg-gray-200 h-72  w-full max-w-[25rem]" />
+        <div className="rounded-lg bg-gray-200 h-72 w-full hidden md:block" />
       </div>
     </div>
   ));
