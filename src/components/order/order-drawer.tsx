@@ -1,13 +1,8 @@
 import { OrderDetailsContent } from './order-details-content';
-import { formatAddress } from '@utils/format-address';
 import Heading from '@components/ui/heading';
 import { IoClose } from 'react-icons/io5';
-import OrderStatus from './order-status';
 import {
-  DiscountPrice,
-  DeliveryFee,
   TotalPrice,
-  SubTotalPrice,
 } from '@components/order/price';
 
 import { useUI } from '@contexts/ui.context';
@@ -20,7 +15,7 @@ const OrderDrawer: React.FC<{ lang: string }> = ({ lang }) => {
   const { order_address, order_is_completed, coupon_detail } = data;
   // console.log('data drawer', data);
   const { price } = usePrice({
-    amount: coupon_detail.coupon_max_discount,
+    amount: coupon_detail?.coupon_max_discount,
     currencyCode: 'IDR',
   });
 
