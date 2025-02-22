@@ -49,8 +49,23 @@ export default function BlogPageContent({
           />
         </>
       ) : (
-        <div className={'pt-8 pb-8'}>Loading...</div>
+        <div className="flex flex-col gap-4 py-8">
+          <LoadingSkeleton count={limit} />
+        </div>
       )}
     </>
   );
 }
+
+const LoadingSkeleton = ({ count = 5 }: { count: number }) =>
+  Array.from({ length: count }).map((_, index) => (
+    <div
+      key={index}
+      className="w-full flex flex-col gap-4 items-center justify-start"
+    >
+      <div className="animate-pulse flex space-x-4 flex-col md:flex-row w-full">
+        <div className="rounded-lg bg-gray-200 h-40 md:h-60 w-full md:w-60" />
+        <div className="rounded-lg bg-gray-200 h-40 md:h-60 w-full" />
+      </div>
+    </div>
+  ));
