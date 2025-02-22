@@ -27,20 +27,6 @@ const SearchProduct: React.FC<SearchProductProps> = ({ lang, item }) => {
     product_promo,
   } = item ?? {};
 
-  // const { price, basePrice } = usePrice({
-  //   amount: item?.sale_price ? item?.sale_price : item?.product_price,
-  //   baseAmount: item?.product_price,
-  //   currencyCode: 'IDR',
-  // });
-  // const { price: minPrice } = usePrice({
-  //   amount: item?.min_price ?? 0,
-  //   currencyCode: 'IDR',
-  // });
-  // const { price: maxPrice } = usePrice({
-  //   amount: item?.max_price ?? 0,
-  //   currencyCode: 'IDR',
-  // });
-
   const { price, basePrice } = usePrice({
     amount: item?.sale_price ? item?.sale_price : item?.product_price,
     baseAmount: item?.product_price,

@@ -27,14 +27,17 @@ export const fetchIsProductOnWishlist = async ({
 
   const fullUrl = `${API_ENDPOINTS.WISHLISTS}?${queryParams}`;
   const { data } = await http.get<ApiResponse>(fullUrl);
+  // console.log('wishlist', data)
   return data;
 };
 
-export const useIsProductOnWishlistQuery = (options: {
-  product_id: string;
-}) => {
+export const useIsProductOnWishlistQuery = (
+  options: { product_id: string },
+  enabled: boolean
+) => {
   return useQuery<ApiResponse, Error>({
     queryKey: [API_ENDPOINTS.WISHLISTS, options],
     queryFn: () => fetchIsProductOnWishlist(options),
+    enabled,
   });
 };

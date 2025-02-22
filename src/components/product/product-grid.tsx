@@ -1,13 +1,10 @@
 import type { FC } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Alert from '@components/ui/alert';
 import Button from '@components/ui/button';
 import ProductCardAlpine from '@components/product/product-cards/product-card';
 import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import ProductCardList from '@components/product/product-cards/product-list-view';
-import cn from 'classnames';
-import { useProductsQuery } from '@framework/product/get-all-products';
-import { LIMITS } from '@framework/utils/limits';
 import { Product } from '@framework/types';
 import { useTranslation } from 'src/app/i18n/client';
 import useQueryParam from '@utils/use-query-params';
@@ -73,7 +70,7 @@ export const ProductGrid: FC<ProductGridProps> = ({
     product_is_show: true,
     category: newQuery.category,
     brand: newQuery.brand,
-    ...sortTranslation, 
+    ...sortTranslation,
   });
 
   // console.log(newQuery)

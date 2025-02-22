@@ -32,13 +32,17 @@ export const fetchWishlistProducts = async ({
   return data;
 };
 
-export const useWishlistProductsQuery = (options: {
-  page: number;
-  limit: number;
-  sort: string;
-}) => {
+export const useWishlistProductsQuery = (
+  options: {
+    page: number;
+    limit: number;
+    sort: string;
+  },
+  enabled: boolean
+) => {
   return useQuery<ApiResponse, Error>({
     queryKey: [API_ENDPOINTS.WISHLISTS, options],
     queryFn: () => fetchWishlistProducts(options),
+    enabled,
   });
 };
