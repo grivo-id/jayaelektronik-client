@@ -278,5 +278,7 @@
   "text-wistlist-not-available": "Currently Not Available in Store",
   "text-wishlist-available": "Available in Store",
   "no-blog-found-title": "No Blogs Found",
-  "no-blog-found-desc": "Try selecting a different category"
+  "no-blog-found-desc": "Try selecting a different category",
+  "total-search-result": "Total Search Result:",
+  "total-product-found": "Product Found"
 }
