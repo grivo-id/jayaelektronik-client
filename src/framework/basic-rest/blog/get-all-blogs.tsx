@@ -1,7 +1,7 @@
 // import { QueryOptionsType, Blog } from '@framework/types';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import http from '@framework/utils/http';
-import {  useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
 interface BlogKeyword {
   blog_keyword_id: string;
@@ -34,14 +34,16 @@ type BlogsApiResponse = {
   message?: string;
   data: Blog[];
   pagination: Pagination;
-}
+};
 
 const fetchBlogs = async ({
+  blog_category_id,
   page,
   limit,
   sort,
 }: any): Promise<BlogsApiResponse> => {
   const queryParams = new URLSearchParams({
+    blog_category_id: blog_category_id.toString(),
     page: page.toString(),
     limit: limit.toString(),
     sort: sort,
@@ -52,6 +54,7 @@ const fetchBlogs = async ({
 };
 
 const useBlogsQuery = (options: {
+  blog_category_id: string;
   page: number;
   limit: number;
   sort: string;

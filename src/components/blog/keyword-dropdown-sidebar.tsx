@@ -1,14 +1,13 @@
 'use client';
 
 import Alert from '@components/ui/alert';
+import { useTranslation } from 'src/app/i18n/client';
 import { useBlogCategoriesQuery } from '@framework/blog/get-all-blog-categories';
 import Scrollbar from '@components/ui/scrollbar';
 import { SidebarBlogMenuItem } from '@components/ui/sidebar-menu-blogs';
 import CategoryListCardLoader from '@components/ui/loaders/category-list-card-loader';
 import cn from 'classnames';
 import SectionHeader from '@components/common/section-header';
-import Button from '@components/ui/button';
-import { useTranslation } from 'src/app/i18n/client';
 
 interface CategorySidebarProps {
   lang: string;
@@ -61,7 +60,7 @@ export default function KeywordDropdownSidebar({
                     page.data.map((item: any) => (
                       <SidebarBlogMenuItem
                         key={item.blog_category_id}
-                        item={item}
+                        {...item}
                         lang={lang}
                       />
                     ))

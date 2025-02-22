@@ -3,20 +3,34 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import cn from 'classnames';
 import useQueryParam from '@utils/use-query-params';
+import { useBlogStore } from 'src/zustandStore/blogStore';
+import { useEffect } from 'react';
 
-export function SidebarBlogMenuItem({ className, item, depth = 0, lang }: any) {
+export function SidebarBlogMenuItem({
+  className,
+  blog_category_name,
+  blog_category_id,
+  slug,
+}: any) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { updateQueryparams } = useQueryParam(pathname ?? '/');
-
+  const setSelectedCategoryBlogId = useBlogStore(
+    (state) => state.setSelectedCategoryBlogId
+  );
   const activeCategory = searchParams?.get('categoryBlogs') || '';
 
-  const slug = item.slug;
+  useEffect(() => {
+    if (!activeCategory) {
+      setSelectedCategoryBlogId('');
+    }
+  }, [activeCategory]);
 
   const isActive = activeCategory === slug;
 
   function onClick() {
     updateQueryparams('categoryBlogs', slug);
+    setSelectedCategoryBlogId(blog_category_id);
   }
 
   return (
@@ -34,7 +48,7 @@ export function SidebarBlogMenuItem({ className, item, depth = 0, lang }: any) {
         }`}
       >
         <span className="capitalize flex items-center w-full ltr:text-left rtl:text-right outline-none focus:outline-none group focus:ring-0 focus:text-brand-dark">
-          {item.blog_category_name}
+          {blog_category_name}
         </span>
       </button>
     </>

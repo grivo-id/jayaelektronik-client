@@ -5,6 +5,7 @@ import { BlogListContent } from './blog-list-content';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import React, { useState } from 'react';
 import Pagination from '@components/ui/pagination';
+import { useBlogStore } from 'src/zustandStore/blogStore';
 
 export default function BlogPageContent({
   lang,
@@ -13,14 +14,20 @@ export default function BlogPageContent({
   lang: string;
   variant?: string;
 }) {
+  const selectedCategoryBlogId = useBlogStore(
+    (state) => state.selectedCategoryBlogId
+  );
   const [page, setPage] = useState<number>(1);
   const limit = 5;
-  const opt = { page, limit, sort: 'desc' };
+  const blog_category_id = selectedCategoryBlogId ? selectedCategoryBlogId : '';
+  const opt = { blog_category_id, page, limit, sort: 'desc' };
   const { data, isLoading, error } = useBlogsQuery(opt);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
+
+  // console.log('selectedCategoryBlogId', selectedCategoryBlogId);
 
   return (
     <>
