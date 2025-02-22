@@ -49,6 +49,7 @@ const fetchBlogs = async ({
     sort: sort,
   }).toString();
   const fullUrl = `${API_ENDPOINTS.BLOGS}?${queryParams}`;
+  console.log(queryParams)
   const { data } = await http.get<BlogsApiResponse>(fullUrl);
   return data;
 };

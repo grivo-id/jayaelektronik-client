@@ -268,16 +268,6 @@
   "text-sidebar": "Sidebar",
   "text-hotline": "Hotline Free:",
   "link-phone": "0813-5653-0099",
-  "feature4-title-one": "Free Delivery",
-  "feature4-title-one-description": "For all orders over $120",
-  "feature4-title-two": "Safe Payment",
-  "feature4-title-two-description": "100% secure payment",
-  "feature4-title-three": "Shop With Confidence",
-  "feature4-title-three-description": "If goods have problems",
-  "feature4-title-four": "24/7 Help Center",
-  "feature4-title-four-description": "Dedicated 24/7 support",
-  "feature4-title-five": "Friendly Services",
-  "feature4-title-five-description": "30 day satisfaction guarantee",
   "text-all-keywords": "Categories",
   "text-brand-sellingpoint": "We are trusted by many brands worldwide",
   "text-brand-invite": "Want to grow your brand with us?",
@@ -286,5 +276,7 @@
   "text-coupon-applied-successfully": "Coupon Applied Successfully",
   "apply-coupon-btn": "Apply Coupon",
   "text-wistlist-not-available": "Currently Not Available in Store",
-  "text-wishlist-available": "Available in Store"
+  "text-wishlist-available": "Available in Store",
+  "no-blog-found-title": "No Blogs Found",
+  "no-blog-found-desc": "Try selecting a different category"
 }

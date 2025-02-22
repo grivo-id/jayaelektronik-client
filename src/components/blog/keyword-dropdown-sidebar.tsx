@@ -62,6 +62,7 @@ export default function KeywordDropdownSidebar({
                         key={item.blog_category_id}
                         {...item}
                         lang={lang}
+                        categories={data.pages.flatMap((p: any) => p.data)}
                       />
                     ))
                   )}
