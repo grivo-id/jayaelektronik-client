@@ -3,19 +3,15 @@
 import { useSessionStorage } from 'react-use';
 import HighlightedBar from '@components/common/highlighted-bar';
 import Countdown from '@components/common/countdown';
-import { useTranslation } from 'src/app/i18n/client';
 import { useAllAnouncerQuery } from '@framework/announcer/get-all-announcer';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 
-type Props = {
-  lang: string;
-};
 
-export default function ClientRenderedHighLightedBar({ lang }: Props) {
-  const { t } = useTranslation(lang, 'common');
+
+export default function ClientRenderedHighLightedBar() {
   const [highlightedBar, setHighlightedBar] = useSessionStorage(
-    'razor-highlightedBar',
+    'jaya-highlightedBar',
     'false'
   );
 
@@ -33,7 +29,7 @@ export default function ClientRenderedHighLightedBar({ lang }: Props) {
     (toast) => new Date(toast.toast_expired_date) > new Date()
   );
 
-  if (!activeMessages?.length) return null;
+  if (!activeMessages?.length) return <></>;
 
   return (
     <>
