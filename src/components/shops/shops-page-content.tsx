@@ -13,6 +13,7 @@ type Shop = {
   operationWeekendEn: string;
   slug?: string;
   imageUrl: string;
+  map?: string;
 };
 
 type Props = {

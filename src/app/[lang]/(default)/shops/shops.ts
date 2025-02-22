@@ -10,6 +10,7 @@ export const shops = [
     operationWeekendEn: 'Sunday Closed',
     slug: 'jaya-elektronik-jayapura',
     imageUrl: '/assets/images/shop/percetakan.jpg',
+    map: 'https://maps.app.goo.gl/y2vwjR7cJCXmpw3o9',
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ export const shops = [
     operationWeekendEn: '11:30 s.d 21:30 (Sunday / Holiday)',
     slug: 'jaya-elektronik-abepura',
     imageUrl: '/assets/images/shop/abepura1.jpeg',
+    map: 'https://maps.app.goo.gl/bLkdpuhy7yUcFTje8',
   },
   {
     id: 3,
@@ -36,5 +38,6 @@ export const shops = [
     operationWeekendEn: 'Sunday Closed',
     slug: 'jaya-elektronik-sentani',
     imageUrl: '/assets/images/shop/sentani.jpg',
+    map: 'https://maps.app.goo.gl/cPxgruRszrRzWvX58',
   },
 ];

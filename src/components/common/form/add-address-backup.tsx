@@ -36,7 +36,7 @@ const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
   });
 
   function onSubmit(values: ContactFormValues) {
-    console.log(values, 'Add Address');
+    // console.log(values, 'Add Address');
   }
 
   return (

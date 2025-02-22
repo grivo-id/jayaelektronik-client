@@ -16,6 +16,7 @@ type Shop = {
   operationWeekendEn: string;
   slug?: string;
   imageUrl: string;
+  map?: string;
 };
 
 type VendorCardProps = {
@@ -35,10 +36,11 @@ const VendorCard: React.FC<VendorCardProps> = ({ lang, shop, index }) => {
     operationWeekendEn,
     address,
     imageUrl,
+    map,
   } = shop;
 
   const mapNav = () => {
-    window.open('https://maps.app.goo.gl/upummRANJ3cR3HC46');
+    window.open(map || '');
   };
 
   const opWeekday = lang === 'ina' ? operationWeekday : operationWeekdayEn;

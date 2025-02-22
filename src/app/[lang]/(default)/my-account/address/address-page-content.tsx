@@ -17,7 +17,7 @@ export default function AddressPageContent({ lang }: { lang: string }) {
         setShippingAddress(response.data.data);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, [setShippingAddress]);
 

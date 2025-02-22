@@ -27,7 +27,7 @@ const WidgetSubscription: React.FC<Props> = ({ lang,className }) => {
     defaultValues,
   });
   function onSubmit(values: NewsLetterFormValues) {
-    console.log(values, 'News letter');
+    // console.log(values, 'News letter');
   }
   const dir = getDirection(lang);
   return (

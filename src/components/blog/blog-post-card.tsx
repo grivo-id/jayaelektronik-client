@@ -55,7 +55,7 @@ const BlogPostCard: React.FC<BlogProps> = ({ blogData, className, lang }) => {
   const { t } = useTranslation(lang, 'common');
   const title = convertToSlug(blog_title);
   const blogUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${ROUTES.BLOG}/${blog_title}`;
-  console.log(blogData);
+  // console.log(blogData);
 
   return (
     <article
