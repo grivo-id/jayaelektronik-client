@@ -2,8 +2,9 @@
 
 import { useBlogsQuery } from '@framework/blog/get-all-blogs';
 import { BlogListContent } from './blog-list-content';
-
-import React from 'react';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+import React, { useState } from 'react';
+import Pagination from '@components/ui/pagination';
 
 export default function BlogPageContent({
   lang,
@@ -12,35 +13,41 @@ export default function BlogPageContent({
   lang: string;
   variant?: string;
 }) {
-  const opt = { page: 1, limit: 10, sort: 'desc' };
+  const [page, setPage] = useState<number>(1);
+  const limit = 5;
+  const opt = { page, limit, sort: 'desc' };
   const { data, isLoading, error } = useBlogsQuery(opt);
-  const dataBlog = data;
-  // console.log(data)
 
-  const renderBlogContent = (variant: any) => {
-    switch (variant) {
-      case 'list':
-        return (
-          <BlogListContent
-            dataBlog={dataBlog}
-            className={`pt-8 pb-8`}
-            lang={lang}
-          />
-        );
-      default:
-        return (
-          <BlogListContent
-            dataBlog={dataBlog}
-            className={`pt-8 pb-8`}
-            lang={lang}
-          />
-        );
-    }
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
   };
+
   return (
     <>
       {!isLoading ? (
-        renderBlogContent(variant)
+        <>
+          <BlogListContent
+            dataBlog={data}
+            className={`pt-8 pb-8`}
+            lang={lang}
+          />
+          <Pagination
+            current={page}
+            onChange={handlePageChange}
+            pageSize={limit}
+            total={data?.pagination?.totalData || 0}
+            prevIcon={
+              <GrPrevious
+                size={14}
+                className={`m-auto my-1.5 rtl:rotate-180`}
+              />
+            }
+            nextIcon={
+              <GrNext size={14} className={`m-auto my-1.5 rtl:rotate-180`} />
+            }
+            className="blog-pagination"
+          />
+        </>
       ) : (
         <div className={'pt-8 pb-8'}>Loading...</div>
       )}

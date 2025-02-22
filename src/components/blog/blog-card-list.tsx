@@ -16,8 +16,7 @@ interface BlogProps {
 
 const convertToSlug = (text: string): string => {
   return text
-    ?.toLowerCase()
-    .replace(/[^\w\s-]/g, '')
+    ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
     .trim();
@@ -42,11 +41,10 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
     blog_banner_image,
     blog_desc,
     blog_created_date,
-    totalWatchCount,
-    date,
+    blog_category_name,
   } = blog ?? {};
-  const { t } = useTranslation(lang, 'common');
 
+  const { t } = useTranslation(lang, 'common');
   const slug = convertToSlug(blog_title);
 
   return (
@@ -79,6 +77,7 @@ const BlogCardList: React.FC<BlogProps> = ({ blog, className, lang }) => {
       </div>
 
       <div className="flex flex-col justify-center py-5 px-5 sm:px-8 h-full overflow-hidden relative">
+        <span className='text-white bg-brand w-fit px-2 py-0.5 text-xs rounded shadow-sm'>{blog_category_name}</span>
         <h4 className={'font-medium text-2xl lg:text-3xl mb-3.5 '}>
           <Link
             href={`/${lang}${ROUTES.BLOG}/${blog_title}`}

@@ -1,8 +1,7 @@
 // import { QueryOptionsType, Blog } from '@framework/types';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import http from '@framework/utils/http';
-import shuffle from 'lodash/shuffle';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import {  useQuery } from 'react-query';
 
 interface BlogKeyword {
   blog_keyword_id: string;
@@ -30,25 +29,37 @@ type Pagination = {
   hasPrevPage: boolean;
 };
 
-
-interface BlogsApiResponse {
+type BlogsApiResponse = {
   success: boolean;
   message?: string;
   data: Blog[];
-  pagination: Pagination[];
+  pagination: Pagination;
 }
 
-const fetchBlogs = async ({ queryKey }: any) => {
-  const [_key, _params] = queryKey;
-  const { data } = await http.get(API_ENDPOINTS.BLOGS);
+const fetchBlogs = async ({
+  page,
+  limit,
+  sort,
+}: any): Promise<BlogsApiResponse> => {
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    sort: sort,
+  }).toString();
+  const fullUrl = `${API_ENDPOINTS.BLOGS}?${queryParams}`;
+  const { data } = await http.get<BlogsApiResponse>(fullUrl);
   return data;
 };
 
-const useBlogsQuery = (options: any) => {
-  return useQuery<BlogsApiResponse, Error>(
-    [API_ENDPOINTS.BLOGS, options],
-    fetchBlogs
-  );
+const useBlogsQuery = (options: {
+  page: number;
+  limit: number;
+  sort: string;
+}) => {
+  return useQuery<BlogsApiResponse, Error>({
+    queryKey: [API_ENDPOINTS.BLOGS, options],
+    queryFn: () => fetchBlogs(options),
+  });
 };
 
 export {
@@ -59,18 +70,3 @@ export {
   type Pagination,
   type BlogsApiResponse,
 };
-
-// const fetchBlogs = async ({ queryKey }: any) => {
-//   const [_key, _params] = queryKey;
-//   const { data } = await http.get(API_ENDPOINTS.BLOGS);
-//   return { blogs: { data: data as Blog[] } };
-// };
-
-// const useBlogsQuery = (options: any) => {
-//   return useQuery<{ blogs: { data: Blog[] } }, Error>(
-//       [API_ENDPOINTS.BLOGS, options],
-//       fetchBlogs
-//   );
-// };
-
-// export { useBlogsQuery, fetchBlogs };
