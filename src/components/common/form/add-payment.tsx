@@ -34,7 +34,7 @@ const AddPaymentForm: React.FC<{ lang: string }> = ({ lang }) => {
   });
 
   function onSubmit(values: ContactFormValues) {
-    console.log(values, 'Add Payment');
+    // console.log(values, 'Add Payment');
   }
 
   return (

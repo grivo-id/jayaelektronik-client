@@ -25,7 +25,7 @@ const DeliveryInstructions: React.FC<{ data?: any; lang: string }> = ({
   });
 
   function onSubmit(values: ContactFormValues) {
-    console.log(values, 'Delivery Note');
+    // console.log(values, 'Delivery Note');
   }
 
   return (

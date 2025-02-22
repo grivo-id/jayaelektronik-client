@@ -22,7 +22,7 @@ const ContactForm: React.FC<{ lang: string }> = ({ lang }) => {
   } = useForm<ContactFormValues>();
 
   function onSubmit(values: ContactFormValues) {
-    console.log(values, 'Contact');
+    // console.log(values, 'Contact');
   }
 
   const { t } = useTranslation(lang);

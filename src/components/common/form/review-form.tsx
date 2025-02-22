@@ -29,7 +29,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ lang, className = '' }) => {
   } = useForm<ReviewFormValues>();
   const [rating_custom_icon, set_rating_custom_icon] = useState(1);
   function onSubmit(values: ReviewFormValues) {
-    console.log(values, 'review');
+    // console.log(values, 'review');
   }
 
   return (

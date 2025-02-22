@@ -22,7 +22,7 @@ const AddressPage: React.FC<Props> = ({ lang }) => {
         setShippingAddress(response.data.data);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, [setShippingAddress]);
 

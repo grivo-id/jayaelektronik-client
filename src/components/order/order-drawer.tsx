@@ -18,7 +18,7 @@ const OrderDrawer: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
   const { data, closeDrawer } = useUI();
   const { order_address, order_is_completed, coupon_detail } = data;
-  console.log('data drawer', data);
+  // console.log('data drawer', data);
   const { price } = usePrice({
     amount: coupon_detail.coupon_max_discount,
     currencyCode: 'IDR',
