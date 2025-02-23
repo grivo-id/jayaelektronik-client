@@ -8,6 +8,7 @@ import { SidebarBlogMenuItem } from '@components/ui/sidebar-menu-blogs';
 import CategoryListCardLoader from '@components/ui/loaders/category-list-card-loader';
 import cn from 'classnames';
 import SectionHeader from '@components/common/section-header';
+import { Suspense } from 'react';
 
 interface CategorySidebarProps {
   lang: string;
@@ -58,12 +59,18 @@ export default function KeywordDropdownSidebar({
                   ))
                 : data?.pages?.map((page: any) =>
                     page.data.map((item: any) => (
-                      <SidebarBlogMenuItem
+                      <Suspense
                         key={item.blog_category_id}
-                        {...item}
-                        lang={lang}
-                        categories={data.pages.flatMap((p: any) => p.data)}
-                      />
+                        fallback={
+                          <CategoryListCardLoader uniqueKey="category-suspense-loader" />
+                        }
+                      >
+                        <SidebarBlogMenuItem
+                          {...item}
+                          lang={lang}
+                          categories={data.pages.flatMap((p: any) => p.data)}
+                        />
+                      </Suspense>
                     ))
                   )}
             </div>

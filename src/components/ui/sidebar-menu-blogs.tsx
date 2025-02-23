@@ -11,7 +11,7 @@ export function SidebarBlogMenuItem({
   blog_category_name,
   blog_category_id,
   slug,
-  categories
+  categories,
 }: any) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -21,11 +21,13 @@ export function SidebarBlogMenuItem({
   );
   const activeCategory = searchParams?.get('categoryBlogs') || '';
 
-  const activeCatId = categories?.find((cat: any) => cat.slug === activeCategory)?.blog_category_id || '';
+  const activeCatId =
+    categories?.find((cat: any) => cat.slug === activeCategory)
+      ?.blog_category_id || '';
 
   useEffect(() => {
     setSelectedCategoryBlogId(activeCatId);
-  }, [activeCategory, activeCatId]);
+  }, [activeCategory, activeCatId, setSelectedCategoryBlogId]);
 
   const isActive = activeCategory === slug;
 
