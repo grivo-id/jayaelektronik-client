@@ -8,7 +8,6 @@ import Pagination from '@components/ui/pagination';
 import { useBlogStore } from 'src/zustandStore/blogStore';
 import Alert from '@components/ui/alert';
 import { useTranslation } from 'src/app/i18n/client';
-import { FaSadCry } from 'react-icons/fa';
 import { Frown } from 'lucide-react';
 
 export default function BlogPageContent({
