@@ -27,11 +27,19 @@ type ResultBody = {
 
 export const fetchBrands = async ({ queryKey }: any) => {
   const [_key, _params] = queryKey;
-  const queryString = new URLSearchParams(_params).toString();
-  const url = `${API_ENDPOINTS.BRANDS}?${queryString}`;
+  const queryParams = new URLSearchParams({
+    page: _params.page,
+    limit: _params.limit,
+    sort: _params.sort,
+    is_show: 'true',
+  }).toString();
+  const url = `${API_ENDPOINTS.BRANDS}?${queryParams}`;
   const { data } = await http.get(url);
   return data as ResultBody;
 };
 export const useBrandsQuery = (options: any) => {
-  return useQuery<ResultBody, Error>([API_ENDPOINTS.BRANDS, options], fetchBrands);
+  return useQuery<ResultBody, Error>(
+    [API_ENDPOINTS.BRANDS, options],
+    fetchBrands
+  );
 };
