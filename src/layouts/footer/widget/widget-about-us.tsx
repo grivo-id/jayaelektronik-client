@@ -34,30 +34,29 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
         </div>
 
         <div
-          className={` bg-no-repeat  min-h-[60px] mb-5 flex flex-row gap-4 ${
+          className={` bg-no-repeat   mb-0 flex flex-row gap-4 ${
             dir === 'rtl' ? 'pr-16 xl:pr-20 bg-right' : 'ps-0 '
           }`}
         >
-          <div>
-            <HotlineSvg />
-          </div>
-          <div className='block'>
+          <HotlineSvg />
+
+          <div className="block">
             <p className="text-black mb-0">{t('text-hotline')}</p>
             <p className="text-brand text-lg duration-200 hover:text-[#fe4800]">
               {t('link-phone')}
             </p>
           </div>
         </div>
-        {/* <div className="mb-3">
-          {t('text-address')} {t('link-address')}
-        </div> */}
-        <div className="mb-3">
-          {t('text-email')} {t('link-email')}
+        <div className="flex flex-row gap-1 items-center">
+          <span className="font-medium">{t('text-email')}</span>
+          <span className="">{t('link-email')}</span>
         </div>
       </div>
 
+      <span className="pb-2 text-sm text-brand-muted text-justify">{t('footer-desc')}</span>
+
       {social && (
-        <ul className="flex flex-wrap  space-x-4 md:space-s-5 mx-auto md:mx-0">
+        <ul className="flex flex-wrap mt-2 space-x-4 md:space-s-5 mx-auto md:mx-0">
           {social?.map((item) => (
             <li
               className="transition hover:opacity-80"
@@ -89,8 +88,8 @@ function HotlineSvg() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="55"
-      height="55"
+      width="45"
+      height="45"
       viewBox="0 0 24 24"
       fill="none"
       stroke="#ff6501"
