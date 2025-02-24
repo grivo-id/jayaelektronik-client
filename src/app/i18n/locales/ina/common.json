@@ -280,5 +280,8 @@
   "no-blog-found-title": "No Blogs Found",
   "no-blog-found-desc": "Try selecting a different category",
   "total-search-result": "Total Search Result:",
-  "total-product-found": "Product Found"
+  "total-product-found": "Product Found",
+  "prod-not-found": "Product Not Found",
+  "prod-not-found-desc": "We're sorry, but the product you're looking for doesn't exist or has been removed.",
+  "browse-all-product": "Browse All Products"
 }

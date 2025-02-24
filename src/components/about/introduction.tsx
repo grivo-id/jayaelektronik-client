@@ -5,9 +5,11 @@ type Props = {
   intro: {
     imageUrl: string;
   };
+
+  lang: Function;
 };
 
-export default function Introduction({ intro }: Props) {
+export default function Introduction({ intro, lang }: Props) {
   return (
     <div className="flex flex-wrap justify-center items-start gap-4 px-4">
       <div className="">
@@ -21,20 +23,18 @@ export default function Introduction({ intro }: Props) {
         />
       </div>
       <div className="max-w-[640px] flex flex-col gap-2">
-        <span className="font-semibold text-lg pb-2">Introduction:</span>
-        <p className="text-brand-muted">
-          Welcome to JayaElektronik, the largest and most trusted electronics
-          store in Papua, Indonesia! Since our founding in 2005, we have been
-          dedicated to bringing the latest and most innovative electronic
-          products to the people of Papua. With over 18 years of experience, we
-          take pride in being the go-to destination for all your tech needs.
-        </p>
-        <p className="text-brand-muted">
-          At JayaElektronik, we don’t just sell electronics—we deliver
-          experiences. From our competitive prices to our exceptional customer
-          service, we strive to make every visit to our store memorable. Thank
-          you for choosing JayaElektronik, where technology meets trust!
-        </p>
+        <span className="font-semibold text-lg pb-2">
+          {lang('intro-welcome')}
+        </span>
+        <span
+          className="text-brand-muted"
+          dangerouslySetInnerHTML={{ __html: lang('intro1') }}
+        />
+
+        <span
+          className="text-brand-muted"
+          dangerouslySetInnerHTML={{ __html: lang('intro2') }}
+        />
       </div>
     </div>
   );
