@@ -43,13 +43,16 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     data: isWishlistAvailableData,
     isLoading: isWishlistAvailableLoading,
     error,
-  } = useIsProductOnWishlistQuery({
-    product_id: productId,
-  }, isAuthorized);
+  } = useIsProductOnWishlistQuery(
+    {
+      product_id: productId,
+    },
+    isAuthorized
+  );
   const { mutate: saveToWishlist, isLoading: isWishlistLoading } =
     useCreateWishlist();
 
-    const { mutate: deleteWishlist, isLoading: deleteWishlistLoading } =
+  const { mutate: deleteWishlist, isLoading: deleteWishlistLoading } =
     useDeleteWishlist();
 
   const { addItemToCart, isInCart, getItemFromCart, isInStock } = useCart();
@@ -86,27 +89,34 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
     currencyCode: 'IDR',
   });
 
-
   useEffect(() => {
     if (product?.product_tags) {
       setProdTag(product.product_tags);
     }
   }, [product]);
-  
 
-  useEffect(() => { 
-    if (isWishlistAvailableData?.data && isWishlistAvailableData?.success === true) { 
+  useEffect(() => {
+    if (
+      isWishlistAvailableData?.data &&
+      isWishlistAvailableData?.success === true
+    ) {
       setFavorite(true);
     } else {
       setFavorite(false);
     }
-  },[isWishlistAvailableData])
-  
+  }, [isWishlistAvailableData]);
+
   const { payment } = footer;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
   if (isLoading) return <p className={'pt-8 pb-8'}>Loading...</p>;
+  if (!isLoading && !product)
+    return (
+      <div>
+        <p>Product not found</p>
+      </div>
+    );
   // const variations = getVariations(product?.variations);
   const variations = getVariations([]);
 
@@ -188,10 +198,8 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
             setAddToWishlistLoader(false);
           },
         }
-      )
-     
+      );
     } else {
-     
       saveToWishlist(
         { product_id: productId },
         {

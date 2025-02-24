@@ -20,6 +20,7 @@ const BestSellerProductFeed: FC<ProductFeedProps> = ({
     sort: 'desc',
     product_is_new_arrival: false,
     product_is_bestseller: true,
+    product_is_show: true,
   };
 
   const { data, isLoading, error } = useFlexProductsNoPaginationQueries(query);

@@ -34,7 +34,7 @@ const convertToSlug = (text: any): string => {
     .trim();
 };
 
-export function generateCartItem(item: Product, variation: any, isValidPromoDate: boolean) {
+export function generateCartItem(item: Product , variation: any, isValidPromoDate: boolean) {
   // console.log('car', item)
   const {
     product_id,
