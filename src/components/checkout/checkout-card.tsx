@@ -15,7 +15,10 @@ import { useTranslation } from 'src/app/i18n/client';
 import { useIsMounted } from '@utils/use-is-mounted';
 import { useCallback, useEffect, useState } from 'react';
 import SearchResultLoader from '@components/ui/loaders/search-result-loader';
-import { redirectToWhatsAppCartV2 } from '@utils/wa-redirect';
+import {
+  redirectToWhatsAppCartEn,
+  redirectToWhatsAppCartIna,
+} from '@utils/wa-redirect';
 import { useUI } from '@contexts/ui.context';
 import { useCreateOrderMutation } from '@framework/checkout/use-order';
 import useWindowSize from '@utils/use-window-size';
@@ -139,7 +142,11 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
           });
 
           resetCart();
-          redirectToWhatsAppCartV2(orderResult);
+          if (lang === 'ina') {
+            redirectToWhatsAppCartIna(orderResult);
+          } else {
+            redirectToWhatsAppCartEn(orderResult);
+          }
         }
       } catch (error: any) {
         toast.error(error.message || 'An unexpected error occurred', {

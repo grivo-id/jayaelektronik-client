@@ -2,16 +2,13 @@
 
 import Link from 'next/link';
 import Logo from '@components/ui/logo';
-import Text from '@components/ui/text';
 import Image from '@components/ui/image';
 import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
 import { useRouter } from 'next/navigation';
 import { getDirection } from '@utils/get-direction';
-import {
-  redirectToWhatsAppCSEn,
-  redirectToWhatsAppCSIndonesia,
-} from './wa-redirect-cs';
+import { redirectToWhatsAppCSEn, redirectToWhatsAppCSIndonesia } from '@utils/wa-redirect';
+
 
 interface AboutProps {
   lang: string;
@@ -33,8 +30,6 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
   const handleRedirectToWACS = () => {
     if (lang === 'ina') {
       redirectToWhatsAppCSIndonesia();
-    } else if (lang === 'en') {
-      redirectToWhatsAppCSEn();
     } else {
       redirectToWhatsAppCSEn();
     }
