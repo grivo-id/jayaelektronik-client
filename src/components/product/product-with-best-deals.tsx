@@ -7,6 +7,7 @@ import Alert from '@components/ui/alert';
 import ProductFlashSellCard from '@components/product/product-cards/product-flash-sell-card';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
+import { useFlexProductsNoPaginationQueries } from '@framework/product/get-flex-product-no-pagination';
 
 interface ProductFeedProps {
   lang?: string;
@@ -35,10 +36,12 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
   uniqueKey,
 }) => {
   const limit = 10;
-  const { data, isLoading, error } = useBestDealProductsQuery({
+  const { data, isLoading, error } = useFlexProductsNoPaginationQueries({
     page: 1,
     limit: limit,
     sort: 'desc',
+    product_is_show: true,
+    product_is_bestdeal: true,
   });
   const now = new Date();
   const validProducts = (data?.data || []).filter((product) => {
@@ -52,7 +55,7 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
     return now >= createdDate && now < expiredDate;
   });
 
-  console.log(validProducts);
+  // console.log(validProducts);
 
   return (
     <div className={`mb-8 ${className}`}>
