@@ -29,6 +29,7 @@ import { useCreateWishlist } from '@framework/wishlist/add-to-wishlist';
 import { useIsProductOnWishlistQuery } from '@framework/wishlist/check-is-wishlist';
 import { useDeleteWishlist } from '@framework/wishlist/delete-wishlist';
 import SingleProductLoader from './single-product-loader';
+import SingleProductNotFound from './single-product-not-found';
 
 const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
@@ -113,11 +114,7 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
   };
   if (isLoading) return <SingleProductLoader />;
   if (!isLoading && !product)
-    return (
-      <div>
-        <p>Product not found</p>
-      </div>
-    );
+    return <SingleProductNotFound lang={lang} />;
   // const variations = getVariations(product?.variations);
   const variations = getVariations([]);
 
