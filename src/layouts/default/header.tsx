@@ -152,9 +152,8 @@ function Header({ lang }: { lang: string }) {
 
                 <div className="flex space-x-5 xl:space-x-10 lg:max-w-[33%]">
                   <div className="items-center hidden lg:flex shrink-0 gap-2 text-fill-dark">
-                    <div className="cart-button !pt-2">
-                      <UserIcon className="text-brand" />
-                    </div>
+                    <UserIcon className="text-brand w-6 h-6" />
+
                     <Link
                       href={
                         isAuthorized
@@ -224,8 +223,8 @@ function Header({ lang }: { lang: string }) {
                     {/* End of search handler btn */}
 
                     <div className="flex-shrink-0 flex items-center gap-2 text-fill-dark">
-                      <div className="cart-button !pt-2">
-                        <UserIcon className="text-brand" />
+                      <div className=" py-4">
+                        <UserIcon className="text-brand w-6 h-6" />
                       </div>
                       <Link
                         href={
