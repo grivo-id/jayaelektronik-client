@@ -5,7 +5,6 @@ import SectionHeader from '@components/common/section-header';
 import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import Alert from '@components/ui/alert';
 import ProductFlashSellCard from '@components/product/product-cards/product-flash-sell-card';
-import { useTranslation } from 'src/app/i18n/client';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
 
@@ -53,13 +52,18 @@ const ProductWithBestDeals: React.FC<ProductFeedProps> = ({
     return now >= createdDate && now < expiredDate;
   });
 
+  console.log(validProducts);
+
   return (
     <div className={`mb-8 ${className}`}>
-      <SectionHeader
-        lang={lang}
-        sectionHeading="text-deals-of-the-week"
-        className="mb-6 block-title"
-      />
+      {!isLoading && validProducts.length > 0 && (
+        <SectionHeader
+          lang={lang}
+          sectionHeading="text-deals-of-the-week"
+          className="mb-6 block-title"
+        />
+      )}
+
       {error ? (
         <Alert message={error?.message} className="col-span-full" />
       ) : (
