@@ -8,6 +8,10 @@ import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
 import { useRouter } from 'next/navigation';
 import { getDirection } from '@utils/get-direction';
+import {
+  redirectToWhatsAppCSEn,
+  redirectToWhatsAppCSIndonesia,
+} from './wa-redirect-cs';
 
 interface AboutProps {
   lang: string;
@@ -26,6 +30,16 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
   const { locale } = useRouter();
   const dir = getDirection(locale);
 
+  const handleRedirectToWACS = () => {
+    if (lang === 'ina') {
+      redirectToWhatsAppCSIndonesia();
+    } else if (lang === 'en') {
+      redirectToWhatsAppCSEn();
+    } else {
+      redirectToWhatsAppCSEn();
+    }
+  };
+
   return (
     <div className={`pb-10 sm:pb-0 ${className}`}>
       <div className="text-sm max-w-[350px]  sm:ms-0 pb-2">
@@ -40,20 +54,27 @@ const WidgetAbout: React.FC<AboutProps> = ({ lang, social, className }) => {
         >
           <HotlineSvg />
 
-          <div className="block">
-            <p className="text-black mb-0">{t('text-hotline')}</p>
-            <p className="text-brand text-lg duration-200 hover:text-[#fe4800]">
+          <div
+            onClick={() => handleRedirectToWACS()}
+            className="block cursor-pointer group"
+          >
+            <p className="text-black mb-0  duration-200 group-hover:opacity-75">
+              {t('text-hotline')}
+            </p>
+            <p className="text-brand text-lg duration-200 group-hover:opacity-75">
               {t('link-phone')}
             </p>
           </div>
         </div>
-        <div className="flex flex-row gap-1 items-center">
+        {/* <div className="flex flex-row gap-1 items-center">
           <span className="font-medium">{t('text-email')}</span>
           <span className="">{t('link-email')}</span>
-        </div>
+        </div> */}
       </div>
 
-      <span className="pb-2 text-sm text-brand-muted text-justify">{t('footer-desc')}</span>
+      <span className="pb-2 text-sm text-brand-muted text-justify">
+        {t('footer-desc')}
+      </span>
 
       {social && (
         <ul className="flex flex-wrap mt-2 space-x-4 md:space-s-5 mx-auto md:mx-0">

@@ -43,7 +43,6 @@ export const redirectToWhatsAppCart = (userData: any) => {
 };
 
 export const redirectToWhatsAppCartV2 = (orderResult: OrderApiResponse) => {
-  // const phoneNumber = '+6281394757477';
   const phoneNumber = '+62816270158';
 
   let message = `Hi,\n\nI would like to place an order: ${orderResult.order_id} with products:\n`;
@@ -53,7 +52,6 @@ export const redirectToWhatsAppCartV2 = (orderResult: OrderApiResponse) => {
     }
   );
 
-  // Add shipping address
   const defaultAddress = JSON.parse(
     sessionStorage.getItem('default_address') || '{}'
   );
