@@ -62,7 +62,8 @@ const convertToSlug = (text: string): string => {
     ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
-    .trim();
+    .trim()
+    .replace(/^-+|-+$/g, '');
 };
 
 export default function ProductPopup({ lang }: { lang: string }) {

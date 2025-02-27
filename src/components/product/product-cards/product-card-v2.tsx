@@ -31,7 +31,8 @@ const convertToSlug = (text: string): string => {
     ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
-    .trim();
+    .trim()
+    .replace(/^-+|-+$/g, '');
 };
 
 function RenderPopupOrAddToCart({ props }: { props: Object }) {
