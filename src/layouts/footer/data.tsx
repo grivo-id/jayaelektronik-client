@@ -14,19 +14,19 @@ export const footer = {
           title: 'link-contact-us',
           path: '/contact-us',
         },
-        // {
-        //   id: 3,
-        //   title: 'link-about-team',
-        //   path: '/privacy',
-        // },
         {
           id: 3,
+          title: 'link-about-team',
+          path: '/privacy',
+        },
+        {
+          id: 4,
           title: 'link-terms',
           path: '/terms',
         },
 
         {
-          id: 4,
+          id: 5,
           title: 'link-faq',
           path: '/faq',
         },

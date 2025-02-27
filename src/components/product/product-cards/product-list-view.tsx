@@ -28,7 +28,8 @@ const convertToSlug = (text: string): string => {
     ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
-    .trim();
+    .trim()
+    .replace(/^-+|-+$/g, '');
 };
 
 function RenderPopupOrAddToCart({ props }: { props: Object }) {
@@ -187,7 +188,7 @@ const ProductList: React.FC<ProductProps> = ({ product, className, lang }) => {
 
       <div className="col-span-3">
         <div className="text-12px sm:text-sm mt-auto text-gray-400 mb-2">
-          {product_name}
+          {brand_name}
         </div>
         <Link
           href={`/${lang}${ROUTES.PRODUCTS}/${product_id}.${convertToSlug(

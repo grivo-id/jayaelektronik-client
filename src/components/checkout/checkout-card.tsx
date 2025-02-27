@@ -45,7 +45,7 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
 
   const getStoredCartAndAddress = () => ({
     storedCart: JSON.parse(
-      JSON.parse(localStorage.getItem('razor-cart') || '{"items":[]}')
+      JSON.parse(localStorage.getItem('jaya-cart') || '{"items":[]}')
     ),
     defaultAddress: JSON.parse(
       sessionStorage.getItem('default_address') || '{}'
