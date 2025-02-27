@@ -15,7 +15,8 @@ const convertToSlug = (text: string): string => {
     ?.replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/--+/g, '-')
-    .trim();
+    .trim()
+    .replace(/^-+|-+$/g, '');
 };
 
 const SearchProduct: React.FC<SearchProductProps> = ({ lang, item }) => {
@@ -71,27 +72,26 @@ const SearchProduct: React.FC<SearchProductProps> = ({ lang, item }) => {
         <h3 className="truncate text-skin-base text-15px  mb-1.5">
           {product_name}
         </h3>
-     
-          {product_promo?.product_promo_is_discount && isValidPromoDate ? (
-            <div className="flex flex-col gap-0 items-start justify-start">
-              <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
-                {promoPrice}
-              </span>
-              <div className="flex flex-row gap-1 justify-center items-center">
-                <del className="mx-1 text-sm text-gray-400 text-opacity-70">
-                  {price}
-                </del>
-                <span className="text-sm text-rose-500">
-                  {product_promo.product_promo_discount_percentage}%
-                </span>
-              </div>
-            </div>
-          ) : (
+
+        {product_promo?.product_promo_is_discount && isValidPromoDate ? (
+          <div className="flex flex-col gap-0 items-start justify-start">
             <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
-              {price}
+              {promoPrice}
             </span>
-          )}
-     
+            <div className="flex flex-row gap-1 justify-center items-center">
+              <del className="mx-1 text-sm text-gray-400 text-opacity-70">
+                {price}
+              </del>
+              <span className="text-sm text-rose-500">
+                {product_promo.product_promo_discount_percentage}%
+              </span>
+            </div>
+          </div>
+        ) : (
+          <span className="inline-block mx-1 text-sm font-medium sm:text-15px lg:text-base text-brand">
+            {price}
+          </span>
+        )}
       </div>
     </Link>
   );
