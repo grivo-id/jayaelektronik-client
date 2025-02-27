@@ -4,6 +4,7 @@ import ElectronicProductFeed from '@components/product/feeds/electronic-product-
 import RelatedProductFeed from '@components/product/feeds/related-product-feed';
 import Breadcrumb from '@components/ui/breadcrumb';
 import Divider from '@components/ui/divider';
+import ProductDetailBreadcrumb from '@components/ui/product-detail-breadcrumb';
 
 export default async function Page({
   params: { lang },
@@ -16,7 +17,7 @@ export default async function Page({
     <>
       <div className="pt-6 lg:pt-7 pb-10">
         <Container>
-          <Breadcrumb lang={lang} />
+          <ProductDetailBreadcrumb lang={lang} />
           <ProductSingleDetails lang={lang} />
           <RelatedProductFeed
             uniqueKey="related-products"
