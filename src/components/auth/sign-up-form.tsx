@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import useWindowSize from '@utils/use-window-size';
 import ErrorIcon from '@components/icons/error-icon';
+import PhoneInput from '@components/ui/form/phone-input';
 
 interface SignUpFormProps {
   lang: string;
@@ -41,6 +42,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     handleSubmit,
     watch,
     formState: { errors },
+    control,
   } = useForm<SignUpInputType>();
 
   const onSubmit = async ({
@@ -156,7 +158,15 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
                 error={errors.user_email?.message}
                 lang={lang}
               />
-              <Input
+              <PhoneInput
+                label={t('forms:label-phone') as string}
+                name="user_phone"
+                control={control}
+                required="forms:phone-required"
+                error={errors.user_phone?.message}
+                lang={lang}
+              />
+              {/* <Input
                 label={t('forms:label-phone') as string}
                 type="text"
                 variant="solid"
@@ -165,7 +175,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
                 })}
                 error={errors.user_phone?.message}
                 lang={lang}
-              />
+              /> */}
               <Input
                 label={t('forms:label-address') as string}
                 type="text"
