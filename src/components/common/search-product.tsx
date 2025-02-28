@@ -82,9 +82,11 @@ const SearchProduct: React.FC<SearchProductProps> = ({ lang, item }) => {
               <del className="mx-1 text-sm text-gray-400 text-opacity-70">
                 {price}
               </del>
-              <span className="text-sm text-rose-500">
-                {product_promo.product_promo_discount_percentage}%
-              </span>
+              {product_promo.product_promo_discount_percentage > 0 && (
+                <span className="text-sm text-rose-500">
+                  {product_promo.product_promo_discount_percentage}%
+                </span>
+              )}
             </div>
           </div>
         ) : (

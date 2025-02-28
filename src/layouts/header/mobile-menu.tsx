@@ -20,28 +20,14 @@ import CategoryListMenu from './category-list';
 const social = [
   {
     id: 0,
-    link: 'https://www.facebook.com/redqinc/',
+    link: 'https://www.facebook.com/profile.php?id=100008667818696&mibextid=ZbWKwL',
     icon: <IoLogoFacebook />,
     className: 'facebook',
     title: 'text-facebook',
   },
   {
     id: 1,
-    link: 'https://twitter.com/redqinc',
-    icon: <IoLogoTwitter />,
-    className: 'twitter',
-    title: 'text-twitter',
-  },
-  {
-    id: 2,
-    link: 'https://www.youtube.com/channel/UCjld1tyVHRNy_pe3ROLiLhw',
-    icon: <IoLogoYoutube />,
-    className: 'youtube',
-    title: 'text-youtube',
-  },
-  {
-    id: 3,
-    link: 'https://www.instagram.com/redqinc/',
+    link: 'https://www.instagram.com/jayaelektronik_jpr/?hl=en',
     icon: <IoLogoInstagram />,
     className: 'instagram',
     title: 'text-instagram',

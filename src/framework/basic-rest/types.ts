@@ -100,6 +100,7 @@ export type ProdTag = {
 
 export type ProductPromo = {
   product_promo_id: string | number;
+  product_promo_type?: string;
   product_promo_final_price: number;
   product_promo_is_discount: boolean;
   product_promo_created_date: Date | string;

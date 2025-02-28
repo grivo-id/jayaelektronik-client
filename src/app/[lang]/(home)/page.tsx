@@ -4,9 +4,7 @@ import FeatureCarousel from '@components/common/featured-carousel';
 import BannerGridTwo from '@components/common/banner-grid-two';
 import HeroSliderBlock from '@components/hero/hero-slider-block';
 import BannerAllCarousel from '@components/common/banner-all-carousel';
-import CategoryGridListBlock from '@components/common/category-grid-list-block';
 import BestSellerProductFeed from '@components/product/feeds/best-seller-top-product';
-import { bundleDataTwo as bundle } from '@framework/static/bundle';
 import {
   homeOnesGridHero as bannerTwo,
   homeOnesGridHero2 as bannerTwo2,

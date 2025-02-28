@@ -48,7 +48,7 @@ export const API_ENDPOINTS = {
   BLOGCATEGORIES: '/blog-categories',
   CATEGORY_BYID: '/product-categories',
   PRODUCTS_BYCATID: '/products',
-  PRODUCT_BYTAG: '/products/tag-flex',
+  PRODUCT_BYTAG: '/products/tag',
   ANNOUNCERS: '/toast-announcers',
   COUPON_BYCODE: '/coupon-discounts',
 };
