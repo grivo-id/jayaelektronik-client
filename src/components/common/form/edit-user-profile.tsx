@@ -128,7 +128,7 @@ export default function EditUserProfileForm({ lang }: Props) {
             </div>
             <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
               <Input
-                type="number"
+                type="text"
                 label={t('forms:label-phone') as string}
                 {...register('user_phone', {
                   required: 'forms:phone-required',

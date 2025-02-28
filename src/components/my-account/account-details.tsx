@@ -93,7 +93,7 @@ const AccountDetails: React.FC<{ lang: string }> = ({ lang }) => {
                 disabled
               />
               <Input
-                type="tel"
+                type="text"
                 label={t('forms:label-phone') as string}
                 name="phoneNumber"
                 variant="solid"
