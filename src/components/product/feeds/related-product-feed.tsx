@@ -1,10 +1,9 @@
 'use client';
 
 import ProductsCarousel from '@components/product/products-carousel';
+import { useParams } from 'next/navigation';
 import { useUI } from '@contexts/ui.context';
-import { useBestSellerProductsQuery } from '@framework/product/get-all-best-seller-products';
 import { useProductTagsQuery } from '@framework/product/get-product-by-tag';
-import { useRelatedProductsQuery } from '@framework/product/get-related-product';
 import { LIMITS } from '@framework/utils/limits';
 
 interface RelatedProductsProps {
@@ -20,11 +19,15 @@ const RelatedProductFeed: React.FC<RelatedProductsProps> = ({
   className,
   uniqueKey = 'related-product-popup',
 }) => {
+  const pathname = useParams();
+  const { slug }: any = pathname;
+  const [productId, productNameWithHyphens] = slug.split('.');
   const { product_tags } = useUI();
   const productTagNames =
     product_tags?.map((tag: any) => tag.product_tag_name) || [];
   const { data, isLoading, error } = useProductTagsQuery({
     tags: productTagNames,
+    product_id: productId,
   });
 
   const products = data?.data || [];
