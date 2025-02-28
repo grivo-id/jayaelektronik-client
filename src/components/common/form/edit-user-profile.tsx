@@ -19,6 +19,7 @@ import { useCallback } from 'react';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import http from '@framework/utils/http';
 import TextArea from '@components/ui/form/text-area';
+import PhoneInput from '@components/ui/form/phone-input';
 
 type Props = {
   lang: string;
@@ -31,7 +32,7 @@ export default function EditUserProfileForm({ lang }: Props) {
   const { user, setUser } = useUI();
   const { mutate: updateUser, isLoading } = useUpdateUserMutation();
   const { closeModal } = useModalAction();
-  console.log('user', user);
+  // console.log('user', user);
   const defaultValues: UpdateUserType = {
     user_fname: user.user_fname,
     user_lname: user.user_lname,
@@ -60,7 +61,7 @@ export default function EditUserProfileForm({ lang }: Props) {
     defaultValues,
   });
   function onSubmit(formData: UpdateUserType) {
-    // console.log('formdata', formData);
+    console.log('formdata', formData);
     updateUser(formData, {
       onSuccess: () => {
         closeModal();
@@ -127,7 +128,17 @@ export default function EditUserProfileForm({ lang }: Props) {
               />
             </div>
             <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
-              <Input
+              <PhoneInput
+                label={t('forms:label-phone') as string}
+                name="user_phone"
+                control={control}
+                required="forms:phone-required"
+                className="w-full sm:w-1/2 px-1.5 md:px-2.5"
+                error={errors.user_phone?.message}
+                lang={lang}
+         
+              />
+              {/* <Input
                 type="text"
                 label={t('forms:label-phone') as string}
                 {...register('user_phone', {
@@ -138,7 +149,7 @@ export default function EditUserProfileForm({ lang }: Props) {
                 error={errors.user_phone?.message}
                 defaultValue={user.user_phone}
                 lang={lang}
-              />
+              /> */}
             </div>
             <TextArea
               label="Address"
