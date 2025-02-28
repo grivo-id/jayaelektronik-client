@@ -19,12 +19,11 @@ import '@assets/css/rc-drawer.css';
 import '@assets/css/themes.scss';
 
 const rubik = Rubik({
-  weight: ['300','400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-rubik',
 });
-
 
 export const metadata: Metadata = {
   title: {
