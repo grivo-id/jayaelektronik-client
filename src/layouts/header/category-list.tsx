@@ -15,7 +15,7 @@ type Props = {
 
 export default function CategoryListMenu({ lang, closeSidebar }: Props) {
   const router = useRouter();
-  const { t } = useTranslation(lang, 'common');
+  const { t } = useTranslation(lang, 'menu');
   const {
     data,
     isLoading: loading,
@@ -40,12 +40,11 @@ export default function CategoryListMenu({ lang, closeSidebar }: Props) {
   };
 
   const handleClose = (categoryId: string | number) => {
-    toggleSubCategory(categoryId)
-    closeSidebar()
-  }
+    toggleSubCategory(categoryId);
+    closeSidebar();
+  };
 
   const categories = data?.categories?.data;
-
 
   return (
     <div className="relative w-full py-1">
@@ -54,7 +53,7 @@ export default function CategoryListMenu({ lang, closeSidebar }: Props) {
         className="py-2 transition duration-300 ease-in-out menu-item ltr:pl-5 rtl:pr-5 md:ltr:pl-7 md:rtl:pr-7 ltr:pr-4 rtl:pl-4 text-brand-dark cursor-pointer"
       >
         <span className=" w-full flex justify-between items-center">
-          Category
+          {t('menu-categories')}
           {isOpenCategory ? (
             <IoChevronUp className="text-brand-dark" />
           ) : (
@@ -94,7 +93,7 @@ export default function CategoryListMenu({ lang, closeSidebar }: Props) {
                       <div
                         key={child.id}
                         onClick={() => {
-                          handleClose(category.id)
+                          handleClose(category.id);
                           router.push(
                             `/${lang}${ROUTES.SEARCH}?category=${child.slug}`
                           );
