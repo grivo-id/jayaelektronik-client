@@ -70,11 +70,6 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
     product_id,
     product_name,
     product_image1,
-    product_image2,
-    product_image3,
-    image,
-    unit,
-    slug,
     product_is_bestseller,
     product_is_new_arrival,
     product_is_available,
@@ -210,9 +205,11 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
                 <del className="mx-1 text-sm text-gray-400 text-opacity-70">
                   {price}
                 </del>
-                <span className="text-sm text-rose-500">
-                  {product_promo.product_promo_discount_percentage}%
-                </span>
+                {product_promo?.product_promo_discount_percentage > 0 && (
+                  <span className="text-sm text-rose-500">
+                    {product_promo?.product_promo_discount_percentage}%,
+                  </span>
+                )}
               </div>
             </div>
           ) : (

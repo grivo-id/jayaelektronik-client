@@ -54,13 +54,11 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
   const {
     product_name,
     product_image1,
-    product_image2,
-    product_image3,
-    image,
-    quantity,
-    sold,
+    product_is_available,
     product_item_sold,
     product_promo,
+    product_is_bestseller,
+    product_is_new_arrival,
     product_type,
   } = product ?? {};
   const isValidPromoDate = usePromoCountdown(product_promo);
@@ -114,16 +112,40 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
           </div>
 
           <div className="w-full h-full absolute top-0 z-10 -mx-0.5 sm:-mx-1">
-            {product_promo?.product_promo_is_discount && isValidPromoDate && (
-              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
-                {t('text-on-sale')}
+            {!product_is_available && (
+              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-brand-danger rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                {t('text-notavailable')}
               </span>
             )}
-            {product_promo?.product_promo_is_best_deal && (
-              <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
-                {t('text-best-deal')}
-              </span>
-            )}
+            {product_promo?.product_promo_is_discount &&
+              product_is_available &&
+              isValidPromoDate && (
+                <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                  {t('text-on-sale')}
+                </span>
+              )}
+            {product_promo?.product_promo_is_best_deal &&
+              product_is_available && (
+                <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                  {t('text-best-deal')}
+                </span>
+              )}
+
+            {product_is_new_arrival &&
+              product_is_available &&
+              !product_is_bestseller && (
+                <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                  {t('text-new-arrival-badge')}
+                </span>
+              )}
+
+            {product_is_bestseller &&
+              product_is_available &&
+              !product_is_new_arrival && (
+                <span className="text-[10px]  text-skin-inverted uppercase inline-block bg-skin-primary rounded-sm px-2.5 pt-1 pb-[3px] mx-0.5 sm:mx-1">
+                  {t('text-best-seller-badge')}
+                </span>
+              )}
           </div>
         </div>
 
@@ -141,9 +163,11 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
                   <del className="text-sm text-skin-base text-opacity-70">
                     {price}
                   </del>
-                  <span className="text-sm text-rose-500">
-                    {product_promo?.product_promo_discount_percentage}%,
-                  </span>
+                  {product_promo?.product_promo_discount_percentage > 0 && (
+                    <span className="text-sm text-rose-500">
+                      {product_promo?.product_promo_discount_percentage}%,
+                    </span>
+                  )}
                 </div>
               </div>
             ) : (
