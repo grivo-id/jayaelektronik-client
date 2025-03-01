@@ -5,7 +5,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const languages = ['ina', 'en'];
   const baseUrl = 'https://jayaelektronik.com';
 
-  const staticRoutes = ['', '/about-us', '/contact-us', '/products'];
+  const staticRoutes = [
+    '',
+    '/products',
+    '/about-us',
+    '/contact-us',
+    '/products',
+    '/brands',
+    '/shops',
+    '/blog',
+    '/faq',
+    '/signin',
+    '/signup',
+    '/checkout',
+    '/privacy',
+    '/terms',
+  ];
 
   const staticEntries = languages.flatMap((lang) =>
     staticRoutes.map((route) => ({
