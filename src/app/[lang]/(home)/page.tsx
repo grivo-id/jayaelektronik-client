@@ -1,5 +1,6 @@
 import Container from '@components/ui/container';
 import { Metadata } from 'next';
+import Script from 'next/script';
 import FeatureCarousel from '@components/common/featured-carousel';
 import BannerGridTwo from '@components/common/banner-grid-two';
 import HeroSliderBlock from '@components/hero/hero-slider-block';
@@ -15,6 +16,7 @@ import NewArrivalProductFeed from '@components/product/feeds/new-arrival-product
 import SupperCategoryAcFeed from '@components/product/feeds/supercategory-ac-feed';
 import SuperCategoryTelevisionFeed from '@components/product/feeds/supercategory-television-feed';
 
+
 export const metadata: Metadata = {
   title: 'Home',
   description: 'Best Online Electronic Store in Jayapura, Papua',
@@ -29,6 +31,9 @@ export default async function Page({
 }) {
   return (
     <>
+      <Script id="homepage-jsonld" type="application/ld+json">
+        {JSON.stringify(HomepageJSONLD)}
+      </Script>
       <HeroSliderBlock
         lang={lang}
         heroBanner={heroSlider}
@@ -56,9 +61,22 @@ export default async function Page({
         />
         <SupperCategoryAcFeed lang={lang} />
         <SuperCategoryTelevisionFeed lang={lang} />
-
-        {/* <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" /> */}
       </Container>
     </>
   );
 }
+
+const HomepageJSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: 'https://www.jayaelektronik.com',
+  name: 'JayaElektronik | Best Online Electronic Store in Jayapura, Papua',
+  // potentialAction: {
+  //   '@type': 'SearchAction',
+  //   target: {
+  //     '@type': 'EntryPoint',
+  //     urlTemplate: `https://www.jayaelektronik.com/`,
+  //   },
+  //   'query-input': 'required name=search_term_string',
+  // },
+};
