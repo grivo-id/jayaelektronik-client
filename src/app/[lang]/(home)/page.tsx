@@ -1,5 +1,6 @@
 import Container from '@components/ui/container';
 import { Metadata } from 'next';
+import Script from 'next/script';
 import FeatureCarousel from '@components/common/featured-carousel';
 import BannerGridTwo from '@components/common/banner-grid-two';
 import HeroSliderBlock from '@components/hero/hero-slider-block';
@@ -17,7 +18,40 @@ import SuperCategoryTelevisionFeed from '@components/product/feeds/supercategory
 
 export const metadata: Metadata = {
   title: 'Home',
-  description: 'Best Online Electronic Store in Jayapura, Papua',
+  description:
+    'A modern electronics retail store with the first after-sales service in Jayapura. We sell office and household electronic products from various brands with warranties and high quality at affordable prices. ',
+  keywords:
+    'jayaelektronik, jaya, elektronik, papua, jayapura, percetakan, abepura, toko elektronik, electronic store, after-sales service, household electronics, office electronics, electronics warranty, affordable electronics, appliances, tv shop, audio systems, air conditioner, refrigerator, washing machine, electronics service center, jayapura electronics, papua electronics, best price electronics, branded electronics, premium electronics',
+  authors: [
+    {
+      name: 'Jaya Elektronik & Grivo.id',
+      url: 'https://www.jayaelektronik.com',
+    },
+  ],
+  robots: 'index, follow',
+  openGraph: {
+    type: 'website',
+    url: 'https://www.jayaelektronik.com',
+    title: 'Jaya Elektronik | Best Electronics Retail Store',
+    description:
+      'A modern electronics retail store with the first after-sales service in Jayapura. We sell office and household electronic products from various brands with warranties and high quality at affordable prices. ',
+
+    siteName: 'Jaya Elektronik',
+    images: [
+      {
+        url: 'https://firebasestorage.googleapis.com/v0/b/personal-d9ef9.appspot.com/o/jaya%2Fjaya.jpeg?alt=media&token=a2f5414d-b25f-492b-a04a-382d167ffed6',
+        alt: 'Jaya Elektronik - Electronics Store in Jayapura',
+      },
+    ],
+  },
+  twitter: {
+    title: 'Jaya Elektronik | Best Electronics Retail Store',
+    card: 'summary_large_image',
+    site: 'https://www.jayaelektronik.com',
+    creator: 'Jaya Elektronik & Grivo.id',
+    images:
+      'https://firebasestorage.googleapis.com/v0/b/personal-d9ef9.appspot.com/o/jaya%2Fjaya.jpeg?alt=media&token=a2f5414d-b25f-492b-a04a-382d167ffed6',
+  },
 };
 
 export default async function Page({
@@ -29,6 +63,9 @@ export default async function Page({
 }) {
   return (
     <>
+      <Script id="homepage-jsonld" type="application/ld+json">
+        {JSON.stringify(HomepageJSONLD)}
+      </Script>
       <HeroSliderBlock
         lang={lang}
         heroBanner={heroSlider}
@@ -56,9 +93,22 @@ export default async function Page({
         />
         <SupperCategoryAcFeed lang={lang} />
         <SuperCategoryTelevisionFeed lang={lang} />
-
-        {/* <CategoryGridListBlock lang={lang} className="mb-6 lg:mb-8" /> */}
       </Container>
     </>
   );
 }
+
+const HomepageJSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: 'https://www.jayaelektronik.com',
+  name: 'JayaElektronik | Best Online Electronic Store in Jayapura, Papua',
+  // potentialAction: {
+  //   '@type': 'SearchAction',
+  //   target: {
+  //     '@type': 'EntryPoint',
+  //     urlTemplate: `https://www.jayaelektronik.com/`,
+  //   },
+  //   'query-input': 'required name=search_term_string',
+  // },
+};
