@@ -61,8 +61,8 @@ export async function generateMetadata({
 
     alternates: {
       languages: {
-        en: `https://www.jayaelektronik.com/en/about`,
-        id: `https://www.jayaelektronik.com/ina/about`,
+        en: `https://www.jayaelektronik.com/en/about-us`,
+        id: `https://www.jayaelektronik.com/ina/about-us`,
       },
     },
   };
