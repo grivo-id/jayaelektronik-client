@@ -113,11 +113,54 @@ export default async function ProductLayout({ children, params }: LayoutProps) {
   }
 }
 
+type AggregateOfferType = {
+  '@type': 'AggregateOffer';
+  priceCurrency: string;
+  lowPrice?: string | number;
+  highPrice?: string | number;
+  url: string;
+  availability: string;
+};
+
+type SingleOfferType = {
+  '@type': 'Offer';
+  priceCurrency: string;
+  price: string | number;
+  url: string;
+  availability: string;
+};
+
+type OfferType = AggregateOfferType | SingleOfferType;
+
 const generateJsonLd = (
   product: Product,
   currentLang: string,
   slug: string
 ) => {
+  const promoPrice = product.product_promo?.product_promo_final_price;
+  const regularPrice = product.product_price;
+
+  let offers: OfferType;
+
+  if (promoPrice && parseFloat(String(promoPrice)) > 0) {
+    offers = {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'IDR',
+      lowPrice: promoPrice,
+      highPrice: regularPrice,
+      url: `https://jayaelektronik.com/${currentLang}/products/${slug}`,
+      availability: 'http://schema.org/InStock',
+    };
+  } else {
+    offers = {
+      '@type': 'Offer',
+      priceCurrency: 'IDR',
+      price: regularPrice,
+      url: `https://jayaelektronik.com/${currentLang}/products/${slug}`,
+      availability: 'http://schema.org/InStock',
+    };
+  }
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -129,15 +172,9 @@ const generateJsonLd = (
     ].filter(Boolean),
     description: product.product_desc,
     sku: product.product_code,
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'IDR',
-      lowPrice: product.product_promo?.product_promo_final_price,
-      highPrice: product.product_price,
-      url: `https://jayaelektronik.com/${currentLang}/products/${slug}`,
-      availability: 'http://schema.org/InStock',
-    },
+    offers: offers,
   };
 
   return jsonLd;
 };
+ 

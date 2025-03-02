@@ -1,6 +1,6 @@
-import { Product } from '@framework/types';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import { api } from './api-config';
+import { Blog } from '@framework/types';
 
 type Pagination = {
   totalData: number;
@@ -10,19 +10,19 @@ type Pagination = {
   hasPrevPage: boolean;
 };
 
-type ResultBody = {
+type BlogsApiResponse = {
   success: boolean;
   message?: string;
-  data: Product;
+  data: Blog;
 };
 
-export const getAxiosProductDetailById = async (product_id: string) => {
+export const getAxiosBlogDetailByTitle = async (blog_title: string) => {
   try {
     const response = await api.get(
-      `${API_ENDPOINTS.PRODUCT_DETAIL}?product_id=${product_id}`
+      `${API_ENDPOINTS.BLOGDETAILS}?blog_title=${blog_title}`
     );
 
-    return response.data as ResultBody;
+    return response.data as BlogsApiResponse;
   } catch (error) {
     console.error(error);
     throw error;
@@ -35,19 +35,18 @@ type Queries = {
   limit: string | number;
 };
 
-type AllProductResultBody = {
+type AllBlogApiResponse = {
   success: boolean;
   message?: string;
-  data: Product[];
+  data: Blog[];
   pagination: Pagination;
 };
 
-export const getAxiosAllProducts = async ({ page, limit, sort }: Queries) => {
-  const queries = { sort, page, limit };
+export const getAxiosAllBlogPosts = async ({ page, limit, sort }: Queries) => {
+  const queries = { page, limit, sort };
   try {
-    const response = await api.get(`/products?${queries}`);
-    // console.log('respon', response.data);
-    return response.data as AllProductResultBody;
+    const response = await api.get(`/blogs?${queries}`);
+    return response.data as AllBlogApiResponse;
   } catch (error) {
     console.error(error);
     throw error;
