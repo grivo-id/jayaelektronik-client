@@ -27,7 +27,6 @@ export async function generateMetadata({ params }: MetaDataProps) {
   try {
     const result = await getAxiosBlogDetailByTitle(blogSlug);
     const blog = result.data;
-    console.log(blog);
 
     const keywordsString = blog.blog_keywords
       ? blog.blog_keywords
@@ -88,7 +87,7 @@ export default async function Page({ children, params }: PageProps) {
   const { lang, slug } = params;
 
   const blogSlug = slug.replace(/-/g, ' ');
-  console.log(slug, '\n', blogSlug);
+  // console.log(slug, '\n', blogSlug);
 
   const result = await getAxiosBlogDetailByTitle(blogSlug);
   const jsonLdData = generateJsonLd(result.data);

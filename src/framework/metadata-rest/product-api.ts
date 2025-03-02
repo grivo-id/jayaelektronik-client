@@ -46,7 +46,7 @@ export const getAxiosAllProducts = async ({ page, limit, sort }: Queries) => {
   const queries = { sort, page, limit };
   try {
     const response = await api.get(`/products?${queries}`);
-    console.log('respon', response.data);
+    // console.log('respon', response.data);
     return response.data as AllProductResultBody;
   } catch (error) {
     console.error(error);
