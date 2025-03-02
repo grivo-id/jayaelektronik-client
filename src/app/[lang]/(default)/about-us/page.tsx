@@ -29,7 +29,7 @@ export async function generateMetadata({
     title: titles[currentLang as keyof typeof titles],
     description: descriptions[currentLang as keyof typeof descriptions],
     keywords:
-      'jayaelektronik, jaya, elektronik, papua, jayapura, percetakan, abepura, toko elektronik, electronic store, after-sales service, household electronics, office electronics, electronics warranty, affordable electronics, appliances, tv shop, audio systems, air conditioner, refrigerator, washing machine, electronic repair, electronics service center, jayapura electronics, papua electronics, best price electronics, branded electronics, premium electronics',
+      'jayaelektronik, jaya, elektronik, papua, jayapura, percetakan, abepura, toko elektronik, electronic store, after-sales service, household electronics, office electronics, electronics warranty, affordable electronics, appliances, tv shop, audio systems, air conditioner, refrigerator, washing machine, electronics service center, jayapura electronics, papua electronics, best price electronics, branded electronics, premium electronics',
     authors: [
       {
         name: 'Jaya Elektronik & Grivo.id',

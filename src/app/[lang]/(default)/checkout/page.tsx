@@ -40,7 +40,7 @@ export async function generateMetadata({
     robots: 'index, follow',
     openGraph: {
       type: 'website',
-      url: `https://www.jayaelektronik.com/${currentLang}/blog`,
+      url: `https://www.jayaelektronik.com/${currentLang}/checkout`,
       title: titles[currentLang as keyof typeof titles],
       description: openGraphDescs[currentLang as keyof typeof openGraphDescs],
       siteName: 'Jaya Elektronik',

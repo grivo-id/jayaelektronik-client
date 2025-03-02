@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     'A modern electronics retail store with the first after-sales service in Jayapura. We sell office and household electronic products from various brands with warranties and high quality at affordable prices. ',
   keywords:
-    'jayaelektronik, jaya, elektronik, papua, jayapura, percetakan, abepura, toko elektronik, electronic store, after-sales service, household electronics, office electronics, electronics warranty, affordable electronics, appliances, tv shop, audio systems, air conditioner, refrigerator, washing machine, electronic repair, electronics service center, jayapura electronics, papua electronics, best price electronics, branded electronics, premium electronics',
+    'jayaelektronik, jaya, elektronik, papua, jayapura, percetakan, abepura, toko elektronik, electronic store, after-sales service, household electronics, office electronics, electronics warranty, affordable electronics, appliances, tv shop, audio systems, air conditioner, refrigerator, washing machine, electronics service center, jayapura electronics, papua electronics, best price electronics, branded electronics, premium electronics',
   authors: [
     {
       name: 'Jaya Elektronik & Grivo.id',

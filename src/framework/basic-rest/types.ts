@@ -186,31 +186,22 @@ export type Shop = {
   updated_at: string;
 };
 
+export type BlogKeyword = {
+  blog_keyword_id: string;
+  blog_keyword_name: string;
+};
+
 export type Blog = {
-  blog_id: number | string;
-  blog_category_id: number | string;
-  blog_title: string;
-  subTitle?: string;
-  blog_desc: string;
-  user_name: string;
-  blog_created_date: Date | string;
-  totalWatchCount?: number;
-  totalCommentCount?: number;
-  titleTwo: string;
-  category: string;
+  blog_id: string;
+  user_id: string;
+  blog_category_id: string;
   blog_banner_image: string;
-  sku?: string;
-  content?: string;
-  contentTwo?: string;
-  contentThree?: string;
-  quote: {
-    content: string;
-  };
-  postList?: object;
-  discount?: object;
-  tags: {};
-  comments?: object;
-  [key: string]: unknown;
+  blog_title: string;
+  blog_desc: string;
+  blog_created_date: string;
+  user_name: string;
+  blog_category_name: string;
+  blog_keywords: BlogKeyword[];
 };
 
 export type ProductFromOrderResult = {
