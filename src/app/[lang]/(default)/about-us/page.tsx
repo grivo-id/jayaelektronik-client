@@ -50,6 +50,14 @@ export async function generateMetadata({
         },
       ],
     },
+    twitter: {
+      title: titles[currentLang as keyof typeof titles],
+      card: 'summary_large_image',
+      site: `https://www.jayaelektronik.com/${currentLang}/about-us`,
+      creator: 'Jaya Elektronik & Grivo.id',
+      images:
+        'https://firebasestorage.googleapis.com/v0/b/personal-d9ef9.appspot.com/o/jaya%2Fjaya.jpeg?alt=media&token=a2f5414d-b25f-492b-a04a-382d167ffed6',
+    },
 
     alternates: {
       languages: {

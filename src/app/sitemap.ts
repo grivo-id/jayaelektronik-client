@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const productEntries: MetadataRoute.Sitemap = [];
   const batchSize = 100;
-  const totalBatches = Math.ceil(600 / batchSize);
+  const totalBatches = Math.ceil(678 / batchSize);
 
   for (let batch = 1; batch <= totalBatches; batch++) {
     const response = await getAxiosAllProducts({
