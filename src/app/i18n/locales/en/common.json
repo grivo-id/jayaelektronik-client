@@ -270,6 +270,7 @@
   "text-coupon-applied-successfully": "Coupon Applied Successfully",
   "apply-coupon-btn": "Apply Coupon",
   "cancel-redeem": "Cancel Redeem",
+  "order-success-response": "Congrats, Order success!",
   "text-wistlist-not-available": "Currently Not Available in Store",
   "text-wishlist-available": "Available in Store",
   "no-blog-found-title": "No Blogs Found",
@@ -278,5 +279,11 @@
   "total-product-found": "Product Found",
   "prod-not-found": "Product Not Found",
   "prod-not-found-desc": "We're sorry, but the product you're looking for doesn't exist or has been removed.",
-  "browse-all-product": "Browse All Products"
+  "browse-all-product": "Browse All Products",
+  "error-coupon-redeemed": "Coupon already redeemed! Please try another.",
+  "error-coupon-not-found": "Coupon code doesn't exist. Please try another.",
+  "error-coupon-limit": "Coupon usage limit has been reached.",
+  "error-coupon-product-qty": "Order has not reached the minimum product quantity required to use the coupon.",
+  "error-coupon-price": "Order has not reached the minimum transaction required to use the coupon.",
+  "error-default-text": "Error!, Please contact admin or customer service"
 }
