@@ -32,6 +32,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
+  staticEntries.push({
+    url: baseUrl,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 1.0,
+  });
+
   const productEntries: MetadataRoute.Sitemap = [];
   const batchSize = 100;
   const totalBatches = Math.ceil(678 / batchSize);
