@@ -337,7 +337,7 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
       <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
         <AlertDialogContent className="">
           <AlertDialogHeader>
-            <AlertDialogTitle> {t('confirm-order-dialog')}</AlertDialogTitle>
+            <AlertDialogTitle className='text-brand-dark'>{t('confirm-order-dialog')}</AlertDialogTitle>
             <AlertDialogDescription>
               {t('confirm-order-dialog2')}
             </AlertDialogDescription>
