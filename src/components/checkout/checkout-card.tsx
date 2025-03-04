@@ -249,6 +249,17 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
   //     }
   //   }
   // }
+  const totalQuantityR = items.reduce(
+    (acc, item) => acc + (item.quantity ?? 0),
+    0
+  );
+  const subtotalR = items.reduce((acc, item) => acc + (item.itemTotal ?? 0), 0);
+
+  const doesNotMeetMinQuantity =
+    couponData && totalQuantityR < Number(couponData.coupon_min_product_qty);
+
+  const doesNotMeetMinTransaction =
+    couponData && subtotalR < Number(couponData.coupon_min_transaction);
 
   const checkoutFooter = [
     {
@@ -304,6 +315,13 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
           checkoutFooter.map((item: any) => (
             <CheckoutCardFooterItem item={item} key={item.id} />
           ))}
+
+        {couponData && (
+          <div className="py-3 text-sm text-brand-danger">
+            {doesNotMeetMinQuantity && <p>{t('error-coupon-product-qty')}</p>}
+            {doesNotMeetMinTransaction && <p>{t('error-coupon-price')}</p>}
+          </div>
+        )}
         <Button
           variant="formButton"
           className={cn(
@@ -337,7 +355,9 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
       <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
         <AlertDialogContent className="">
           <AlertDialogHeader>
-            <AlertDialogTitle className='text-brand-dark'>{t('confirm-order-dialog')}</AlertDialogTitle>
+            <AlertDialogTitle className="text-brand-dark">
+              {t('confirm-order-dialog')}
+            </AlertDialogTitle>
             <AlertDialogDescription>
               {t('confirm-order-dialog2')}
             </AlertDialogDescription>
