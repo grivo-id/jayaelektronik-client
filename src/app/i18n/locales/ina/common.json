@@ -266,6 +266,8 @@
   "text-coupon-invalid": "Kupon tidak ditemukan",
   "text-coupon-applied-successfully": "Kupon Berhasil Diterapkan",
   "apply-coupon-btn": "Gunakan Kupon",
+  "cancel-redeem": "Batalkan Coupon",
+  "order-success-response": "Selamat, Order berhasil dibuat!",
   "text-wistlist-not-available": "Saat ini Tidak Tersedia di Toko",
   "text-wishlist-available": "Tersedia di Toko",
   "no-blog-found-title": "Tidak Ada Blog Ditemukan",
@@ -274,5 +276,16 @@
   "total-product-found": "Produk Ditemukan",
   "prod-not-found": "Produk Tidak Ditemukan",
   "prod-not-found-desc": "Maaf, tetapi produk yang Anda cari tidak ada atau telah dihapus.",
-  "browse-all-product": "Jelajahi Semua Produk"
+  "browse-all-product": "Jelajahi Semua Produk",
+  "error-coupon-redeemed": "Kupon sudah digunakan! Silakan coba yang lain.",
+  "error-coupon-not-found": "Kode kupon tidak ditemukan. Silakan coba yang lain.",
+  "error-coupon-limit": "Batas penggunaan kupon telah tercapai.",
+  "error-coupon-product-qty": "Pesanan belum mencapai jumlah produk minimum yang diperlukan untuk menggunakan kupon.",
+  "error-coupon-price": "Pesanan belum mencapai transaksi minimum yang diperlukan untuk menggunakan kupon.",
+  "error-default-text": "Error!, Hubungi admin atau layanan pelanggan kami",
+  "confirm-order-title": "Konfirmasi Order",
+  "confirm-order-btn": "Konfirmasi",
+  "cancel-order-btn": "Batal",
+  "confirm-order-dialog": "Apakah Anda yakin ingin melanjutkan pesanan ini?",
+  "confirm-order-dialog2": "Anda akan dialihkan ke Whatsapp dan Anda juga akan menerima email terkait order Anda."
 }
