@@ -1,9 +1,9 @@
 import { OrderApiResponse, ProductFromOrderResult } from '@framework/types';
 
-
 // Checkout
 export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
-  const phoneNumber = '+62816270158';
+  // const phoneNumber = '+62816270158';
+  const phoneNumber = '+6281356530099';
 
   let message = `Hi,\n\nI would like to place an order: ${orderResult.order_id} with products:\n`;
   orderResult.products.forEach(
@@ -33,7 +33,8 @@ export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
 };
 
 export const redirectToWhatsAppCartIna = (orderResult: OrderApiResponse) => {
-  const phoneNumber = '+62816270158';
+  // const phoneNumber = '+62816270158';
+  const phoneNumber = '+6281356530099';
 
   let message = `Halo,\n\nSaya ingin melakukan pemesanan: ${orderResult.order_id} dengan produk:\n`;
   orderResult.products.forEach(
@@ -61,7 +62,6 @@ export const redirectToWhatsAppCartIna = (orderResult: OrderApiResponse) => {
   )}`;
   window.open(whatsappURL, '_blank');
 };
-
 
 //Customer Care
 export const redirectToWhatsAppCSIndonesia = () => {

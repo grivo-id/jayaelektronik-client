@@ -107,6 +107,12 @@ export default function Coupon({ lang, setCoupon, couponData }: Props) {
       }
     );
   };
+
+  const handleClearCoupon = () => {
+    setCoupon();
+    setCouponCode('');
+  };
+
   return (
     <div className="flex flex-col gap-4 text-brand-dark">
       <div className="flex flex-row gap-4 items-end w-full ">
@@ -175,6 +181,15 @@ export default function Coupon({ lang, setCoupon, couponData }: Props) {
             lang={lang}
             disabled
           />
+          <div className="flex justify-end w-full">
+            <Button
+              onClick={handleClearCoupon}
+              variant="formButton"
+              className="bg-brand-danger"
+            >
+              {t('cancel-redeem')}
+            </Button>
+          </div>
         </div>
       )}
     </div>

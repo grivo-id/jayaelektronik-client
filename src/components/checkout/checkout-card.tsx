@@ -24,6 +24,17 @@ import { useCreateOrderMutation } from '@framework/checkout/use-order';
 import useWindowSize from '@utils/use-window-size';
 import { toast } from 'react-toastify';
 import ErrorIcon from '@components/icons/error-icon';
+import { displayErrorCheckout } from './checkout-error';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@components/components/ui/alert-dialog';
 
 type Props = {
   lang: string;
@@ -40,6 +51,7 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
   const { checkOutFormData, user, shippingAddress } = useUI();
   const { resetCart } = useCart();
   const [isValid, setValid] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
   const [isOrderSuccess, setIsOrderSuccess] = useState<boolean>(false);
   const [orderResponse, setOrderResponse] = useState<OrderApiResponse>();
 
@@ -93,7 +105,7 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
     currencyCode: 'IDR',
   });
 
-  async function orderHeader() {
+  function orderHeader() {
     if (!isValid) {
       let message;
       if (lang === 'ina') {
@@ -113,6 +125,11 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
       });
       return;
     }
+
+    setIsAlertOpen(true);
+  }
+
+  async function handleOrderConfirmed() {
     const { storedCart, defaultAddress } = getStoredCartAndAddress();
     if (!isEmpty) {
       try {
@@ -131,7 +148,7 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
         });
         const orderResult: OrderApiResponse = response.data;
         if (response.success) {
-          toast('Order success!', {
+          toast(t('order-success-response'), {
             progressClassName: 'fancy-progress-bar',
             position: width! > 768 ? 'bottom-right' : 'top-right',
             autoClose: 1500,
@@ -149,7 +166,7 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
           }
         }
       } catch (error: any) {
-        toast.error(error.message || 'An unexpected error occurred', {
+        toast.error(displayErrorCheckout(error.message, t), {
           progressClassName: 'fancy-progress-bar',
           position: width! > 768 ? 'bottom-right' : 'top-right',
           autoClose: 1500,
@@ -162,6 +179,87 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
       }
     }
   }
+
+  // async function orderHeader() {
+  //   if (!isValid) {
+  //     let message;
+  //     if (lang === 'ina') {
+  //       message = 'Mohon lengkapi data diri dan alamat pengiriman!';
+  //     } else {
+  //       message = 'Please fill your data and shipping address in the form!';
+  //     }
+  //     toast.error(message, {
+  //       progressClassName: 'fancy-progress-bar',
+  //       position: width! > 768 ? 'bottom-right' : 'top-right',
+  //       autoClose: 1500,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       icon: <ErrorIcon />,
+  //     });
+  //     return;
+  //   }
+  //   const { storedCart, defaultAddress } = getStoredCartAndAddress();
+  //   if (!isEmpty) {
+  //     try {
+  //       const response = await createOrder({
+  //         coupon_code: couponData?.coupon_code,
+  //         order_email: checkOutFormData.user_email,
+  //         order_fname: checkOutFormData.user_fname,
+  //         order_lname: checkOutFormData.user_lname,
+  //         order_phone: checkOutFormData.user_phone,
+  //         order_address: defaultAddress.shipping_address_desc,
+  //         order_user_verified: user ? true : false,
+  //         products: storedCart.items.map((item: any) => ({
+  //           product_id: item.id,
+  //           product_qty: item.quantity,
+  //         })),
+  //       });
+  //       const orderResult: OrderApiResponse = response.data;
+  //       if (response.success) {
+  //         toast(t('order-success-response'), {
+  //           progressClassName: 'fancy-progress-bar',
+  //           position: width! > 768 ? 'bottom-right' : 'top-right',
+  //           autoClose: 1500,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //         });
+
+  //         resetCart();
+  //         if (lang === 'ina') {
+  //           redirectToWhatsAppCartIna(orderResult);
+  //         } else {
+  //           redirectToWhatsAppCartEn(orderResult);
+  //         }
+  //       }
+  //     } catch (error: any) {
+  //       toast.error(displayErrorCheckout(error.message, t), {
+  //         progressClassName: 'fancy-progress-bar',
+  //         position: width! > 768 ? 'bottom-right' : 'top-right',
+  //         autoClose: 1500,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         icon: <ErrorIcon />,
+  //       });
+  //     }
+  //   }
+  // }
+  const totalQuantityR = items.reduce(
+    (acc, item) => acc + (item.quantity ?? 0),
+    0
+  );
+  const subtotalR = items.reduce((acc, item) => acc + (item.itemTotal ?? 0), 0);
+
+  const doesNotMeetMinQuantity =
+    couponData && totalQuantityR < Number(couponData.coupon_min_product_qty);
+
+  const doesNotMeetMinTransaction =
+    couponData && subtotalR < Number(couponData.coupon_min_transaction);
 
   const checkoutFooter = [
     {
@@ -217,6 +315,13 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
           checkoutFooter.map((item: any) => (
             <CheckoutCardFooterItem item={item} key={item.id} />
           ))}
+
+        {couponData && (
+          <div className="py-3 text-sm text-brand-danger">
+            {doesNotMeetMinQuantity && <p>{t('error-coupon-product-qty')}</p>}
+            {doesNotMeetMinTransaction && <p>{t('error-coupon-price')}</p>}
+          </div>
+        )}
         <Button
           variant="formButton"
           className={cn(
@@ -246,6 +351,30 @@ const CheckoutCard: React.FC<Props> = ({ lang, couponData }) => {
         </Link>
         . {t('text-credit-debit')}
       </Text>
+
+      <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+        <AlertDialogContent className="">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-brand-dark">
+              {t('confirm-order-dialog')}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('confirm-order-dialog2')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="">
+            <AlertDialogCancel className="p-5">
+              {t('cancel-order-btn')}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleOrderConfirmed}
+              className="bg-brand p-5 hover:bg-brand/75"
+            >
+              {t('confirm-order-btn')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
