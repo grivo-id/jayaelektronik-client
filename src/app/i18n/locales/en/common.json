@@ -285,5 +285,9 @@
   "error-coupon-limit": "Coupon usage limit has been reached.",
   "error-coupon-product-qty": "Order has not reached the minimum product quantity required to use the coupon.",
   "error-coupon-price": "Order has not reached the minimum transaction required to use the coupon.",
-  "error-default-text": "Error!, Please contact admin or customer service"
+  "error-default-text": "Error!, Please contact admin or customer service",
+  "confirm-order-title": "Confirm Order",
+  "confirm-order-btn": "Confirm",
+  "cancel-order-btn": "Cancel",
+  "confirm-order-dialog": "Are you sure you want to proceed with this order?"
 }

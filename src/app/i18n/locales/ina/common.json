@@ -282,5 +282,9 @@
   "error-coupon-limit": "Batas penggunaan kupon telah tercapai.",
   "error-coupon-product-qty": "Pesanan belum mencapai jumlah produk minimum yang diperlukan untuk menggunakan kupon.",
   "error-coupon-price": "Pesanan belum mencapai transaksi minimum yang diperlukan untuk menggunakan kupon.",
-  "error-default-text": "Error!, Hubungi admin atau layanan pelanggan kami"
+  "error-default-text": "Error!, Hubungi admin atau layanan pelanggan kami",
+  "confirm-order-title": "Konfirmasi Order",
+  "confirm-order-btn": "Konfirmasi",
+  "cancel-order-btn": "Batal",
+  "confirm-order-dialog": "Apakah Anda yakin ingin melanjutkan pesanan ini?"
 }
