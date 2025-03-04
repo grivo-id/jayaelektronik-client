@@ -289,5 +289,6 @@
   "confirm-order-title": "Confirm Order",
   "confirm-order-btn": "Confirm",
   "cancel-order-btn": "Cancel",
-  "confirm-order-dialog": "Are you sure you want to proceed with this order?"
+  "confirm-order-dialog": "Are you sure you want to proceed with this order?",
+  "confirm-order-dialog2": "You will be redirected to Whatsapp and you will also receive an email."
 }

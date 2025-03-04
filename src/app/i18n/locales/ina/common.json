@@ -286,5 +286,6 @@
   "confirm-order-title": "Konfirmasi Order",
   "confirm-order-btn": "Konfirmasi",
   "cancel-order-btn": "Batal",
-  "confirm-order-dialog": "Apakah Anda yakin ingin melanjutkan pesanan ini?"
+  "confirm-order-dialog": "Apakah Anda yakin ingin melanjutkan pesanan ini?",
+  "confirm-order-dialog2": "Anda akan dialihkan ke Whatsapp dan Anda juga akan menerima email terkait order Anda."
 }
