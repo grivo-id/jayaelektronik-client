@@ -1,4 +1,4 @@
-export const displayErrorCheckout = (errorMsg: string, lang: any) => {
+export const displayErrorCheckout = (errorMsg: string, lang: Function) => {
   switch (errorMsg) {
     case 'Coupon already redeemed! Please try another.':
       return lang('error-coupon-redeemed');
