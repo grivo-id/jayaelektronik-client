@@ -17,6 +17,7 @@ import '@assets/css/custom-plugins.css';
 import './globals.css';
 import '@assets/css/rc-drawer.css';
 import '@assets/css/themes.scss';
+import BannerPopupProvider from '../provider/banner-provider';
 
 const rubik = Rubik({
   weight: ['300', '400', '500', '600', '700'],
@@ -51,6 +52,7 @@ export default function RootLayout({
             {children}
             <ManagedModal lang={lang} />
             <ManagedDrawer lang={lang} />
+            <BannerPopupProvider />
             <ToasterProvider />
           </ManagedUIContext>
         </Providers>

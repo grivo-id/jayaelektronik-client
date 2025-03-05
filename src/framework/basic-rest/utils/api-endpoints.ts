@@ -51,6 +51,7 @@ export const API_ENDPOINTS = {
   PRODUCT_BYTAG: '/products/tag',
   ANNOUNCERS: '/toast-announcers',
   COUPON_BYCODE: '/coupon-discounts',
+  BANNER_ADS: '/banner-popups',
 };
 
 // export const API_ENDPOINTS = {
