@@ -1,8 +1,6 @@
-import { QueryOptionsType } from '@framework/types';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import http from '@framework/utils/http';
-import shuffle from 'lodash/shuffle';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
 type BlogKeyword = {
   blog_keyword_id: string;
