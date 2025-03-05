@@ -30,6 +30,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.8",
     "embla-carousel-react": "^8.5.2",
+    "framer-motion": "^12.4.10",
     "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.0.2",
     "i18next-resources-to-backend": "^1.1.4",
