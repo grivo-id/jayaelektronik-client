@@ -16,27 +16,12 @@ export const config = {
 const cookieName = 'i18next';
 
 export function middleware(req: any) {
+  console.log('middleware running');
   if (
     req.nextUrl.pathname.indexOf('icon') > -1 ||
     req.nextUrl.pathname.indexOf('chrome') > -1
   )
     return NextResponse.next();
-
-  const firstSegment = req.nextUrl.pathname.split('/')[1];
-
-  // if (
-  //   firstSegment &&
-  //   !languages.includes(firstSegment) &&
-  //   !req.nextUrl.pathname.startsWith('/_next') &&
-  //   !req.nextUrl.pathname.startsWith('/api')
-  // ) {
-  //   return new Response('Not Found', {
-  //     status: 404,
-  //     headers: {
-  //       'Content-Type': 'text/plain',
-  //     },
-  //   });
-  // }
 
   let lang;
   if (req.cookies.has(cookieName))
