@@ -220,6 +220,16 @@ export type ProductFromOrderResult = {
 
 export type CouponDetail = {
   coupon_name?: string;
+  coupon_code: string;
+  coupon_completed_used: number | string;
+  coupon_discount_id: number | string;
+  coupon_expired_date: Date | string;
+  coupon_max_discount: number;
+  coupon_max_used: number;
+  coupon_min_product_qty: number;
+  coupon_min_transaction: number;
+  coupon_percentage: number;
+  coupon_used: number;
 };
 
 export type OrderApiResponse = {
