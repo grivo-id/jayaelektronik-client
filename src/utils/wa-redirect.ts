@@ -1,5 +1,9 @@
 import { OrderApiResponse, ProductFromOrderResult } from '@framework/types';
 
+export function convertRupiah(amount: number): string {
+  return `Rp${amount.toLocaleString("id-ID")}`; 
+};
+
 // Checkout
 export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
   // const phoneNumber = '+62816270158';
@@ -8,7 +12,7 @@ export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
   let message = `Hi,\n\nI would like to place an order: ${orderResult.order_id} with products:\n`;
   orderResult.products.forEach(
     (item: ProductFromOrderResult, index: number) => {
-      message += `${index + 1}. ${item.product_name}\n`;
+      message += `${index + 1}. ${item.product_name} - Quantity: ${item.product_qty} - Subtotal: ${convertRupiah(item.product_subtotal)}\n`;
     }
   );
 
@@ -39,7 +43,7 @@ export const redirectToWhatsAppCartIna = (orderResult: OrderApiResponse) => {
   let message = `Halo,\n\nSaya ingin melakukan pemesanan: ${orderResult.order_id} dengan produk:\n`;
   orderResult.products.forEach(
     (item: ProductFromOrderResult, index: number) => {
-      message += `${index + 1}. ${item.product_name}\n`;
+      message += `${index + 1}. ${item.product_name} - Jumlah: ${item.product_qty} - Subtotal: ${convertRupiah(item.product_subtotal)}\n`;
     }
   );
 
