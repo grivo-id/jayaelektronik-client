@@ -56,7 +56,7 @@ export default function BannerPopupProvider() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed z-[999999] inset-0 w-full h-full flex items-center justify-center"
+          className="fixed z-[999999] p-4 inset-0 w-full h-full flex items-center justify-center overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -69,7 +69,7 @@ export default function BannerPopupProvider() {
             animate={{ opacity: 1 }}
           />
           <motion.div
-            className="max-w-3xl relative"
+            className="max-w-3xl relative w-full max-h-[90vh] flex items-center justify-center"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
@@ -88,13 +88,19 @@ export default function BannerPopupProvider() {
             >
               <X />
             </motion.button>
-            <Image
-              src={banner.banner_popup_image}
-              alt={banner.banner_popup_title || 'Promotional Banner'}
-              width={800}
-              height={800}
-              className="cover rounded-lg shadow-xl"
-            />
+            <div className="relative w-full h-full overflow-hidden">
+              <Image
+                src={banner.banner_popup_image}
+                alt={banner.banner_popup_title || 'Promotional Banner'}
+                className="object-contain rounded-lg shadow-xl max-h-[80vh] w-auto mx-auto"
+                width={800}
+                height={800}
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
+              />
+            </div>
           </motion.div>
         </motion.div>
       )}

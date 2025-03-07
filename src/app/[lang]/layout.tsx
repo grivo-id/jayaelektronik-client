@@ -39,13 +39,18 @@ export async function generateStaticParams() {
 
 export default function RootLayout({
   children,
-  params: { lang },
+  params,
 }: {
   children: React.ReactNode;
-  params: any;
+  params: { lang: string };
 }) {
+  const validLanguages = ['ina', 'en'];
+  const lang = params.lang;
+  const isValidLang = validLanguages.includes(lang);
+  const actualLang = isValidLang ? lang : 'ina';
+
   return (
-    <html lang={lang} dir={dir(lang)}>
+    <html lang={actualLang} dir={dir(lang)}>
       <body className={`${rubik.variable}`}>
         <Providers>
           <ManagedUIContext>
