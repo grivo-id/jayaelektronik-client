@@ -217,12 +217,12 @@ const ProductCard: React.FC<ProductProps> = ({ product, className, lang }) => {
               {price}
             </span>
           )}
-          {product_item_sold > 0 && (
+          {/* {product_item_sold > 0 && (
             <span className="text-sm text-brand-muted">
               {product_item_sold}
               {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
             </span>
-          )}
+          )} */}
         </div>
         <div className="inline-block product-cart-button">
           <RenderPopupOrAddToCart props={{ data: product, lang: lang }} />

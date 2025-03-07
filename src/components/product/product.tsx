@@ -319,12 +319,12 @@ const ProductSingleDetails: React.FC<{ lang: string }> = ({ lang }) => {
             <dd className="productView-info-value">
               {t(`text-calculated-checkout`)}
             </dd>
-            <dt className={`productView-info-name w-40 float-left`}>
+            {/* <dt className={`productView-info-name w-40 float-left`}>
               {t('text-amountsold')}:
             </dt>
             <dd className="productView-info-value">
               {product?.product_item_sold}
-            </dd>
+            </dd> */}
           </dl>
 
           <div className="pb-2">
