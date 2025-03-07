@@ -29,3 +29,27 @@ export default async function Page({
     </>
   );
 }
+
+
+// const generateJsonLd = (currentLang: string) => {
+//   const descriptions = {
+//     ina: 'Selesaikan pembelian Anda dengan aman dan mudah di Jaya Elektronik. Nikmati pengalaman belanja terbaik dengan berbagai metode pembayaran dan layanan pelanggan terpercaya.',
+//     en: 'Complete your purchase securely and easily at Jaya Elektronik. Enjoy the best shopping experience with multiple payment options and reliable customer service.',
+//   };
+
+//   const jsonLd = {
+//     '@context': 'https://schema.org',
+//     '@type': 'WebSite',
+//     name: 'Checkout',
+//     description: descriptions[currentLang as keyof typeof descriptions],
+//     url: `https://jayaelektronik.com/${currentLang}/checkout`,
+//     logo: 'https://firebasestorage.googleapis.com/v0/b/personal-d9ef9.appspot.com/o/jaya%2Fjaya.jpeg?alt=media&token=a2f5414d-b25f-492b-a04a-382d167ffed6',
+//     potentialAction: {
+//       '@type': 'SearchAction',
+//       target: `https://jayaelektronik.com/${currentLang}/search?category={search_term_string}`,
+//       'query-input': 'required category=search_term_string',
+//     },
+//   };
+
+//   return jsonLd;
+// };
