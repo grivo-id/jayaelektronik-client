@@ -176,12 +176,12 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
               </span>
             )}
           </div>
-          {product_item_sold > 0 && (
+          {/* {product_item_sold > 0 && (
             <span className="mb-1 lg:mb-4 text-brand-muted ">
               {product_item_sold}
               {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
             </span>
-          )}
+          )} */}
 
           {isValidPromoDate && (
             <>

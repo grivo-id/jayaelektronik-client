@@ -345,12 +345,12 @@ export default function ProductPopup({ lang }: { lang: string }) {
                   />
                 );
               })}
-              {product_item_sold > 0 && (
+              {/* {product_item_sold > 0 && (
                 <span className="text-sm text-brand-muted">
                   {product_item_sold}
                   {product_item_sold > 100 ? '+' : ''} {t('text-sold')}
                 </span>
-              )}
+              )} */}
               <div className="pb-2">
                 {/* check that item isInCart and place the available quantity or the item quantity */}
                 {isEmpty(variations) && (
