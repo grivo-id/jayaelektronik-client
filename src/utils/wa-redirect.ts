@@ -21,6 +21,8 @@ export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
   );
   message += `\n*Shipping Address:*\n`;
   message += `- *Ship To:*: ${defaultAddress.shipping_address_title}\n`;
+  message += `- *Recipient Name*: ${defaultAddress.user_name}\n`;
+  message += `- *Phone Number:*: ${defaultAddress.user_phone}\n`;
   message += `- *Full Address*: ${defaultAddress.shipping_address_desc}\n\n`;
 
   if (orderResult.coupon_code) {
@@ -52,6 +54,8 @@ export const redirectToWhatsAppCartIna = (orderResult: OrderApiResponse) => {
   );
   message += `\n*Alamat Pengiriman:*\n`;
   message += `- *Kirim Ke:* ${defaultAddress.shipping_address_title}\n`;
+  message += `- *Nama Penerima*: ${defaultAddress.user_name}\n`;
+  message += `- *No Handphone:*: ${defaultAddress.user_phone}\n`;
   message += `- *Alamat Lengkap*: ${defaultAddress.shipping_address_desc}\n\n`;
 
   if (orderResult.coupon_code) {
