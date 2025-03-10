@@ -29,8 +29,22 @@ export async function generateMetadata({
   return {
     title: titles[currentLang as keyof typeof titles],
     description: descriptions[currentLang as keyof typeof descriptions],
-    keywords:
-      'jayaelektronik checkout, buy electronic online, order electronic online, jaya, elektronik, papua, jayapura, percetakan, abepura, toko elektronik, electronic store, purchase electronic products',
+    keywords: [
+      'jayaelektronik checkout',
+      'jayaelektronik beli produk',
+      'buy electronic online',
+      'order electronic online',
+      'jaya',
+      'elektronik',
+      'papua',
+      'jayapura',
+      'percetakan',
+      'abepura',
+      'toko elektronik',
+      'electronic store',
+      'purchase electronic products',
+      'beli barang elektronik',
+    ],
     authors: [
       {
         name: 'Jaya Elektronik & Grivo.id',
