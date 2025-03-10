@@ -71,15 +71,37 @@ const AddAddressForm: React.FC<{ lang: string }> = ({ lang }) => {
         });
       }
     } else {
-      const addressStore = [
-        {
-          shipping_address_title: shipping_address_title,
-          shipping_address_desc: shipping_address_desc,
-        },
-      ];
+      const existingData = JSON.parse(
+        sessionStorage.getItem('default_address') || '{}'
+      );
 
-      await setShippingAddress(addressStore);
+      const newAddressData = {
+        shipping_address_title,
+        shipping_address_desc,
+        user_fname: existingData.user_fname || '',
+        user_lname: existingData.user_lname || '',
+        user_email: existingData.user_email || '',
+        user_phone: existingData.user_phone || '',
+        user_name: existingData.user_name || '',
+      };
+
+      sessionStorage.setItem('default_address', JSON.stringify(newAddressData));
+
+      setShippingAddress([
+        ...(Array.isArray(shippingAddress) ? shippingAddress : []),
+        newAddressData,
+      ]);
+
       closeModal();
+      toast('Address added successful!', {
+        progressClassName: 'fancy-progress-bar',
+        position: width! > 768 ? 'bottom-right' : 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   }
 

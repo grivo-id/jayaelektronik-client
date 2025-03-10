@@ -61,7 +61,7 @@ export default function EditUserProfileForm({ lang }: Props) {
     defaultValues,
   });
   function onSubmit(formData: UpdateUserType) {
-    console.log('formdata', formData);
+    // console.log('formdata', formData);
     updateUser(formData, {
       onSuccess: () => {
         closeModal();
