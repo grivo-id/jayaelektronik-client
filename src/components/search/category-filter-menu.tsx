@@ -47,7 +47,11 @@ function CategoryFilterMenuItem({
   const hasQueryKey = searchParams?.get('category');
 
   useEffect(() => {
-    updateQueryparams('category', formState.toString());
+    const timer = setTimeout(() => {
+      updateQueryparams('category', formState.toString());
+    }, 300);
+
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formState]);
 

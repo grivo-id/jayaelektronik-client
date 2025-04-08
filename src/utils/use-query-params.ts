@@ -69,7 +69,7 @@ export default function useQueryParam(pathname: string = '/') {
     url.searchParams.set(key, value.toString());
     setQuery(url.search);
 
-    window.history.replaceState(null, '', `${pathname}${url.search}`);
+    // window.history.replaceState(null, '', `${pathname}${url.search}`);
 
     router.push(`${pathname}${url.search}`, {
       scroll: false,
