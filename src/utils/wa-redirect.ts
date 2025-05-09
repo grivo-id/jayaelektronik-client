@@ -1,18 +1,19 @@
 import { OrderApiResponse, ProductFromOrderResult } from '@framework/types';
 
 export function convertRupiah(amount: number): string {
-  return `Rp${amount.toLocaleString("id-ID")}`; 
-};
+  return `Rp${amount.toLocaleString('id-ID')}`;
+}
 
 // Checkout
 export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
-  // const phoneNumber = '+62816270158';
   const phoneNumber = '+6281356530099';
 
   let message = `Hi,\n\nI would like to place an order: ${orderResult.order_id} with products:\n`;
   orderResult.products.forEach(
     (item: ProductFromOrderResult, index: number) => {
-      message += `${index + 1}. ${item.product_name} - Quantity: ${item.product_qty} - Subtotal: ${convertRupiah(item.product_subtotal)}\n`;
+      message += `${index + 1}. ${item.product_name} - Quantity: ${
+        item.product_qty
+      } - Subtotal: ${convertRupiah(item.product_subtotal)}\n`;
     }
   );
 
@@ -39,13 +40,14 @@ export const redirectToWhatsAppCartEn = (orderResult: OrderApiResponse) => {
 };
 
 export const redirectToWhatsAppCartIna = (orderResult: OrderApiResponse) => {
-  // const phoneNumber = '+62816270158';
   const phoneNumber = '+6281356530099';
 
   let message = `Halo,\n\nSaya ingin melakukan pemesanan: ${orderResult.order_id} dengan produk:\n`;
   orderResult.products.forEach(
     (item: ProductFromOrderResult, index: number) => {
-      message += `${index + 1}. ${item.product_name} - Jumlah: ${item.product_qty} - Subtotal: ${convertRupiah(item.product_subtotal)}\n`;
+      message += `${index + 1}. ${item.product_name} - Jumlah: ${
+        item.product_qty
+      } - Subtotal: ${convertRupiah(item.product_subtotal)}\n`;
     }
   );
 
@@ -73,7 +75,7 @@ export const redirectToWhatsAppCartIna = (orderResult: OrderApiResponse) => {
 
 //Customer Care
 export const redirectToWhatsAppCSIndonesia = () => {
-  const phoneNumber = '+62816270158';
+  const phoneNumber = '+6281356530099';
 
   let message = `Halo Admin Jaya Elektronik,\n saya membutuhkan bantuan support terkait:\n`;
 
@@ -84,7 +86,7 @@ export const redirectToWhatsAppCSIndonesia = () => {
 };
 
 export const redirectToWhatsAppCSEn = () => {
-  const phoneNumber = '+62816270158';
+  const phoneNumber = '+6281356530099';
 
   let message = `Hello Jaya Elektronik Admin,\n I need support regarding:\n`;
 
